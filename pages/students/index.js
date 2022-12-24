@@ -1,9 +1,26 @@
-import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
+import Dropdown from "../../components/Dropdown";
+import { DropdownButton } from "../../components/DropdownLink";
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
 import axios from "../../src/lib/axios";
+import { PlusIcon } from "@heroicons/react/24/solid";
+import { useRecoilState } from "recoil";
+import { modalState, modalTypeState } from "../../src/atoms/modalAtom";
+import { AnimatePresence, motion } from "framer-motion";
 
-const Student = ({ students }) => {
+const Student = ({ students, levels, modules }) => {
+    const [modalOpen, setModalOpen] = useRecoilState(modalState);
+    const [modalType, setModalType] = useRecoilState(modalTypeState);
+
+    const [modelLevelToggler, setModelLevelToggler] = useState(true);
+    const [LevelSelectedValue, setLevelSelectedValue] = useState(
+        levels[0].name,
+    );
+    const [moduleSelectedValue, setModuleSelectedValue] = useState(
+        modules[0].code,
+    );
     return (
         <AppLayout header="Students">
             {/* Title */}
@@ -11,51 +28,109 @@ const Student = ({ students }) => {
 
             {/* Main Sction */}
             <div className="space-y-5">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between relative">
                     <div className="flex space-x-4 items-center">
                         <h1 className="text-black font-extrabold text-xl">
                             Total Students
                         </h1>
                         <span className="p-1 h-7 w-7 inline-flex items-center justify-center rounded-full text-xs text-white bg-primary">
-                            98
+                            {students.length}
                         </span>
                     </div>
-                    <div className="space-x-5">
+                    <div className="space-x-6 flex items-center">
                         <div className="rounded-full border border-primary p-0.5 space-x-2">
-                            <div className="rounded-full inline-block px-8 py-2 bg-primary text-white text-xs ">
+                            <button
+                                onClick={() => setModelLevelToggler(true)}
+                                className={`${
+                                    modelLevelToggler
+                                        ? "bg-primary text-white"
+                                        : "text-primary"
+                                } rounded-full inline-block px-8 py-2 text-xs font-bold transition duration-500 ease-in-out`}>
                                 levels
-                            </div>
-                            <div className="rounded-full inline-block px-8 py-2 bg-white text-primary text-xs ">
+                            </button>
+                            <button
+                                onClick={() => setModelLevelToggler(false)}
+                                className={`${
+                                    !modelLevelToggler
+                                        ? "bg-primary text-white"
+                                        : "text-primary"
+                                } rounded-full inline-block px-8 py-2 text-xs font-bold transition duration-500 ease-in-out`}>
                                 Modules
-                            </div>
+                            </button>
+                        </div>
+                        <div>
+                            <Dropdown
+                                align="left"
+                                width="48"
+                                trigger={
+                                    <button className="flex items-center text-sm font-medium transition duration-500 ease-in-out rounded-full border border-primary py-2 px-6">
+                                        {modelLevelToggler ? (
+                                            <span className="text-primary text-xs capitalize font-bold">
+                                                {LevelSelectedValue}
+                                            </span>
+                                        ) : (
+                                            <span className="text-primary text-xs capitalize font-bold">
+                                                {moduleSelectedValue}
+                                            </span>
+                                        )}
+                                        <div className="ml-1">
+                                            <svg
+                                                className="fill-current h-5 w-5"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20">
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                        </div>
+                                    </button>
+                                }>
+                                {modelLevelToggler
+                                    ? levels.map(level => (
+                                          <DropdownButton
+                                              key={level.id}
+                                              onClick={() =>
+                                                  setLevelSelectedValue(
+                                                      level.name,
+                                                  )
+                                              }>
+                                              {level.name}
+                                          </DropdownButton>
+                                      ))
+                                    : modules.map(module => (
+                                          <DropdownButton
+                                              onClick={() =>
+                                                  setModuleSelectedValue(
+                                                      module.code,
+                                                  )
+                                              }>
+                                              {module.code}
+                                          </DropdownButton>
+                                      ))}
+                            </Dropdown>
                         </div>
                     </div>
                     <div>
-                        <Link
-                            href={"/"}
+                        <motion.button
+                            whileHover={{ scale: 1.01 }}
+                            whileTap={{ scale: 0.99 }}
+                            onClick={() => {
+                                setModalOpen(true);
+                                setModalType("dropIn");
+                            }}
                             className="inline-flex items-center px-4 py-2 bg-primary text-white border border-transparent rounded-full font-semibold text-xs capitalize tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity:25 transition ease-in-out duration-150">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={1.5}
-                                stroke="currentColor"
-                                className="w-4 h-4 mr-2">
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M12 4.5v15m7.5-7.5h-15"
-                                />
-                            </svg>
+                            <PlusIcon className="w-4 h-4 mr-2" />
                             Add Student
-                        </Link>
+                        </motion.button>
                     </div>
                 </div>
-                <div className="my-3 overflow-x-auto bg-white shadow-lg rounded-lg overflow-y-auto relative">
-                    <table className="table power-grid-table rounded-lg min-w-full border border-slate-200">
+                <div className="my-3 overflow-x-auto bg-white shadow-lg rounded-lg overflow-y-auto">
+                    <table className="table rounded-lg min-w-full border border-slate-200 transition duration-500 ease-in-out">
                         <thead className="shadow-sm bg-primary-accent border border-slate-200">
                             <tr>
-                                <th className="capitalize font-bold px-2 pr-4 py-3 text-left text-sm text-primary tracking-wider whitespace-nowrap">
+                                <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
                                     Photo
                                 </th>
                                 <th className="capitalize font-bold px-2 pr-4 py-3 text-left text-sm text-primary tracking-wider whitespace-nowrap">
@@ -73,61 +148,111 @@ const Student = ({ students }) => {
                             </tr>
                         </thead>
                         <tbody className="text-gray-text text-sm !border-[#E6EAEF]">
-                            {students.map(student => (
-                                <tr className="" key={student.id}>
-                                    <td className="capitalize p-3 whitespace-nowrap">
-                                        <span>
-                                            <div>
-                                                {student.attributes.photo}
-                                            </div>
-                                        </span>
-                                    </td>
-                                    <td className="capitalize p-3 whitespace-nowrap border-b">
-                                        <span>
-                                            <div>
-                                                {
-                                                    student.attributes
-                                                        .index_number
-                                                }
-                                            </div>
-                                        </span>
-                                    </td>
-                                    <td className="capitalize p-3 whitespace-nowrap border-b">
-                                        <span>
-                                            <div>
-                                                {student.attributes.full_name}
-                                            </div>
-                                        </span>
-                                    </td>
-                                    <td className="capitalize p-3 whitespace-nowrap border-b text-right">
-                                        <span>
-                                            <div>40</div>
-                                        </span>
-                                    </td>
-                                    <td className="capitalize p-3 whitespace-nowrap border-b text-right pr-6">
-                                        <span>
-                                            <div>30</div>
-                                        </span>
-                                    </td>
-                                    {/* <h1>{student.attributes.first_name}</h1>
-                                        <Link href={`/students/${student.id}`}>
-                                            details
-                                        </Link> */}
-                                </tr>
-                            ))}
+                            {modelLevelToggler
+                                ? students
+                                      .filter(
+                                          itm =>
+                                              itm.level.name ==
+                                              LevelSelectedValue,
+                                      )
+                                      .map(student => (
+                                          <tr className="" key={student.id}>
+                                              <td className="capitalize p-3 whitespace-nowrap">
+                                                  <Image
+                                                      src={student.picture_url}
+                                                      height={100}
+                                                      width={100}
+                                                      alt={student.index_number}
+                                                      className="w-10 h-10 my-0 mx-auto"
+                                                  />
+                                              </td>
+                                              <td className="capitalize p-3 whitespace-nowrap border-b">
+                                                  <span>
+                                                      <div>
+                                                          {student.index_number}
+                                                      </div>
+                                                  </span>
+                                              </td>
+                                              <td className="capitalize p-3 whitespace-nowrap border-b">
+                                                  <span>
+                                                      <div>
+                                                          {student.full_name}
+                                                      </div>
+                                                  </span>
+                                              </td>
+                                              <td className="capitalize p-3 whitespace-nowrap border-b text-right">
+                                                  <span>
+                                                      <div>40</div>
+                                                  </span>
+                                              </td>
+                                              <td className="capitalize p-3 whitespace-nowrap border-b text-right pr-6">
+                                                  <span>
+                                                      <div>30</div>
+                                                  </span>
+                                              </td>
+                                          </tr>
+                                      ))
+                                : modules
+                                      .filter(
+                                          itm =>
+                                              itm.code == moduleSelectedValue,
+                                      )
+                                      .map(module =>
+                                          module.students.map(student => (
+                                              <tr className="" key={student.id}>
+                                                  <td className="capitalize p-3 whitespace-nowrap">
+                                                      <Image
+                                                          src={
+                                                              student.picture_url
+                                                          }
+                                                          height={100}
+                                                          width={100}
+                                                          alt={
+                                                              student.index_number
+                                                          }
+                                                          className="w-10 h-10 my-0 mx-auto"
+                                                      />
+                                                  </td>
+                                                  <td className="capitalize p-3 whitespace-nowrap border-b">
+                                                      <span>
+                                                          <div>
+                                                              {
+                                                                  student.index_number
+                                                              }
+                                                          </div>
+                                                      </span>
+                                                  </td>
+                                                  <td className="capitalize p-3 whitespace-nowrap border-b">
+                                                      <span>
+                                                          <div>
+                                                              {
+                                                                  student.first_name
+                                                              }{" "}
+                                                              {student.other_name &&
+                                                                  student.other_name +
+                                                                      " "}
+                                                              {
+                                                                  student.last_name
+                                                              }
+                                                          </div>
+                                                      </span>
+                                                  </td>
+                                                  <td className="capitalize p-3 whitespace-nowrap border-b text-right">
+                                                      <span>
+                                                          <div>40</div>
+                                                      </span>
+                                                  </td>
+                                                  <td className="capitalize p-3 whitespace-nowrap border-b text-right pr-6">
+                                                      <span>
+                                                          <div>30</div>
+                                                      </span>
+                                                  </td>
+                                              </tr>
+                                          )),
+                                      )}
                         </tbody>
                     </table>
                 </div>
-                {/* <div className="p-6 bg-white border-b border-gray-200">
-                            {students.map(student => (
-                                <div className="" key={student.id}>
-                                    <h1>{student.attributes.first_name}</h1>
-                                    <Link href={`/students/${student.id}`}>
-                                        details
-                                    </Link>
-                                </div>
-                            ))}
-                        </div> */}
             </div>
         </AppLayout>
     );
@@ -136,11 +261,19 @@ const Student = ({ students }) => {
 export default Student;
 
 export async function getStaticProps() {
+    const responseModule = await axios.get("api/v1/modules");
+    const modules = responseModule.data.data;
+
+    const responseLevel = await axios.get("api/v1/levels");
+    const levels = responseLevel.data.data;
+
     const response = await axios.get("api/v1/students");
     const students = response.data.data;
     return {
         props: {
             students,
+            levels,
+            modules,
         },
     };
 }

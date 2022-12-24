@@ -1,3 +1,64 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.phone-card {
+    min-height: calc(100vh - 200px);
+}
+
+.checkInModal .overlay {
+    background: rgba(4, 15, 39, 0.8);
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    backdrop-filter: blur(0.4rem);
+}
+
+.checkInModal .modal-panel {
+    background: white;
+    position: fixed;
+    /* width: 40rem; */
+    top: 10rem;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    z-index: 4;
+    /* min-height: 20rem; */
+    border-radius: 1rem 1rem 0 0;
+    box-shadow: 0 1rem 2rem 0 rgba(0, 0, 0, 0.2);
+    user-select: none;
+    cursor: pointer;
+}
+
+.checkInModal .modal-panel:active {
+    cursor: grab;
+}
+
+.checkInModal .modal-panel .handle {
+    width: 7rem;
+    height: 1rem;
+    background: #e8e8e8;
+    border-radius: 0.5rem;
+    margin: 1rem auto 0;
+}
+
+.checkInModal .modal-panel .modal-body {
+    height: calc(100% - 2rem);
+}
+
+.checkInModal .closeBtnM {
+    width: 50px;
+    top: 0;
+    position: absolute;
+    z-index: 99999;
+    color: #fff;
+    height: 50px;
+    text-align: center;
+    left: 50%;
+    top: 3rem;
+    transform: translate(-50%, 0);
+}

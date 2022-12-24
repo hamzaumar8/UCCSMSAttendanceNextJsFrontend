@@ -15,6 +15,7 @@ module.exports = {
                 "primary-accent": "#E9EDFB",
                 "secondary-accent": "#CCFFE2",
                 "gray-text": "#8D9091",
+                "black-text": "#1E2019",
             },
             fontFamily: {
                 sans: ["Nunito", ...defaultTheme.fontFamily.sans],

@@ -6,7 +6,7 @@ const Student = ({ student }) => {
     return (
         <AppLayout
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                <h2 className="font-semibold text-xl text-black-text leading-tight">
                     student details page
                 </h2>
             }>

@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useAuth } from "../../src/hooks/auth";
-import ApplicationLogo from "../ApplicationLogo";
-import NavLink from "../NavLink";
+import { useAuth } from "../../../src/hooks/auth";
+import ApplicationLogo from "../../ApplicationLogo";
+import NavLink from "../../NavLink";
 
-const SideNav = () => {
+const LecturerSideNav = () => {
     const router = useRouter();
     const { logout } = useAuth();
     return (
@@ -25,8 +25,8 @@ const SideNav = () => {
             <div className="items-center block w-auto max-h-screen overflow-auto grow basis-full">
                 <div className="py-14 px-8 space-y-6 relative">
                     <NavLink
-                        href="/dashboard"
-                        active={router.pathname === "/dashboard"}>
+                        href="/staff"
+                        active={router.pathname === "/staff"}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -145,4 +145,4 @@ const SideNav = () => {
         </aside>
     );
 };
-export default SideNav;
+export default LecturerSideNav;

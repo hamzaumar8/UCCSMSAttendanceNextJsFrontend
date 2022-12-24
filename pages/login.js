@@ -34,11 +34,6 @@ const Login = () => {
         }
     });
 
-    // Check loading
-    // if (isLoading) {
-    //     return <>Loading...</>;
-    // }
-
     // submit form
     const submitForm = async event => {
         event.preventDefault();
@@ -51,6 +46,9 @@ const Login = () => {
         });
     };
 
+    // if (isLoading || user) {
+    //     return <>Loading...</>;
+    // }
     return (
         <GuestLayout>
             <AuthCard
@@ -59,6 +57,15 @@ const Login = () => {
                         <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
                     </Link>
                 }>
+                <div className="py-8">
+                    <h1 className="text-3xl font-bold text-black-text leading-tight">
+                        Welcome Back
+                    </h1>
+                    <p className="text-sm text-gray-text">
+                        Login to your account and view up to date attendance of
+                        modules.
+                    </p>
+                </div>
                 {/* Session Status */}
                 <AuthSessionStatus className="mb-4" status={status} />
 
@@ -121,14 +128,15 @@ const Login = () => {
                         </label>
                     </div>
 
-                    <div className="flex items-center justify-end mt-4">
+                    <div className="flex items-center justify-end my-5">
                         <Link
                             href="/forgot-password"
-                            className="underline text-sm text-gray-600 hover:text-gray-900">
+                            className="underline text-sm text-primary font-bold hover:text-blue-800">
                             Forgot your password?
                         </Link>
-
-                        <Button className="ml-3">Login</Button>
+                    </div>
+                    <div className="flex items-center justify-end mt-4">
+                        <Button className="w-full">Login</Button>
                     </div>
                 </form>
             </AuthCard>

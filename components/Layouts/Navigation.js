@@ -1,12 +1,10 @@
-import ApplicationLogo from "../ApplicationLogo";
 import Dropdown from "../Dropdown";
-import Link from "next/link";
-import NavLink from "../NavLink";
 import ResponsiveNavLink, { ResponsiveNavButton } from "../ResponsiveNavLink";
 import { DropdownButton } from "../DropdownLink";
 import { useAuth } from "../../src/hooks/auth";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import Image from "next/image";
 
 const Navigation = ({ user, header }) => {
     const router = useRouter();
@@ -23,7 +21,7 @@ const Navigation = ({ user, header }) => {
                     {/* Page Heading */}
                     <div className="flex">
                         <div className="inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none transition duration-150 ease-in-out">
-                            <h2 className="font-bold text-2xl text-gray-800 leading-tight">
+                            <h2 className="font-bold text-2xl text-black-text leading-tight">
                                 {header}
                             </h2>
                         </div>
@@ -37,7 +35,12 @@ const Navigation = ({ user, header }) => {
                             trigger={
                                 <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition duration-150 ease-in-out space-x-2">
                                     <div className="h-10 w-10 rounded-full inlie-block border-2 border-primary">
-                                        <img src="" alt="lphot" />
+                                        <Image
+                                            src="http://localhost:8000/assets/img/lecturers/default.png"
+                                            width={100}
+                                            height={100}
+                                            alt="lphot"
+                                        />
                                     </div>
                                     <div className="">
                                         <div className="capitalize">
@@ -135,7 +138,7 @@ const Navigation = ({ user, header }) => {
                             </div>
 
                             <div className="ml-3">
-                                <div className="font-medium text-base text-gray-800">
+                                <div className="font-medium text-base text-black-text">
                                     {user?.name}
                                 </div>
                                 <div className="font-medium text-sm text-gray-500">

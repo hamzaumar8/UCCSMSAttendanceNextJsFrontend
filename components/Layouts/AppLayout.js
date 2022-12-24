@@ -2,12 +2,27 @@ import Navigation from "./Navigation";
 import { useAuth } from "../../src/hooks/auth";
 import SideNav from "./SideNav";
 import Head from "next/head";
+import { AnimatePresence } from "framer-motion";
+import Modal from "../Modal";
+import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { modalState, modalTypeState } from "../../src/atoms/modalAtom.js";
+import { useRouter } from "next/router";
 
 const AppLayout = ({ header = "", children }) => {
+    const router = useRouter();
+
+    const [modalOpen, setModalOpen] = useRecoilState(modalState);
+    const [modalType, setModalType] = useRecoilState(modalTypeState);
     const { user, isLoading } = useAuth({ middleware: "auth" });
 
     if (isLoading || !user) {
         return <>Loading...</>;
+    }
+
+    if (user.role !== "ADM") {
+        if (user.role === "STF") router.push("/staff");
+        if (user.role === "USR" || user.role === "REP") router.push("/user");
     }
     return (
         <div className="bg-[#E5E5E5">
@@ -21,6 +36,14 @@ const AppLayout = ({ header = "", children }) => {
                     {children}
                 </section>
             </main>
+            <AnimatePresence>
+                {modalOpen && (
+                    <Modal
+                        handleClose={() => setModalOpen(false)}
+                        type={modalType}
+                    />
+                )}
+            </AnimatePresence>
         </div>
     );
 };

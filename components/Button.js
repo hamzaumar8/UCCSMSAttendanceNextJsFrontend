@@ -1,9 +1,13 @@
-const Button = ({ type = 'submit', className, ...props }) => (
+const Button = ({ type = "submit", className, danger = "", ...props }) => (
     <button
         type={type}
-        className={`${className} inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150`}
+        className={`${className} inline-flex items-center justify-center px-4 py-3  border border-transparent rounded-sm font-semibold text-xs uppercase tracking-widest ${
+            danger
+                ? "text-red-500 bg-red-200 hover:bg-red-300 active:bg-red-400 active:text-white focus:outline-none focus:border-red-400  ring-red-100"
+                : "text-white bg-primary hover:bg-primary active:bg-primary focus:outline-none focus:border-primary ring-primary"
+        }  focus:ring disabled:opacity-25 transition ease-in-out duration-150`}
         {...props}
     />
-)
+);
 
-export default Button
+export default Button;

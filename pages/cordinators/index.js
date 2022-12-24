@@ -1,23 +1,24 @@
+import Image from "next/image";
 import Link from "next/link";
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
 import axios from "../../src/lib/axios";
 
-const Student = ({ students }) => {
+const Cordinators = ({ modules, modeulesSummary }) => {
     return (
-        <AppLayout header="Students">
+        <AppLayout header="Cordinators">
             {/* Title */}
-            <HeadTitle title="Students" />
+            <HeadTitle title="Cordinators" />
 
             {/* Main Sction */}
             <div className="space-y-5">
                 <div className="flex items-center justify-between">
                     <div className="flex space-x-4 items-center">
                         <h1 className="text-black font-extrabold text-xl">
-                            Total Students
+                            Total Cordinators
                         </h1>
                         <span className="p-1 h-7 w-7 inline-flex items-center justify-center rounded-full text-xs text-white bg-primary">
-                            98
+                            {modules.length}
                         </span>
                     </div>
                     <div className="space-x-5">
@@ -47,7 +48,7 @@ const Student = ({ students }) => {
                                     d="M12 4.5v15m7.5-7.5h-15"
                                 />
                             </svg>
-                            Add Student
+                            Add Lecturer
                         </Link>
                     </div>
                 </div>
@@ -55,92 +56,66 @@ const Student = ({ students }) => {
                     <table className="table power-grid-table rounded-lg min-w-full border border-slate-200">
                         <thead className="shadow-sm bg-primary-accent border border-slate-200">
                             <tr>
-                                <th className="capitalize font-bold px-2 pr-4 py-3 text-left text-sm text-primary tracking-wider whitespace-nowrap">
+                                <th className="capitalize font-bold px-2 pr-4 py-3 text-sm text-primary tracking-wider whitespace-nowrap">
                                     Photo
-                                </th>
-                                <th className="capitalize font-bold px-2 pr-4 py-3 text-left text-sm text-primary tracking-wider whitespace-nowrap">
-                                    ID
                                 </th>
                                 <th className="capitalize font-bold px-2 pr-4 py-3 text-left text-sm text-primary tracking-wider whitespace-nowrap">
                                     Name
                                 </th>
-                                <th className="capitalize font-bold px-2 pr-4 py-3 text-right text-sm text-primary tracking-wider whitespace-nowrap">
-                                    Absents(%)
-                                </th>
                                 <th className="capitalize font-bold px-2 pr-6 py-3 text-sm text-primary tracking-wider whitespace-nowrap text-right">
-                                    Absents(%)
+                                    Cordinating Modules
                                 </th>
                             </tr>
                         </thead>
                         <tbody className="text-gray-text text-sm !border-[#E6EAEF]">
-                            {students.map(student => (
-                                <tr className="" key={student.id}>
-                                    <td className="capitalize p-3 whitespace-nowrap">
-                                        <span>
-                                            <div>
-                                                {student.attributes.photo}
-                                            </div>
-                                        </span>
+                            {modules.map(module => (
+                                <tr className="" key={module.id}>
+                                    <td className="capitalize text-center  p-3 whitespace-nowrap">
+                                        <Image
+                                            width={100}
+                                            height={100}
+                                            src={module.cordinator.picture_url}
+                                            className="h-10 w-10 my-0 mx-auto"
+                                            alt={module.cordinator.first_name}
+                                        />
                                     </td>
                                     <td className="capitalize p-3 whitespace-nowrap border-b">
                                         <span>
                                             <div>
-                                                {
-                                                    student.attributes
-                                                        .index_number
-                                                }
+                                                {module.cordinator.title}{" "}
+                                                {module.cordinator.first_name}{" "}
+                                                {module.cordinator.other_name}
+                                                {module.cordinator.other_name &&
+                                                    " "}
+                                                {module.cordinator.last_name}
                                             </div>
-                                        </span>
-                                    </td>
-                                    <td className="capitalize p-3 whitespace-nowrap border-b">
-                                        <span>
-                                            <div>
-                                                {student.attributes.full_name}
-                                            </div>
-                                        </span>
-                                    </td>
-                                    <td className="capitalize p-3 whitespace-nowrap border-b text-right">
-                                        <span>
-                                            <div>40</div>
                                         </span>
                                     </td>
                                     <td className="capitalize p-3 whitespace-nowrap border-b text-right pr-6">
                                         <span>
-                                            <div>30</div>
+                                            <div>{module.code}</div>
                                         </span>
                                     </td>
-                                    {/* <h1>{student.attributes.first_name}</h1>
-                                        <Link href={`/students/${student.id}`}>
-                                            details
-                                        </Link> */}
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
-                {/* <div className="p-6 bg-white border-b border-gray-200">
-                            {students.map(student => (
-                                <div className="" key={student.id}>
-                                    <h1>{student.attributes.first_name}</h1>
-                                    <Link href={`/students/${student.id}`}>
-                                        details
-                                    </Link>
-                                </div>
-                            ))}
-                        </div> */}
             </div>
         </AppLayout>
     );
 };
 
-export default Student;
+export default Cordinators;
 
 export async function getStaticProps() {
-    const response = await axios.get("api/v1/students");
-    const students = response.data.data;
+    const response = await axios.get("api/v1/modules");
+    const modules = response.data.data;
+    const modeulesSummary = response.data.summary;
     return {
         props: {
-            students,
+            modules,
+            modeulesSummary,
         },
     };
 }

@@ -17,7 +17,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     } = useSWR("/api/v1/user", () =>
         axios
             .get("/api/v1/user")
-            .then(res => res.data)
+            .then(res => res.data.data)
             .catch(error => {
                 if (error.response.status !== 409) throw error;
 
@@ -111,10 +111,12 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     };
 
     useEffect(() => {
-        if (user || error) setIsLoading(false);
+        if (user) setIsLoading(false);
 
         if (middleware === "guest" && redirectIfAuthenticated && user)
             router.push(redirectIfAuthenticated);
+
+        // if (middleware == "auth" && !user) router.push("/login");
 
         if (
             window.location.pathname === "/verify-email" &&
@@ -122,7 +124,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         )
             router.push(redirectIfAuthenticated);
 
-        if (middleware === "auth" && error) logout();
+        if (middleware === "auth" && error && !user) logout();
     }, [user, error]);
 
     return {
@@ -133,6 +135,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         resetPassword,
         resendEmailVerification,
         isLoading,
+        csrf,
         logout,
     };
 };
