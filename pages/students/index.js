@@ -5,7 +5,7 @@ import { DropdownButton } from "../../components/DropdownLink";
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
 import axios from "../../src/lib/axios";
-import { PlusIcon } from "@heroicons/react/24/solid";
+import { ChevronDownIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { useRecoilState } from "recoil";
 import { modalState, modalTypeState } from "../../src/atoms/modalAtom";
 import { AnimatePresence, motion } from "framer-motion";
@@ -74,16 +74,7 @@ const Student = ({ students, levels, modules }) => {
                                             </span>
                                         )}
                                         <div className="ml-1">
-                                            <svg
-                                                className="fill-current h-5 w-5"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 20 20">
-                                                <path
-                                                    fillRule="evenodd"
-                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                    clipRule="evenodd"
-                                                />
-                                            </svg>
+                                            <ChevronDownIcon className="h-5 w-5" />
                                         </div>
                                     </button>
                                 }>
@@ -118,7 +109,7 @@ const Student = ({ students, levels, modules }) => {
                             whileTap={{ scale: 0.99 }}
                             onClick={() => {
                                 setModalOpen(true);
-                                setModalType("dropIn");
+                                setModalType("addStudent");
                             }}
                             className="inline-flex items-center px-4 py-2 bg-primary text-white border border-transparent rounded-full font-semibold text-xs capitalize tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity:25 transition ease-in-out duration-150">
                             <PlusIcon className="w-4 h-4 mr-2" />

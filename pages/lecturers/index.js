@@ -1,12 +1,18 @@
 import { PlusIcon } from "@heroicons/react/24/solid";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useRecoilState } from "recoil";
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
+import { modalState, modalTypeState } from "../../src/atoms/modalAtom";
 import axios from "../../src/lib/axios";
 
 const Lecturer = ({ lecturers, lecturersSummary }) => {
-    console.log(lecturers);
+    // console.log(lecturers);
+
+    const [modalOpen, setModalOpen] = useRecoilState(modalState);
+    const [modalType, setModalType] = useRecoilState(modalTypeState);
     return (
         <AppLayout header="Lecturers">
             {/* Title */}
@@ -24,12 +30,17 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
                         </span>
                     </div>
                     <div>
-                        <Link
-                            href={"/"}
+                        <motion.button
+                            whileHover={{ scale: 1.01 }}
+                            whileTap={{ scale: 0.99 }}
+                            onClick={() => {
+                                setModalOpen(true);
+                                setModalType("addlecturer");
+                            }}
                             className="inline-flex items-center px-4 py-2 bg-primary text-white border border-transparent rounded-full font-semibold text-xs capitalize tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity:25 transition ease-in-out duration-150">
-                            <PlusIcon className="h-5 w-5 mr-1" />
+                            <PlusIcon className="w-4 h-4 mr-2" />
                             Add Lecturer
-                        </Link>
+                        </motion.button>
                     </div>
                 </div>
                 <div className="my-3 overflow-x-auto bg-white shadow-lg rounded-lg overflow-y-auto relative">

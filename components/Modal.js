@@ -1,6 +1,7 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
 import Backdrop from "./Backdrop";
+import LecturerAddForm from "./Modals/Lecturers/LecturerAddForm";
 import ModuleAddForm from "./Modals/Module/ModuleAddForm";
 import CheckInModal from "./Modals/Staff/CheckInModal";
 import StudentAddForm from "./Modals/students/StudentAddForm";
@@ -53,27 +54,16 @@ const gifYouUp = {
 const Modal = ({ handleClose, type }) => {
     return (
         <>
-            {type === "dropIn" && (
-                <Backdrop onClick={handleClose}>
+            {type === "addStudent" && (
+                <Backdrop>
                     <motion.div
                         onClick={e => e.stopPropagation()}
-                        className="rounded-xl flex flex-col justify-center bg-white w-full max-w-lg md:-mt-96 mx-6"
                         variants={dropIn}
                         initial="hidden"
                         animate="visible"
-                        exit="exit">
-                        <div className="flex items-center justify-between border-b border-white/75 px-4 py-2.5">
-                            <h4 className="text-xl">Create a post</h4>
-                            <div
-                                onClick={handleClose}
-                                className="cursor-pointer">
-                                <XMarkIcon className="h-7 w-7" />
-                            </div>
-                        </div>
-
-                        <div className="p-6">
-                            <StudentAddForm />
-                        </div>
+                        exit="exit"
+                        className="rounded-lg flex flex-col justify-center z-0 bg-primary-accent w-full max-w-xl mx-6  after:absolute after:-top-2 after:-left-2 after:w-full after:h-full after:bg-white after:-z-10 after:rounded-lg after:shadow-md">
+                        <StudentAddForm onClick={handleClose} />
                     </motion.div>
                 </Backdrop>
             )}
@@ -86,8 +76,22 @@ const Modal = ({ handleClose, type }) => {
                         initial="hidden"
                         animate="visible"
                         exit="exit"
-                        className="rounded-xl flex flex-col justify-center z-0 bg-white w-full max-w-xl mx-6 after:absolute after:top-2 after:left-2 after:w-full after:h-full after:bg-white after:-z-10 after:rounded-xl after:shadow-md">
+                        className="rounded-lg flex flex-col justify-center z-0 bg-primary-accent w-full max-w-xl mx-6  after:absolute after:-top-2 after:-left-2 after:w-full after:h-full after:bg-white after:-z-10 after:rounded-lg after:shadow-md">
                         <ModuleAddForm onClick={handleClose} />
+                    </motion.div>
+                </Backdrop>
+            )}
+
+            {type === "addlecturer" && (
+                <Backdrop>
+                    <motion.div
+                        onClick={e => e.stopPropagation()}
+                        variants={dropIn}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        className="rounded-lg flex flex-col justify-center z-0 bg-primary-accent w-full max-w-xl mx-6  after:absolute after:-top-2 after:-left-2 after:w-full after:h-full after:bg-white after:-z-10 after:rounded-lg after:shadow-md">
+                        <LecturerAddForm onClick={handleClose} />
                     </motion.div>
                 </Backdrop>
             )}

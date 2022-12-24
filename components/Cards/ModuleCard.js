@@ -1,11 +1,14 @@
+import { useState } from "react";
 import {
-    EllipsisHorizontalIcon
+    EllipsisHorizontalIcon,
+    PencilSquareIcon,
+    XCircleIcon,
+    XMarkIcon,
 } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import { useState } from "react";
 
 const ModuleCard = ({ lecturermodule, active = "" }) => {
-    const [menu, setMenu] = useState(false);
+    const [menuToggle, setMenuToggle] = useState(false);
     return (
         <div
             className={`${
@@ -23,6 +26,7 @@ const ModuleCard = ({ lecturermodule, active = "" }) => {
                     </div>
                 </div>
                 <button
+                    onClick={() => setMenuToggle(true)}
                     className="bg-primary rounded-full text-white h-8 w-8 inline-flex items-center justify-center cursor-pointer">
                     <EllipsisHorizontalIcon />
                 </button>
@@ -100,18 +104,22 @@ const ModuleCard = ({ lecturermodule, active = "" }) => {
                 </div>
             </div>
 
-           
-            <div className="absolute w-full h-full top-0 left-0 bg-[#000000BF] z-10 transition ease-in-out duration-700">
-                    <div className="flex items-baselin flex-col">
-                        <div className="w-full text-center text-sm font-bold text-white p-3 bg-primary border-b border-gray-text">
-                            End Module
+            {menuToggle && (
+                <div className="absolute w-full h-full top-0 left-0 bg-[#000000BF] z-10 flex items-end transition ease-in-out duration-700">
+                    <button onClick={() => setMenuToggle(false)} className="absolute top-3 right-3 h-10 w-10 text-white cursor z-40 cursor-pointer">
+                        <XCircleIcon />
+                    </button>
+                    <div className="flex items-baselin flex-col z-20 w-full">
+                        <div className="inline-flex items-center justify-center space-x-2 text-center text-sm font-bold text-white p-3 bg-primary border-b border-gray-text">
+                            <PencilSquareIcon className="h-5 w-5" />
+                            <span>Edit Module </span>
                         </div>
-                        <div className="w-full text-center text-sm font-bold text-white p-3 bg-primary border-gray-text">
-                            End Module
+                        <div className="inline-flex items-center justify-center space-x-2 text-center text-sm font-bold text-white p-3 bg-primary border-gray-text">
+                            <span>End Module </span>
                         </div>
                     </div>
                 </div>
-               
+            )}
         </div>
     );
 };

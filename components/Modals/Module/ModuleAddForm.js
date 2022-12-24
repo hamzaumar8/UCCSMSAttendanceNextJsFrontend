@@ -27,7 +27,7 @@ const ModuleAddForm = ({ onClick }) => {
         //  });
     };
     return (
-        <form onSubmit={submitForm}>
+        <form onSubmit={submitForm} className="-ml-2">
             <div className="flex items-center justify-between border-b px-8 py-4 ">
                 <h4 className="text-2xl font-bold text-black-text">
                     New Module
@@ -46,7 +46,7 @@ const ModuleAddForm = ({ onClick }) => {
             </div>
 
             <div className="pb-10">
-                <div className="py-6 px-8 space-y-5 border-b">
+                <div className="py-6 px-8 pr-10 space-y-5 border-b">
                     <div className="">
                         <Label htmlFor="name">Module Name</Label>
                         <Input
@@ -126,7 +126,7 @@ const ModuleAddForm = ({ onClick }) => {
                         </div>
                     </div>
                 </div>
-                <div className="py-6 px-8 space-y-5">
+                <div className="py-6 px-8 pr-10 space-y-5">
                     <div className="">
                         <Label htmlFor="lecturer">Lecturer</Label>
                         <Input
