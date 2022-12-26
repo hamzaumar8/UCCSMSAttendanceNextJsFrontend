@@ -18,7 +18,7 @@ const ModuleCard = ({ lecturermodule, active = "" }) => {
                 <div className="flex items-center space-x-3 text-xs font-extrabold text-black-text">
                     <h2 className="uppercase">{lecturermodule.module.code}</h2>
                     <div className="rounded-full border-2 border-gray-900 py-1 px-3">
-                        {active ? lecturermodule.days.covered : "0"}/
+                        {lecturermodule.days.covered}/
                         <span className="text-gray-500 mr-1">
                             {lecturermodule.days.total}
                         </span>{" "}
@@ -106,7 +106,9 @@ const ModuleCard = ({ lecturermodule, active = "" }) => {
 
             {menuToggle && (
                 <div className="absolute w-full h-full top-0 left-0 bg-[#000000BF] z-10 flex items-end transition ease-in-out duration-700">
-                    <button onClick={() => setMenuToggle(false)} className="absolute top-3 right-3 h-10 w-10 text-white cursor z-40 cursor-pointer">
+                    <button
+                        onClick={() => setMenuToggle(false)}
+                        className="absolute top-3 right-3 h-10 w-10 text-white cursor z-40 cursor-pointer">
                         <XCircleIcon />
                     </button>
                     <div className="flex items-baselin flex-col z-20 w-full">

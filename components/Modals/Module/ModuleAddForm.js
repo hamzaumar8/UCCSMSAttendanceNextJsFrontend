@@ -30,7 +30,6 @@ const ModuleAddForm = ({ onClick }) => {
 
     const submitForm = event => {
         event.preventDefault();
-        // send to backend
         let lecturers = [];
         lecturer.forEach(itm => lecturers.push(itm.value));
         mountModule({
@@ -45,7 +44,6 @@ const ModuleAddForm = ({ onClick }) => {
             setErrors,
             setStatus,
         });
-        // if (status === "module-mounted-succesffully") console.log("status");
     };
 
     const levelLoadOptions = async (inputText, callback) => {

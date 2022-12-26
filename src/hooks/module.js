@@ -3,9 +3,13 @@ import axios from "../lib/axios";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "./auth";
+import { useRecoilState } from "recoil";
+import { modalState } from "../atoms/modalAtom";
+import { toast } from "react-toastify";
 
 export const useModule = () => {
     const router = useRouter();
+    const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [loading, setLoading] = useState(false);
 
     // CSRF
@@ -19,12 +23,20 @@ export const useModule = () => {
         await csrf();
         axios
             .post("/api/v1/modules", props)
-            .then(response => setStatus(response.data.status))
+            .then(res => {
+                if (res.data.status === "module-mounted-succesffully") {
+                    setLoading(false);
+                    setModalOpen(false);
+                    toast.success("Moudule Mounted Successfully!", {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                }
+            })
             .catch(error => {
                 if (error.response.status !== 422) throw error;
                 setErrors(Object.values(error.response.data.errors).flat());
+                setLoading(false);
             });
-        setLoading(false);
     };
 
     return {

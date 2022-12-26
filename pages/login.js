@@ -23,6 +23,7 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [shouldRemember, setShouldRemember] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState([]);
     const [status, setStatus] = useState(null);
 
@@ -37,6 +38,7 @@ const Login = () => {
     // submit form
     const submitForm = async event => {
         event.preventDefault();
+        setLoading(true);
         login({
             email,
             password,
@@ -44,11 +46,9 @@ const Login = () => {
             setErrors,
             setStatus,
         });
+        setLoading(false);
     };
 
-    // if (isLoading || user) {
-    //     return <>Loading...</>;
-    // }
     return (
         <GuestLayout>
             <AuthCard
@@ -136,7 +136,9 @@ const Login = () => {
                         </Link>
                     </div>
                     <div className="flex items-center justify-end mt-4">
-                        <Button className="w-full">Login</Button>
+                        <Button className="w-full" loader={loading}>
+                            Login
+                        </Button>
                     </div>
                 </form>
             </AuthCard>

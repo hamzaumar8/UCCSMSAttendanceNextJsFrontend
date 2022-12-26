@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import ProgressBar from "@badrap/bar-of-progress";
 import { Router } from "next/router";
 import { RecoilRoot } from "recoil";
+import "react-toastify/dist/ReactToastify.css";
 
 const progress = new ProgressBar({
     size: 3,

@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { modalState, modalTypeState } from "../../src/atoms/modalAtom.js";
 import { useRouter } from "next/router";
+import { ToastContainer } from "react-toastify";
 
 const AppLayout = ({ header = "", children }) => {
     const router = useRouter();
@@ -44,6 +45,8 @@ const AppLayout = ({ header = "", children }) => {
                     />
                 )}
             </AnimatePresence>
+
+            <ToastContainer />
         </div>
     );
 };
