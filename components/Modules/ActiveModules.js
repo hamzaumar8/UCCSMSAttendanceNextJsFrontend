@@ -31,13 +31,25 @@ const ActiveModules = ({ modules }) => {
                             </button>
                         </div>
                     )}
-                    <div>
+                    <div className="space-x-2">
                         <motion.button
                             whileHover={{ scale: 1.01 }}
                             whileTap={{ scale: 0.99 }}
                             onClick={() => {
                                 setModalOpen(true);
-                                setModalType("addNewModule");
+                                setModalType("addModule");
+                            }}
+                            className="inline-flex items-center px-4 py-2 bg-primary text-white border border-transparent rounded-full font-semibold text-xs capitalize tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity:25 transition ease-in-out duration-150 space-x-2">
+                            <PlusIcon className="w-4 h-4" />
+                            <span> Add Module</span>
+                        </motion.button>
+
+                        <motion.button
+                            whileHover={{ scale: 1.01 }}
+                            whileTap={{ scale: 0.99 }}
+                            onClick={() => {
+                                setModalOpen(true);
+                                setModalType("mountModule");
                             }}
                             className="inline-flex items-center px-4 py-2 bg-primary text-white border border-transparent rounded-full font-semibold text-xs capitalize tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity:25 transition ease-in-out duration-150 space-x-2">
                             <PlusIcon className="w-4 h-4" />

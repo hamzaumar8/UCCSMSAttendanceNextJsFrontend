@@ -4,11 +4,12 @@ import { useRecoilState } from "recoil";
 import { modalEditIdState } from "../src/atoms/modalAtom";
 import Backdrop from "./Backdrop";
 import LecturerAddForm from "./Modals/Lecturers/LecturerAddForm";
-import ModuleAddForm from "./Modals/Module/ModuleAddForm";
 import ModuleEditForm from "./Modals/Module/ModuleEditForm";
 import CheckInModal from "./Modals/Staff/CheckInModal";
 import StudentAddForm from "./Modals/students/StudentAddForm";
 import SlideUp from "./SlideUp";
+import ModuleMountForm from "./Modals/Module/ModuleMountForm";
+import ModuleAddForm from "./Modals/Module/ModuleAddForm";
 
 const dropIn = {
     hidden: {
@@ -72,7 +73,7 @@ const Modal = ({ handleClose, type }) => {
                 </Backdrop>
             )}
 
-            {type === "addNewModule" && (
+            {type === "addModule" && (
                 <Backdrop>
                     <motion.div
                         onClick={e => e.stopPropagation()}
@@ -85,7 +86,23 @@ const Modal = ({ handleClose, type }) => {
                     </motion.div>
                 </Backdrop>
             )}
-            {type === "editNewModule" && (
+
+            {type === "mountModule" && (
+                <Backdrop>
+                    <motion.div
+                        onClick={e => e.stopPropagation()}
+                        variants={dropIn}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        className="rounded-lg flex flex-col justify-center z-0 bg-primary-accent w-full max-w-xl mx-6  after:absolute after:-top-2 after:-left-2 after:w-full after:h-full after:bg-white after:-z-10 after:rounded-lg after:shadow-md">
+                        hfdhsbdfvhfsh
+                        <ModuleMountForm onClick={handleClose} />
+                    </motion.div>
+                </Backdrop>
+            )}
+
+            {type === "editModule" && (
                 <Backdrop>
                     <motion.div
                         onClick={e => e.stopPropagation()}

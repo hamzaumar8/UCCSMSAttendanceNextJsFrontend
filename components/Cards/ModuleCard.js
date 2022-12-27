@@ -50,7 +50,7 @@ const ModuleCard = ({ lecturermodule, active = "" }) => {
                     <DropdownButton
                         onClick={() => {
                             setModalOpen(true);
-                            setModalType("editNewModule");
+                            setModalType("editModule");
                             setModalEditId(lecturermodule);
                         }}>
                         <PencilSquareIcon className="h-5 w-5 mr-1 text-primary" />

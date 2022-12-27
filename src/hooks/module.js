@@ -14,6 +14,32 @@ export const useModule = () => {
     // CSRF
     const csrf = () => axios.get("/sanctum/csrf-cookie");
 
+    const addModule = async ({ setErrors, setStatus, ...props }) => {
+        setLoading(true);
+        setErrors([]);
+        setStatus(null);
+
+        await csrf();
+        axios
+            .post("/api/v1/module/bank", props)
+            .then(res => {
+                if (res.data.status === "success") {
+                    setLoading(false);
+                    setModalOpen(false);
+                    toast.success("Moudule has been added successfully!", {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                }
+            })
+            .catch(error => {
+                setLoading(false);
+                if (error.response.status !== 422) {
+                    console.log(error);
+                } else {
+                    setErrors(error.response.data.errors);
+                }
+            });
+    };
     const mountModule = async ({ setErrors, setStatus, ...props }) => {
         setLoading(true);
         setErrors([]);
@@ -66,6 +92,7 @@ export const useModule = () => {
 
     return {
         loading,
+        addModule,
         mountModule,
         editModule,
     };
