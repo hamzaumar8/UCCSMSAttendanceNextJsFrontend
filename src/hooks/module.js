@@ -14,6 +14,7 @@ export const useModule = () => {
     // CSRF
     const csrf = () => axios.get("/sanctum/csrf-cookie");
 
+    // Add Module to Module Bank
     const addModule = async ({ setErrors, setStatus, ...props }) => {
         setLoading(true);
         setErrors([]);
@@ -26,7 +27,7 @@ export const useModule = () => {
                 if (res.data.status === "success") {
                     setLoading(false);
                     setModalOpen(false);
-                    toast.success("Moudule has been added successfully!", {
+                    toast.success("Module has been added successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
                     });
                 }
@@ -40,6 +41,34 @@ export const useModule = () => {
                 }
             });
     };
+
+    const editModule = async ({ setErrors, setStatus, ...props }) => {
+        setLoading(true);
+        setErrors([]);
+        setStatus(null);
+
+        await csrf();
+        axios
+            .put(`/api/v1/module/bank/${props.id}`, props)
+            .then(res => {
+                if (res.data.status === "success") {
+                    setLoading(false);
+                    setModalOpen(false);
+                    toast.success("Module editted successfully!", {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                }
+            })
+            .catch(error => {
+                setLoading(false);
+                if (error.response.status !== 422) {
+                    console.log(error);
+                } else {
+                    setErrors(error.response.data.errors);
+                }
+            });
+    };
+
     const mountModule = async ({ setErrors, setStatus, ...props }) => {
         setLoading(true);
         setErrors([]);
@@ -52,7 +81,7 @@ export const useModule = () => {
                 if (res.data.status === "module-mounted-succesffully") {
                     setLoading(false);
                     setModalOpen(false);
-                    toast.success("Moudule Mounted Successfully!", {
+                    toast.success("Module Mounted Successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
                     });
                 }
@@ -64,7 +93,7 @@ export const useModule = () => {
             });
     };
 
-    const editModule = async ({ setErrors, setStatus, ...props }) => {
+    const editMountModule = async ({ setErrors, setStatus, ...props }) => {
         setLoading(true);
         setErrors([]);
         setStatus(null);
@@ -78,7 +107,7 @@ export const useModule = () => {
                 if (res.data.status === "module-editted") {
                     setLoading(false);
                     setModalOpen(false);
-                    toast.success("Moudule Mounted Successfully!", {
+                    toast.success("Module Mounted Successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
                     });
                 }
@@ -93,7 +122,8 @@ export const useModule = () => {
     return {
         loading,
         addModule,
-        mountModule,
         editModule,
+        mountModule,
+        editMountModule,
     };
 };

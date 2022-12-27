@@ -1,7 +1,7 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
 import { useRecoilState } from "recoil";
-import { modalEditIdState } from "../src/atoms/modalAtom";
+import { modalEditState } from "../src/atoms/modalAtom";
 import Backdrop from "./Backdrop";
 import LecturerAddForm from "./Modals/Lecturers/LecturerAddForm";
 import ModuleEditForm from "./Modals/Module/ModuleEditForm";
@@ -56,7 +56,7 @@ const gifYouUp = {
 };
 
 const Modal = ({ handleClose, type }) => {
-    const [modalEditId, setModalEditId] = useRecoilState(modalEditIdState);
+    const [modalEdit, setModalEdit] = useRecoilState(modalEditState);
     return (
         <>
             {type === "addStudent" && (
@@ -113,7 +113,7 @@ const Modal = ({ handleClose, type }) => {
                         className="rounded-lg flex flex-col justify-center z-0 bg-primary-accent w-full max-w-xl mx-6  after:absolute after:-top-2 after:-left-2 after:w-full after:h-full after:bg-white after:-z-10 after:rounded-lg after:shadow-md">
                         <ModuleEditForm
                             onClick={handleClose}
-                            lecturermodule={modalEditId}
+                            module={modalEdit}
                         />
                     </motion.div>
                 </Backdrop>

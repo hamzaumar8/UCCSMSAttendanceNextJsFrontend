@@ -11,7 +11,7 @@ import Dropdown from "../Dropdown";
 import { DropdownButton } from "../DropdownLink";
 import { useRecoilState } from "recoil";
 import {
-    modalEditIdState,
+    modalEditState,
     modalState,
     modalTypeState,
 } from "../../src/atoms/modalAtom";
@@ -21,7 +21,7 @@ const ModuleCard = ({ lecturermodule, active = "" }) => {
 
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
-    const [modalEditId, setModalEditId] = useRecoilState(modalEditIdState);
+    const [modalEdit, setModalEdit] = useRecoilState(modalEditState);
     return (
         <div
             className={`${
@@ -51,7 +51,7 @@ const ModuleCard = ({ lecturermodule, active = "" }) => {
                         onClick={() => {
                             setModalOpen(true);
                             setModalType("editModule");
-                            setModalEditId(lecturermodule);
+                            setModalEdit(lecturermodule);
                         }}>
                         <PencilSquareIcon className="h-5 w-5 mr-1 text-primary" />
                         Edit Module

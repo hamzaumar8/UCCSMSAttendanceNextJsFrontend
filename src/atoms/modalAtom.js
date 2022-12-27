@@ -10,7 +10,7 @@ export const modalTypeState = atom({
     default: "dropIn",
 });
 
-export const modalEditIdState = atom({
-    key: "modalEditIdState",
+export const modalEditState = atom({
+    key: "modalEditState",
     default: [],
 });
