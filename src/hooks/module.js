@@ -2,7 +2,6 @@ import useSWR from "swr";
 import axios from "../lib/axios";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { useAuth } from "./auth";
 import { useRecoilState } from "recoil";
 import { modalState } from "../atoms/modalAtom";
 import { toast } from "react-toastify";
