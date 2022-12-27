@@ -14,8 +14,9 @@ const Student = ({ students, levels, modules }) => {
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
 
+    console.log(students);
     const [modelLevelToggler, setModelLevelToggler] = useState(true);
-    const [LevelSelectedValue, setLevelSelectedValue] = useState(
+    const [levelSelectedValue, setLevelSelectedValue] = useState(
         levels[0].name,
     );
     const [moduleSelectedValue, setModuleSelectedValue] = useState(
@@ -66,7 +67,7 @@ const Student = ({ students, levels, modules }) => {
                                     <button className="flex items-center text-sm font-medium transition duration-500 ease-in-out rounded-full border border-primary py-2 px-6">
                                         {modelLevelToggler ? (
                                             <span className="text-primary text-xs capitalize font-bold">
-                                                {LevelSelectedValue}
+                                                {levelSelectedValue}
                                             </span>
                                         ) : (
                                             <span className="text-primary text-xs capitalize font-bold">
@@ -92,6 +93,7 @@ const Student = ({ students, levels, modules }) => {
                                       ))
                                     : modules.map(module => (
                                           <DropdownButton
+                                              key={module.id}
                                               onClick={() =>
                                                   setModuleSelectedValue(
                                                       module.code,
@@ -143,8 +145,8 @@ const Student = ({ students, levels, modules }) => {
                                 ? students
                                       .filter(
                                           itm =>
-                                              itm.level.name ==
-                                              LevelSelectedValue,
+                                              itm.level?.name ==
+                                              levelSelectedValue,
                                       )
                                       .map(student => (
                                           <tr className="" key={student.id}>
@@ -186,7 +188,7 @@ const Student = ({ students, levels, modules }) => {
                                 : modules
                                       .filter(
                                           itm =>
-                                              itm.code == moduleSelectedValue,
+                                              itm?.code == moduleSelectedValue,
                                       )
                                       .map(module =>
                                           module.students.map(student => (

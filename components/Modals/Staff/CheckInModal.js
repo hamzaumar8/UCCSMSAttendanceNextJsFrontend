@@ -14,20 +14,21 @@ const CheckInModal = () => {
     const { addAttendance, loading } = useAttendance();
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
 
-    const {
-        data: currentLecturer,
-        error,
-        mutate,
-    } = useSWR(`api/v1/lecturers/${user?.lecturer.id}`, () =>
-        axios
-            .get(`api/v1/lecturers/${user?.lecturer.id}`)
-            .then(response => response.data.data),
-    );
+    // const {
+    //     data: currentLecturer,
+    //     error,
+    //     mutate,
+    // } = useSWR(`api/v1/lecturers/${user?.lecturer.id}`, () =>
+    //     axios
+    //         .get(`api/v1/lecturers/${user?.lecturer.id}`)
+    //         .then(response => response.data.data),
+    // );
 
     const [errors, setErrors] = useState([]);
     const [status, setStatus] = useState(null);
     const [checkInTime, setCheckInTime] = useState("");
     const [checkOutTime, setCheckOutTime] = useState("");
+
     const [moduleValue, setModuleValue] = useState(
         currentLecturer?.modules[0].id,
     );

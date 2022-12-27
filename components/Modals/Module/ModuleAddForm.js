@@ -5,12 +5,9 @@ import Input from "../../Input";
 import Label from "../../Label";
 import AsyncSelect from "react-select/async";
 import makeAnimated from "react-select/animated";
-import axios from "../../../src/lib/axios";
 import { useModule } from "../../../src/hooks/module";
 import Errors from "../../Errors";
 import InputError from "../../InputError";
-import Loader from "../../Loader";
-
 const animatedCompnent = makeAnimated();
 
 const ModuleAddForm = ({ onClick }) => {

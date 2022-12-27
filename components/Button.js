@@ -10,6 +10,7 @@ const Button = ({
 }) => (
     <button
         type={type}
+        disabled={loader}
         className={`${className} inline-flex items-center justify-center px-4 py-3  border border-transparent rounded-sm font-semibold text-xs uppercase tracking-widest ${
             danger
                 ? "text-red-500 bg-red-200 hover:bg-red-300 active:bg-red-400 active:text-white focus:outline-none focus:border-red-400  ring-red-100"

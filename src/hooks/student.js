@@ -1,13 +1,19 @@
 import useSWR from "swr";
 import axios from "../lib/axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "./auth";
+import { useRecoilState } from "recoil";
+import { modalState } from "../atoms/modalAtom";
+import { toast } from "react-toastify";
 
-export const useLecturer = ({ user }) => {
+export const useStudent = () => {
     const router = useRouter();
-
+    const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [loading, setLoading] = useState(false);
+
+    // CSRF
+    const csrf = () => axios.get("/sanctum/csrf-cookie");
 
     const addStudent = async ({ setErrors, setStatus, ...props }) => {
         setLoading(true);
@@ -37,5 +43,6 @@ export const useLecturer = ({ user }) => {
 
     return {
         loading,
+        addStudent,
     };
 };

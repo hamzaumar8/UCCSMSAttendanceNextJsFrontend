@@ -13,15 +13,6 @@ const LecturerAddForm = ({ onClick }) => {
 
     const submitForm = event => {
         event.preventDefault();
-        //  addAttendance({
-        //      lecturer_id: currentLecturer.id,
-        //      module_id: moduleValue,
-        //      date: now,
-        //      start_time: checkInTime,
-        //      end_time: checkOutTime,
-        //      setErrors,
-        //      setStatus,
-        //  });
     };
     return (
         <form onSubmit={submitForm} className="-ml-2">

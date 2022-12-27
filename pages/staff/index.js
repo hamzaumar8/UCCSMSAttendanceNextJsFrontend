@@ -11,15 +11,14 @@ import { useLecturer } from "../../src/hooks/lecturer";
 
 const StaffDashboard = ({ modules }) => {
     const { user } = useAuth({ middleware: "auth" });
-    const { loading, currentLecturer } = useLecturer({ user });
 
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
 
     const lecturerModules = modules.filter(
-        item => item.lecturer_id == currentLecturer?.id,
+        item => item.lecturer_id == user?.id,
     );
 
-    console.log(modules, currentLecturer?.id, lecturerModules);
+    console.log(modules, user?.id, lecturerModules);
     return (
         <LecturerLayout header="Here's an overview of all attendaces">
             <HeadTitle title="Lecturer Dashboard" />
