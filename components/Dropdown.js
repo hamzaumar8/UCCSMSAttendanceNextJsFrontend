@@ -14,6 +14,9 @@ const Dropdown = ({
         case "48":
             width = "w-48";
             break;
+        default:
+            width = width;
+            break;
     }
 
     switch (align) {
@@ -46,7 +49,7 @@ const Dropdown = ({
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95">
                         <div
-                            className={`absolute z-50 mt-2 ${width} rounded-md shadow-lg ${alignmentClasses}`}>
+                            className={`absolute z-50 mt-1 ${width} rounded-md shadow-lg ${alignmentClasses}`}>
                             <Menu.Items
                                 className={`rounded-md focus:outline-none ring-1 ring-black ring-opacity-5 ${contentClasses}`}
                                 static>

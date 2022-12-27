@@ -2,18 +2,31 @@ import { useState } from "react";
 import {
     EllipsisHorizontalIcon,
     PencilSquareIcon,
+    TrashIcon,
     XCircleIcon,
     XMarkIcon,
 } from "@heroicons/react/24/solid";
 import Image from "next/image";
+import Dropdown from "../Dropdown";
+import { DropdownButton } from "../DropdownLink";
+import { useRecoilState } from "recoil";
+import {
+    modalEditIdState,
+    modalState,
+    modalTypeState,
+} from "../../src/atoms/modalAtom";
 
 const ModuleCard = ({ lecturermodule, active = "" }) => {
     const [menuToggle, setMenuToggle] = useState(false);
+
+    const [modalOpen, setModalOpen] = useRecoilState(modalState);
+    const [modalType, setModalType] = useRecoilState(modalTypeState);
+    const [modalEditId, setModalEditId] = useRecoilState(modalEditIdState);
     return (
         <div
             className={`${
                 active ? "bg-secondary" : "bg-primary-accent"
-            } overflow-hidden rounded-lg block relative transition ease-in-out duration-300`}>
+            } rounded-lg block transition ease-in-out duration-300`}>
             <div className="border-b border-[#00000029] flex items-center justify-between p-4">
                 <div className="flex items-center space-x-3 text-xs font-extrabold text-black-text">
                     <h2 className="uppercase">{lecturermodule.module.code}</h2>
@@ -25,18 +38,36 @@ const ModuleCard = ({ lecturermodule, active = "" }) => {
                         Days
                     </div>
                 </div>
-                <button
-                    onClick={() => setMenuToggle(true)}
-                    className="bg-primary rounded-full text-white h-8 w-8 inline-flex items-center justify-center cursor-pointer">
-                    <EllipsisHorizontalIcon />
-                </button>
+
+                <Dropdown
+                    width="w-40"
+                    align="left"
+                    trigger={
+                        <button className="bg-primary rounded-full text-white h-8 w-8 inline-flex items-center justify-center cursor-pointer">
+                            <EllipsisHorizontalIcon />
+                        </button>
+                    }>
+                    <DropdownButton
+                        onClick={() => {
+                            setModalOpen(true);
+                            setModalType("editNewModule");
+                            setModalEditId(lecturermodule);
+                        }}>
+                        <PencilSquareIcon className="h-5 w-5 mr-1 text-primary" />
+                        Edit Module
+                    </DropdownButton>
+                    <DropdownButton onClick={""}>
+                        <TrashIcon className="h-5 w-5 mr-1 text-red-500" />{" "}
+                        Delete Module
+                    </DropdownButton>
+                </Dropdown>
             </div>
             <div className="px-4 py-3 space-y-3">
                 <h1 className="capitalize font-gray-800 text-lg font-bold">
                     {lecturermodule.module.title}
                 </h1>
                 <div
-                    className={`grid grid-cols-2 relative  rounded-md ${
+                    className={`grid grid-cols-2 rounded-md ${
                         active ? "bg-secondary-accent" : "bg-white"
                     }`}>
                     <div className="py-2 px-6 border-r border-[#00000029] space-y-2 ">
@@ -46,8 +77,8 @@ const ModuleCard = ({ lecturermodule, active = "" }) => {
                         <div className="font-bold text-black-text">
                             {active
                                 ? lecturermodule.attendance.total.present
-                                : "--"}{" "}
-                            /{" "}
+                                : "--"}
+                            /
                             {active
                                 ? lecturermodule.attendance.total.count
                                 : "--"}
@@ -57,7 +88,13 @@ const ModuleCard = ({ lecturermodule, active = "" }) => {
                         <h3 className="text-xs font-bold text-black-text">
                             Students Attendance (%)
                         </h3>
-                        <div className="font-bold text-black-text">97/100</div>
+                        <div className="font-bold text-black-text">
+                            {active
+                                ? lecturermodule.attendance.total
+                                      .student_attendance.present_percentage
+                                : "--"}
+                            /{active ? "100" : "--"}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -104,24 +141,24 @@ const ModuleCard = ({ lecturermodule, active = "" }) => {
                 </div>
             </div>
 
-            {menuToggle && (
-                <div className="absolute w-full h-full top-0 left-0 bg-[#000000BF] z-10 flex items-end transition ease-in-out duration-700">
-                    <button
-                        onClick={() => setMenuToggle(false)}
-                        className="absolute top-3 right-3 h-10 w-10 text-white cursor z-40 cursor-pointer">
-                        <XCircleIcon />
-                    </button>
-                    <div className="flex items-baselin flex-col z-20 w-full">
-                        <div className="inline-flex items-center justify-center space-x-2 text-center text-sm font-bold text-white p-3 bg-primary border-b border-gray-text">
-                            <PencilSquareIcon className="h-5 w-5" />
-                            <span>Edit Module </span>
-                        </div>
-                        <div className="inline-flex items-center justify-center space-x-2 text-center text-sm font-bold text-white p-3 bg-primary border-gray-text">
-                            <span>End Module </span>
-                        </div>
-                    </div>
-                </div>
-            )}
+            {/* {menuToggle && ( 
+                // <div className="absolute w-full h-full top-0 left-0 bg-[#000000BF] z-10 flex items-end transition ease-in-out duration-700">
+                //     <button
+                //         onClick={() => setMenuToggle(false)}
+                //         className="absolute top-3 right-3 h-10 w-10 text-white cursor z-40 cursor-pointer">
+                //         <XCircleIcon />
+                //     </button>
+                //     <div className="flex items-baselin flex-col z-20 w-full">
+                //         <div className="inline-flex items-center justify-center space-x-2 text-center text-sm font-bold text-white p-3 bg-primary border-b border-gray-text">
+                //             <PencilSquareIcon className="h-5 w-5" />
+                //             <span>Edit Module </span>
+                //         </div>
+                //         <div className="inline-flex items-center justify-center space-x-2 text-center text-sm font-bold text-white p-3 bg-primary border-gray-text">
+                //             <span>End Module </span>
+                //         </div>
+                //     </div>
+                // </div>
+            )} */}
         </div>
     );
 };

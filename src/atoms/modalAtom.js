@@ -9,3 +9,8 @@ export const modalTypeState = atom({
     key: "modalTypeState",
     default: "dropIn",
 });
+
+export const modalEditIdState = atom({
+    key: "modalEditIdState",
+    default: [],
+});

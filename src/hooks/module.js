@@ -38,8 +38,35 @@ export const useModule = () => {
             });
     };
 
+    const editModule = async ({ setErrors, setStatus, ...props }) => {
+        setLoading(true);
+        setErrors([]);
+        setStatus(null);
+
+        console.log(props.id);
+
+        await csrf();
+        axios
+            .put(`/api/v1/modules/${props.id}`, props)
+            .then(res => {
+                if (res.data.status === "module-editted") {
+                    setLoading(false);
+                    setModalOpen(false);
+                    toast.success("Moudule Mounted Successfully!", {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                }
+            })
+            .catch(error => {
+                if (error.response.status !== 422) throw error;
+                setErrors(error.response.data.errors);
+                setLoading(false);
+            });
+    };
+
     return {
         loading,
         mountModule,
+        editModule,
     };
 };
