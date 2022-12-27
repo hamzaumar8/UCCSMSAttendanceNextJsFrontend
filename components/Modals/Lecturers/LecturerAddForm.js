@@ -1,19 +1,53 @@
 import { useState } from "react";
+import { useLecturer } from "../../../src/hooks/lecturer";
 import Button from "../../Button";
 import Input from "../../Input";
+import InputError from "../../InputError";
 import Label from "../../Label";
+import Select from "../../Select";
 
 const LecturerAddForm = ({ onClick }) => {
-    const [fullName, setFullName] = useState("");
+    const { addLecturer, loading } = useLecturer();
+
     const [title, setTitle] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [otherName, setOtherName] = useState("");
     const [staffId, setStaffId] = useState("");
     const [email, setEmail] = useState("");
-    const [contact, setContact] = useState("");
+    const [phone, setPhone] = useState("");
     const [picture, setPicture] = useState("");
+    const [previewImage, setPreviewImage] = useState(null);
+
+    const [errors, setErrors] = useState([]);
+    const [status, setStatus] = useState(null);
+
+    const handlePicture = event => {
+        if (event.target.files && event.target.files.length) {
+            setPicture(event.target.files[0]);
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onloadend = () => setPreviewImage(reader.result);
+            reader.readAsDataURL(file);
+        }
+    };
 
     const submitForm = event => {
         event.preventDefault();
+        addLecturer({
+            title,
+            first_name: firstName,
+            last_name: lastName,
+            other_name: otherName,
+            staff_id: staffId,
+            email,
+            phone,
+            picture,
+            setErrors,
+            setStatus,
+        });
     };
+
     return (
         <form onSubmit={submitForm} className="-ml-2">
             <div className="flex items-center justify-between border-b px-8 py-4 ">
@@ -29,7 +63,8 @@ const LecturerAddForm = ({ onClick }) => {
                     </Button>
                     <Button
                         type="submit"
-                        className="!capitalize !rounded-full !px-8">
+                        className="!capitalize !rounded-full !px-8"
+                        loader={loading}>
                         Submit
                     </Button>
                 </div>
@@ -37,34 +72,81 @@ const LecturerAddForm = ({ onClick }) => {
 
             <div className="pb-10">
                 <div className="py-6 px-8 pr-10 space-y-5 border-b">
-                    <div className="grid grid-cols-4 gap-2">
+                    <div className="grid grid-cols-2 gap-8">
                         <div className="">
-                            <Label htmlFor="title">Lecuturer Title</Label>
-                            <Input
+                            <Label htmlFor="title">Title</Label>
+                            <select
                                 id="title"
-                                type="text"
                                 value={title}
-                                className="block mt-1 w-full"
+                                className="block mt-1 w-full placeholder:text-gray-text text-gray-700 border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 onChange={event => setTitle(event.target.value)}
-                                required
+                                required>
+                                <option></option>
+                                <option value="Prof.">Prof</option>
+                                <option value="Dr.">Dr</option>
+                                <option value="Rev.">Rev</option>
+                                <option value="Mr.">Mr</option>
+                                <option value="Mrs.">Mrs</option>
+                                <option value="Miss.">Miss</option>
+                            </select>
+                            <InputError
+                                messages={errors.title}
+                                className="mt-1"
                             />
                         </div>
-                        <div className="col-span-3">
-                            <Label htmlFor="fullName">Lecuturer Name</Label>
+                        <div className="">
+                            <Label htmlFor="firstName">First Name</Label>
                             <Input
-                                id="fullName"
+                                id="firstName"
                                 type="text"
-                                value={fullName}
-                                placeholder="eg: Clecmentina Amponsah Agyei"
+                                value={firstName}
+                                placeholder="eg: Clementina"
                                 className="block mt-1 w-full"
                                 onChange={event =>
-                                    setFullName(event.target.value)
+                                    setFirstName(event.target.value)
                                 }
                                 required
                             />
+                            <InputError
+                                messages={errors.first_name}
+                                className="mt-1"
+                            />
                         </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-8">
+                        <div className="">
+                            <Label htmlFor="lastName">Last Name</Label>
+                            <Input
+                                id="lastName"
+                                type="text"
+                                value={lastName}
+                                placeholder="eg: Amponsah"
+                                className="block mt-1 w-full"
+                                onChange={event =>
+                                    setLastName(event.target.value)
+                                }
+                                required
+                            />
+                            <InputError
+                                messages={errors.last_name}
+                                className="mt-1"
+                            />
+                        </div>
+                        <div className="">
+                            <Label htmlFor="otherName">Other Name(s)</Label>
+                            <Input
+                                id="otherName"
+                                type="text"
+                                value={otherName}
+                                placeholder="eg: Agyei"
+                                className="block mt-1 w-full"
+                                onChange={event =>
+                                    setOtherName(event.target.value)
+                                }
+                            />
+                            <InputError
+                                messages={errors.other_name}
+                                className="mt-1"
+                            />
+                        </div>
                         <div className="">
                             <Label htmlFor="staffId">Staff ID</Label>
                             <Input
@@ -78,19 +160,24 @@ const LecturerAddForm = ({ onClick }) => {
                                 }
                                 required
                             />
+                            <InputError
+                                messages={errors.staff_id}
+                                className="mt-2"
+                            />
                         </div>
                         <div className="">
-                            <Label htmlFor="contact">Contact</Label>
+                            <Label htmlFor="phone">phone</Label>
                             <Input
-                                id="contact"
+                                id="phone"
                                 type="tel"
-                                value={contact}
+                                value={phone}
                                 placeholder="eg: +233556455567"
                                 className="block mt-1 w-full"
-                                onChange={event =>
-                                    setContact(event.target.value)
-                                }
-                                required
+                                onChange={event => setPhone(event.target.value)}
+                            />
+                            <InputError
+                                messages={errors.phone}
+                                className="mt-2"
                             />
                         </div>
                     </div>
@@ -105,6 +192,7 @@ const LecturerAddForm = ({ onClick }) => {
                             onChange={event => setEmail(event.target.value)}
                             required
                         />
+                        <InputError messages={errors.email} className="mt-2" />
                     </div>
                 </div>
                 <div className="py-6 px-8 pr-10 space-y-5">
@@ -113,10 +201,18 @@ const LecturerAddForm = ({ onClick }) => {
                         <Input
                             id="picture"
                             type="file"
-                            value={picture}
                             className="block mt-1 w-full"
-                            onChange={event => setPicture(event.target.value)}
-                            required
+                            onChange={handlePicture}
+                        />
+                        {previewImage && (
+                            <img
+                                src={previewImage}
+                                className="mt-1 object-cover w-[100px] h-[100px]"
+                            />
+                        )}
+                        <InputError
+                            messages={errors.picture}
+                            className="mt-2"
                         />
                     </div>
                 </div>

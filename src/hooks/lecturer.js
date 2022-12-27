@@ -2,23 +2,28 @@ import useSWR from "swr";
 import axios from "../lib/axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useAuth } from "./auth";
+import { toast } from "react-toastify";
+import { useRecoilState } from "recoil";
+import { modalState } from "../atoms/modalAtom";
 
-export const useLecturer = ({ user }) => {
+export const useLecturer = () => {
     const router = useRouter();
 
+    const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [loading, setLoading] = useState(false);
 
-    const addStudent = async ({ setErrors, setStatus, ...props }) => {
+    // CSRF
+    const csrf = () => axios.get("/sanctum/csrf-cookie");
+    const addLecturer = async ({ setErrors, setStatus, ...props }) => {
         setLoading(true);
         setErrors([]);
         setStatus(null);
 
         await csrf();
         axios
-            .post("/api/v1/students", props)
+            .post("/api/v1/lecturers", props)
             .then(res => {
-                if (res.data.status === "student-added-succesffully") {
+                if (res.data.status === "lecturer-added") {
                     setLoading(false);
                     toast.success("Student was added successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
@@ -28,8 +33,7 @@ export const useLecturer = ({ user }) => {
             })
             .catch(error => {
                 setLoading(false);
-                // if (error.response.status !== 422) throw error;
-                if (error.response.status !== 422) console.log(error);
+                if (error.response.status !== 422) throw error;
 
                 setErrors(error.response.data.errors);
             });
@@ -37,5 +41,6 @@ export const useLecturer = ({ user }) => {
 
     return {
         loading,
+        addLecturer,
     };
 };
