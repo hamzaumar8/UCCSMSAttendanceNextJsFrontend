@@ -1,17 +1,16 @@
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { modalState, modalTypeState } from "../../src/atoms/modalAtom";
 import ModuleBankCard from "../Cards/ModuleBankCard";
-import ModuleCard from "../Cards/ModuleCard";
 
 const ModuleBank = ({ modules }) => {
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
 
     const [viewAll, setViewAll] = useState(false);
+
     return (
         <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg transition duration-200 ease-in-out">
             {/* Header */}

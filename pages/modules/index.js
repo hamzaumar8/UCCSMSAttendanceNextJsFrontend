@@ -1,7 +1,7 @@
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
 import ActiveModules from "../../components/Modules/ActiveModules";
-import ModuleBank from "../../components/Modules/ModuleBank";
+import ModuleBankFeed from "../../components/Modules/ModuleBankFeed";
 import UpPastModules from "../../components/Modules/UpPastModules";
 import axios from "../../src/lib/axios";
 
@@ -18,7 +18,7 @@ const Modules = ({ modules, modulesBank }) => {
             <div className="relative space-y-8">
                 <ActiveModules modules={modulesActive} />
                 <UpPastModules modules={modulesUpPast} />
-                <ModuleBank modules={modulesBank} />
+                <ModuleBankFeed modules={modulesBank} />
             </div>
         </AppLayout>
     );

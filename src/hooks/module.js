@@ -5,14 +5,27 @@ import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { modalState } from "../atoms/modalAtom";
 import { toast } from "react-toastify";
+import { handleModuleBankState } from "../atoms/moduleAtom";
 
 export const useModule = () => {
     const router = useRouter();
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
+    const [handleModuleBank, setHandleModuleBank] = useRecoilState(
+        handleModuleBankState,
+    );
+
     const [loading, setLoading] = useState(false);
 
     // CSRF
     const csrf = () => axios.get("/sanctum/csrf-cookie");
+
+    const {
+        data: SWRmodules,
+        error,
+        mutate,
+    } = useSWR("/api/v1/module/bank", () =>
+        axios.get("/api/v1/module/bank").then(response => response.data.data),
+    );
 
     // Add Module to Module Bank
     const addModule = async ({ setErrors, setStatus, ...props }) => {
@@ -26,6 +39,7 @@ export const useModule = () => {
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
+                    setHandleModuleBank(true);
                     setModalOpen(false);
                     toast.success("Module has been added successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
