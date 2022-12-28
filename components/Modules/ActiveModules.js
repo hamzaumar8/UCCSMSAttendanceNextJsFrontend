@@ -51,20 +51,20 @@ const ActiveModules = ({ modules }) => {
                     {modules.length > 0 ? (
                         !viewAll ? (
                             <>
-                                {modules.slice(0, 3).map(lecturermodule => (
+                                {modules.slice(0, 3).map(module => (
                                     <ModuleCard
-                                        key={lecturermodule.id}
-                                        lecturermodule={lecturermodule}
+                                        key={module.id}
+                                        module={module}
                                         active={true}
                                     />
                                 ))}
                             </>
                         ) : (
                             <>
-                                {modules.map(lecturermodule => (
+                                {modules.map(module => (
                                     <ModuleCard
-                                        key={lecturermodule.id}
-                                        lecturermodule={lecturermodule}
+                                        key={module.id}
+                                        module={module}
                                         active={true}
                                     />
                                 ))}

@@ -73,7 +73,7 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
                                             className="h-10 w-10 my-0 mx-auto"
                                             width={100}
                                             height={100}
-                                            alt={lecturer.last_name}
+                                            alt={lecturer.surname}
                                         />
                                     </td>
                                     <td className="capitalize p-3 whitespace-nowrap border-b">
@@ -83,7 +83,7 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
                                                 {lecturer.first_name}{" "}
                                                 {lecturer.other_name &&
                                                     lecturer.other_name + " "}
-                                                {lecturer.last_name}
+                                                {lecturer.surname}
                                             </div>
                                         </span>
                                     </td>

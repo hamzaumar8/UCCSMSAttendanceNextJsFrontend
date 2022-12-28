@@ -36,7 +36,7 @@ const Navigation = ({ user, header }) => {
                                 <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition duration-150 ease-in-out space-x-2">
                                     <div className="h-10 w-10 rounded-full inlie-block border-2 border-primary">
                                         <Image
-                                            src="http://localhost:8000/assets/img/lecturers/default.png"
+                                            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`}
                                             width={100}
                                             height={100}
                                             alt="lphot"

@@ -87,7 +87,7 @@ const Cordinators = ({ modules, modeulesSummary }) => {
                                                 {module.cordinator.other_name}
                                                 {module.cordinator.other_name &&
                                                     " "}
-                                                {module.cordinator.last_name}
+                                                {module.cordinator.surname}
                                             </div>
                                         </span>
                                     </td>

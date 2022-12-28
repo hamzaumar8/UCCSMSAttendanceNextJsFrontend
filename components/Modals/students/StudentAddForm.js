@@ -49,7 +49,7 @@ const StudentAddForm = ({ onClick }) => {
         event.preventDefault();
         addStudent({
             first_name: firstName,
-            last_name: lastName,
+            surname: lastName,
             other_name: otherName,
             index_number: indexNumber,
             level,
@@ -122,7 +122,7 @@ const StudentAddForm = ({ onClick }) => {
                                 required
                             />{" "}
                             <InputError
-                                messages={errors.last_name}
+                                messages={errors.surname}
                                 className="mt-1"
                             />
                         </div>

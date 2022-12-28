@@ -79,8 +79,8 @@ const ModuleEditForm = ({ onClick, lecturermodule }) => {
             json.map(i => ({
                 label:
                     i.other_name != null
-                        ? `${i.title} ${i.first_name} ${i.other_name} ${i.last_name} (${i.staff_id})`
-                        : `${i.title} ${i.first_name} ${i.last_name} (${i.staff_id})`,
+                        ? `${i.title} ${i.first_name} ${i.other_name} ${i.surname} (${i.staff_id})`
+                        : `${i.title} ${i.first_name} ${i.surname} (${i.staff_id})`,
                 value: i.id,
             })),
         );
@@ -95,8 +95,8 @@ const ModuleEditForm = ({ onClick, lecturermodule }) => {
             json.map(i => ({
                 label:
                     i.other_name != null
-                        ? `${i.full_nme} ${i.last_name} ${i.other_name} (${i.index_number})`
-                        : `${i.first_name} ${i.last_name} (${i.index_number})`,
+                        ? `${i.full_nme} ${i.surname} ${i.other_name} (${i.index_number})`
+                        : `${i.first_name} ${i.surname} (${i.index_number})`,
                 value: i.id,
             })),
         );

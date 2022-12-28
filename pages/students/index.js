@@ -224,9 +224,7 @@ const Student = ({ students, levels, modules }) => {
                                                               {student.other_name &&
                                                                   student.other_name +
                                                                       " "}
-                                                              {
-                                                                  student.last_name
-                                                              }
+                                                              {student.surname}
                                                           </div>
                                                       </span>
                                                   </td>

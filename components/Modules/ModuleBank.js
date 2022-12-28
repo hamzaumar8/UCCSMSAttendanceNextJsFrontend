@@ -12,7 +12,7 @@ const ModuleBank = ({ modules }) => {
     const [viewAll, setViewAll] = useState(false);
 
     return (
-        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg transition duration-200 ease-in-out">
+        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg transition duration-500 ease-in-out">
             {/* Header */}
             <div className="p-5 block sm:flex  items-center justify-between relative border-b ">
                 <div className="flex items-center justify-center space-x-4">

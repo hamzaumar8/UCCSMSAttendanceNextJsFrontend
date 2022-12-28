@@ -37,7 +37,7 @@ const LecturerAddForm = ({ onClick }) => {
         addLecturer({
             title,
             first_name: firstName,
-            last_name: lastName,
+            surname: lastName,
             other_name: otherName,
             staff_id: staffId,
             email,
@@ -126,7 +126,7 @@ const LecturerAddForm = ({ onClick }) => {
                                 required
                             />
                             <InputError
-                                messages={errors.last_name}
+                                messages={errors.surname}
                                 className="mt-1"
                             />
                         </div>

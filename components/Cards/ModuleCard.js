@@ -16,12 +16,15 @@ import {
     modalTypeState,
 } from "../../src/atoms/modalAtom";
 
-const ModuleCard = ({ lecturermodule, active = "" }) => {
+const ModuleCard = ({ module, active = "" }) => {
+    const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
     const [menuToggle, setMenuToggle] = useState(false);
 
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
     const [modalEdit, setModalEdit] = useRecoilState(modalEditState);
+
+    console.log(module);
     return (
         <div
             className={`${
@@ -29,11 +32,11 @@ const ModuleCard = ({ lecturermodule, active = "" }) => {
             } rounded-lg block transition ease-in-out duration-300`}>
             <div className="border-b border-[#00000029] flex items-center justify-between p-4">
                 <div className="flex items-center space-x-3 text-xs font-extrabold text-black-text">
-                    <h2 className="uppercase">{lecturermodule.module.code}</h2>
+                    <h2 className="uppercase">{module.module.code}</h2>
                     <div className="rounded-full border-2 border-gray-900 py-1 px-3">
-                        {lecturermodule.days.covered}/
+                        {module.days.covered}/
                         <span className="text-gray-500 mr-1">
-                            {lecturermodule.days.total}
+                            {module.days.total}
                         </span>{" "}
                         Days
                     </div>
@@ -51,7 +54,7 @@ const ModuleCard = ({ lecturermodule, active = "" }) => {
                         onClick={() => {
                             setModalOpen(true);
                             setModalType("editModule");
-                            setModalEdit(lecturermodule);
+                            setModalEdit(module);
                         }}>
                         <PencilSquareIcon className="h-5 w-5 mr-1 text-primary" />
                         Edit Module
@@ -64,7 +67,7 @@ const ModuleCard = ({ lecturermodule, active = "" }) => {
             </div>
             <div className="px-4 py-3 space-y-3">
                 <h1 className="capitalize font-gray-800 text-lg font-bold">
-                    {lecturermodule.module.title}
+                    {module.module.title}
                 </h1>
                 <div
                     className={`grid grid-cols-2 rounded-md ${
@@ -75,12 +78,12 @@ const ModuleCard = ({ lecturermodule, active = "" }) => {
                             Lecturer Attendance
                         </h3>
                         <div className="font-bold text-black-text">
-                            {active
-                                ? lecturermodule.attendance.total.present
+                            {active || module.status === "inactive"
+                                ? module.attendance.total.present
                                 : "--"}
                             /
-                            {active
-                                ? lecturermodule.attendance.total.count
+                            {active || module.status === "inactive"
+                                ? module.attendance.total.count
                                 : "--"}
                         </div>
                     </div>
@@ -89,11 +92,14 @@ const ModuleCard = ({ lecturermodule, active = "" }) => {
                             Students Attendance (%)
                         </h3>
                         <div className="font-bold text-black-text">
-                            {active
-                                ? lecturermodule.attendance.total
-                                      .student_attendance.present_percentage
+                            {active || module.status === "inactive"
+                                ? module.attendance.total.student_attendance
+                                      .present_percentage
                                 : "--"}
-                            /{active ? "100" : "--"}
+                            /
+                            {active || module.status === "inactive"
+                                ? "100"
+                                : "--"}
                         </div>
                     </div>
                 </div>
@@ -107,18 +113,27 @@ const ModuleCard = ({ lecturermodule, active = "" }) => {
                                 : "bg-white border-primary"
                         } border-2  rounded-full overflow-hidden`}>
                         <Image
-                            src={lecturermodule.lecturer.picture_url}
+                            src={
+                                module?.lecturers[0].picture
+                                    ? module?.lecturers[0].picture
+                                    : defaultImg
+                            }
                             width={100}
                             height={100}
-                            alt={lecturermodule.lecturer.last_name}
+                            alt={module?.lecturers[0].surname}
                             className="h-full w-full"
                         />
                     </div>
-                    <h2 className="text-xs font-bold text-black-text">
-                        {lecturermodule.lecturer.title}{" "}
-                        {lecturermodule.lecturer.first_name}{" "}
-                        {lecturermodule.lecturer.last_name}
-                    </h2>
+                    <div>
+                        {module.lecturers.map(lecturer => (
+                            <h2
+                                key={lecturer.key}
+                                className="text-xs font-bold text-black-text">
+                                {lecturer.title} {lecturer.first_name}{" "}
+                                {lecturer.surname}
+                            </h2>
+                        ))}
+                    </div>
                 </div>
                 <div className="p-2 flex items-center space-x-2 ">
                     <div
@@ -126,39 +141,23 @@ const ModuleCard = ({ lecturermodule, active = "" }) => {
                             active ? "bg-secondary-accent" : "bg-white"
                         } rounded-full overflow-hidden`}>
                         <Image
-                            src={lecturermodule.module.cordinator.picture_url}
+                            src={
+                                module.cordinator.picture
+                                    ? module.cordinator.picture
+                                    : defaultImg
+                            }
                             width={100}
                             height={100}
-                            alt={lecturermodule.module.cordinator.last_name}
+                            alt={module.cordinator.surname}
                             className="h-full w-full"
                         />
                     </div>
                     <h2 className="text-xs font-bold text-black-text">
-                        {lecturermodule.module.cordinator.title}{" "}
-                        {lecturermodule.module.cordinator.first_name}{" "}
-                        {lecturermodule.module.cordinator.last_name}
+                        {module.cordinator.title} {module.cordinator.first_name}{" "}
+                        {module.cordinator.surname}
                     </h2>
                 </div>
             </div>
-
-            {/* {menuToggle && ( 
-                // <div className="absolute w-full h-full top-0 left-0 bg-[#000000BF] z-10 flex items-end transition ease-in-out duration-700">
-                //     <button
-                //         onClick={() => setMenuToggle(false)}
-                //         className="absolute top-3 right-3 h-10 w-10 text-white cursor z-40 cursor-pointer">
-                //         <XCircleIcon />
-                //     </button>
-                //     <div className="flex items-baselin flex-col z-20 w-full">
-                //         <div className="inline-flex items-center justify-center space-x-2 text-center text-sm font-bold text-white p-3 bg-primary border-b border-gray-text">
-                //             <PencilSquareIcon className="h-5 w-5" />
-                //             <span>Edit Module </span>
-                //         </div>
-                //         <div className="inline-flex items-center justify-center space-x-2 text-center text-sm font-bold text-white p-3 bg-primary border-gray-text">
-                //             <span>End Module </span>
-                //         </div>
-                //     </div>
-                // </div>
-            )} */}
         </div>
     );
 };
