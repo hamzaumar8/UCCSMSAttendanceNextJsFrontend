@@ -23,13 +23,11 @@ const ModuleBank = ({ modules }) => {
                 </div>
                 <div className="space-x-20 flex items-center">
                     {modules.length > 3 && (
-                        <div>
-                            <button
-                                className="inline-flex items-center px-5 py-3 bg-primary-accent text-primary border border-transparent rounded-full font-semibold text-xs capitalize tracking-widest hover:bg-blue-700 hover:text-white active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity:25 transition ease-in-out duration-150"
-                                onClick={() => setViewAll(!viewAll)}>
-                                View {viewAll ? "less" : "all"}
-                            </button>
-                        </div>
+                        <button
+                            className="inline-flex items-center px-5 py-3 bg-primary-accent text-primary border border-transparent rounded-full font-semibold text-xs capitalize tracking-widest hover:bg-blue-700 hover:text-white active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity:25 transition ease-in-out duration-150"
+                            onClick={() => setViewAll(!viewAll)}>
+                            View {viewAll ? "less" : "all"}
+                        </button>
                     )}
                     <div className="space-x-2">
                         <motion.button

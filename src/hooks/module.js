@@ -23,8 +23,8 @@ export const useModule = () => {
         data: SWRmodules,
         error,
         mutate,
-    } = useSWR("/api/v1/module/bank", () =>
-        axios.get("/api/v1/module/bank").then(response => response.data.data),
+    } = useSWR("/api/v1/module_banks", () =>
+        axios.get("/api/v1/module_banks").then(response => response.data.data),
     );
 
     // Add Module to Module Bank
@@ -35,7 +35,7 @@ export const useModule = () => {
 
         await csrf();
         axios
-            .post("/api/v1/module/bank", props)
+            .post("/api/v1/module_banks", props)
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
@@ -56,6 +56,7 @@ export const useModule = () => {
             });
     };
 
+    // Edit Module Bank
     const editModule = async ({ setErrors, setStatus, ...props }) => {
         setLoading(true);
         setErrors([]);
@@ -63,10 +64,11 @@ export const useModule = () => {
 
         await csrf();
         axios
-            .put(`/api/v1/module/bank/${props.id}`, props)
+            .put(`/api/v1/module_banks/${props.id}`, props)
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
+                    setHandleModuleBank(true);
                     setModalOpen(false);
                     toast.success("Module editted successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
@@ -101,9 +103,12 @@ export const useModule = () => {
                 }
             })
             .catch(error => {
-                if (error.response.status !== 422) throw error;
-                setErrors(Object.values(error.response.data.errors).flat());
                 setLoading(false);
+                if (error.response.status !== 422) {
+                    console.log(error);
+                } else {
+                    setErrors(error.response.data.errors);
+                }
             });
     };
 

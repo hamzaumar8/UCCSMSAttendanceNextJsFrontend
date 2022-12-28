@@ -1,9 +1,9 @@
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { modalState, modalTypeState } from "../../src/atoms/modalAtom";
+import Button from "../Button";
 import ModuleCard from "../Cards/ModuleCard";
 
 const ActiveModules = ({ modules }) => {
@@ -24,26 +24,14 @@ const ActiveModules = ({ modules }) => {
                 <div className="space-x-20 flex items-center">
                     {modules.length > 3 && (
                         <div>
-                            <button
+                            <Button
                                 className="inline-flex items-center px-5 py-3 bg-primary-accent text-primary border border-transparent rounded-full font-semibold text-xs capitalize tracking-widest hover:bg-blue-700 hover:text-white active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity:25 transition ease-in-out duration-150"
                                 onClick={() => setViewAll(!viewAll)}>
                                 View {viewAll ? "less" : "all"}
-                            </button>
+                            </Button>
                         </div>
                     )}
                     <div className="space-x-2">
-                        <motion.button
-                            whileHover={{ scale: 1.01 }}
-                            whileTap={{ scale: 0.99 }}
-                            onClick={() => {
-                                setModalOpen(true);
-                                setModalType("addModule");
-                            }}
-                            className="inline-flex items-center px-4 py-2 bg-primary text-white border border-transparent rounded-full font-semibold text-xs capitalize tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity:25 transition ease-in-out duration-150 space-x-2">
-                            <PlusIcon className="w-4 h-4" />
-                            <span> Add Module</span>
-                        </motion.button>
-
                         <motion.button
                             whileHover={{ scale: 1.01 }}
                             whileTap={{ scale: 0.99 }}

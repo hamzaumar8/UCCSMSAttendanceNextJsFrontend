@@ -30,7 +30,7 @@ export async function getStaticProps() {
     const response = await axios.get("api/v1/lecture/modules");
     const modules = response.data.data;
 
-    const responseModuleBank = await axios.get("api/v1/module/bank");
+    const responseModuleBank = await axios.get("api/v1/module_banks");
     const modulesBank = responseModuleBank.data.data;
     return {
         props: {

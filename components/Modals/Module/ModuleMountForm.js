@@ -13,8 +13,7 @@ const animatedCompnent = makeAnimated();
 const ModuleMountForm = ({ onClick }) => {
     const { mountModule, loading } = useModule();
 
-    const [name, setName] = useState("");
-    const [code, setCode] = useState("");
+    const [module, setModule] = useState("");
     const [level, setLevel] = useState("");
     const [startDate, setStartDate] = useState("");
     const [duration, setDuration] = useState(1);
@@ -30,8 +29,7 @@ const ModuleMountForm = ({ onClick }) => {
         let lecturers = [];
         lecturer.forEach(itm => lecturers.push(itm.value));
         mountModule({
-            title: name,
-            code,
+            module: module,
             level,
             start_date: startDate,
             duration,
@@ -87,23 +85,35 @@ const ModuleMountForm = ({ onClick }) => {
             })),
         );
     };
+    const moduleLoadOption = async (inputText, callback) => {
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/mod_bank/backend?s=${inputText}`,
+        );
+        const json = await response.json();
+        callback(
+            json.map(i => ({
+                label: `${i.title} (${i.code})`,
+                value: i.id,
+            })),
+        );
+    };
 
     return (
         <form onSubmit={submitForm} className="-ml-2">
             <div className="flex items-center justify-between border-b px-8 py-4 ">
                 <h4 className="text-2xl font-bold text-black-text">
-                    New Modbhbhbule
+                    Mount Module
                 </h4>
                 <div className="space-x-4">
                     <Button
                         onClick={onClick}
-                        className="!rounded-full !px-8"
+                        className="!capitalize !rounded-full !px-8"
                         danger>
                         Cancel
                     </Button>
                     <Button
                         type="submit"
-                        className="!rounded-full !px-8"
+                        className="!capitalize !rounded-full !px-8"
                         loader={loading}>
                         <span>Mount</span>
                     </Button>
@@ -114,54 +124,54 @@ const ModuleMountForm = ({ onClick }) => {
                 <div className="py-6 px-8 pr-10 space-y-5 border-b">
                     <Errors className="mb-5" errors={errors} />
                     <div className="">
-                        <Label htmlFor="name">Module Name</Label>
-                        <Input
-                            id="name"
-                            type="text"
-                            value={name}
-                            placeholder="eg: Molecular and cell basices of health and diseases I"
+                        <Label htmlFor="module">Module</Label>
+                        <AsyncSelect
+                            cacheOptions
+                            loadOptions={moduleLoadOption}
+                            defaultOptions
                             className="block mt-1 w-full"
-                            onChange={event => setName(event.target.value)}
+                            onChange={event => setModule(event.value)}
                             required
                         />
-                        <InputError messages={errors.title} className="mt-2" />
+                        {module === "" && (
+                            <input
+                                tabIndex={-1}
+                                autoComplete="off"
+                                style={{
+                                    position: "absolute",
+                                    opacity: 0,
+                                    width: "100%",
+                                }}
+                                required
+                            />
+                        )}
+                        <InputError messages={errors.module} className="mt-2" />
+                    </div>
+                    <div className="">
+                        <Label htmlFor="level">Level</Label>
+                        <AsyncSelect
+                            cacheOptions
+                            loadOptions={levelLoadOptions}
+                            defaultOptions
+                            className="block mt-1 w-full"
+                            onChange={event => setLevel(event.value)}
+                            required
+                        />
+                        {level === "" && (
+                            <input
+                                tabIndex={-1}
+                                autoComplete="off"
+                                style={{
+                                    position: "absolute",
+                                    opacity: 0,
+                                    width: "100%",
+                                }}
+                                required
+                            />
+                        )}
+                        <InputError messages={errors.level} className="mt-2" />
                     </div>
                     <div className="grid grid-cols-2 gap-6">
-                        <div className="">
-                            <Label htmlFor="code">Module Code</Label>
-                            <Input
-                                id="code"
-                                type="text"
-                                value={code}
-                                className="block mt-1 w-full uppercase"
-                                placeholder="MED 203"
-                                onChange={event => setCode(event.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="">
-                            <Label htmlFor="level">Class</Label>
-                            <AsyncSelect
-                                cacheOptions
-                                loadOptions={levelLoadOptions}
-                                defaultOptions
-                                className="block mt-1 w-full"
-                                onChange={event => setLevel(event.value)}
-                                required
-                            />
-                            {level === "" && (
-                                <input
-                                    tabIndex={-1}
-                                    autoComplete="off"
-                                    style={{
-                                        position: "absolute",
-                                        opacity: 0,
-                                        width: "100%",
-                                    }}
-                                    required
-                                />
-                            )}
-                        </div>
                         <div className="">
                             <Label htmlFor="startDate">Start Date</Label>
                             <Input
@@ -173,6 +183,10 @@ const ModuleMountForm = ({ onClick }) => {
                                     setStartDate(event.target.value)
                                 }
                                 required
+                            />
+                            <InputError
+                                messages={errors.start_date}
+                                className="mt-2"
                             />
                         </div>
                         <div className="">
@@ -202,12 +216,18 @@ const ModuleMountForm = ({ onClick }) => {
                                     <PlusIcon className="h-4 w-4" />
                                 </Button>
                             </div>
+                            <InputError
+                                messages={errors.duration}
+                                className="mt-2"
+                            />
                         </div>
                     </div>
                 </div>
                 <div className="py-6 px-8 pr-10 space-y-5">
                     <div className="relative">
-                        <Label htmlFor="lecturer">Lecturer</Label>
+                        <Label htmlFor="lecturer">
+                            Lecturer <span className="lowercase">(s)</span>
+                        </Label>
                         <AsyncSelect
                             isMulti
                             components={animatedCompnent}
@@ -229,6 +249,10 @@ const ModuleMountForm = ({ onClick }) => {
                                 required
                             />
                         )}
+                        <InputError
+                            messages={errors.lecturer}
+                            className="mt-2"
+                        />
                     </div>
                     <div className="relative">
                         <Label htmlFor="cordinator">Cordinator</Label>
@@ -252,6 +276,10 @@ const ModuleMountForm = ({ onClick }) => {
                                 required
                             />
                         )}
+                        <InputError
+                            messages={errors.cordinator}
+                            className="mt-2"
+                        />
                     </div>
                     <div className="relative">
                         <Label htmlFor="courseRep">Course Rep</Label>
@@ -275,6 +303,10 @@ const ModuleMountForm = ({ onClick }) => {
                                 required
                             />
                         )}
+                        <InputError
+                            messages={errors.course_rep}
+                            className="mt-2"
+                        />
                     </div>
                 </div>
             </div>
@@ -283,15 +315,3 @@ const ModuleMountForm = ({ onClick }) => {
 };
 
 export default ModuleMountForm;
-
-// theme={theme => ({
-//     ...theme,
-//     borderRadius: 0,
-//     colors: {
-//         ...theme.colors,
-//         primary25: "green",
-//         primary: "black",
-//         // neutral0: "#c8c8c8",
-//         neutral90: "white",
-//     },
-// })}
