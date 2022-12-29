@@ -38,6 +38,7 @@ const VerifyEmail = () => {
 
                 <div className="mt-4 flex items-center justify-between">
                     <Button
+                        type="submit"
                         onClick={() => resendEmailVerification({ setStatus })}>
                         Resend Verification Email
                     </Button>

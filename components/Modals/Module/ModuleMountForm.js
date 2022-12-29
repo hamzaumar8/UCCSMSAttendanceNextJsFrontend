@@ -33,7 +33,7 @@ const ModuleMountForm = ({ onClick }) => {
             level,
             start_date: startDate,
             duration,
-            lecturer: JSON.stringify(lecturers),
+            lecturer: lecturers,
             cordinator,
             course_rep: courseRep,
             setErrors,

@@ -169,7 +169,7 @@ const Dashboard = ({ modules, lecturers, cordinators, students }) => {
                         </div>
                     </div>
                     <div className="p-20 relative text-gray-text ">
-                        <AnimatePresence exitBeforeEnter>
+                        <AnimatePresence mode="wait">
                 <motion.div
                     key={attendanceLecStu ? "Lecturer" : "Student"}
                     initial={{ y: 10, opacity: 0 }}
@@ -288,7 +288,7 @@ export async function getStaticProps() {
     const lecturersResponse = await axios.get("api/v1/lecturers");
     const lecturers = lecturersResponse.data.data;
 
-    const modulesResponse = await axios.get("api/v1/lecture/modules");
+    const modulesResponse = await axios.get("api/v1/modules");
     const modules = modulesResponse.data.data;
     return {
         props: {

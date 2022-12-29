@@ -85,6 +85,7 @@ export const useModule = () => {
             });
     };
 
+    // Add Mounted Moudle
     const mountModule = async ({ setErrors, setStatus, ...props }) => {
         setLoading(true);
         setErrors([]);
@@ -94,7 +95,7 @@ export const useModule = () => {
         axios
             .post("/api/v1/modules", props)
             .then(res => {
-                if (res.data.status === "module-mounted-succesffully") {
+                if (res.data.status === "success") {
                     setLoading(false);
                     setModalOpen(false);
                     toast.success("Module Mounted Successfully!", {
@@ -104,37 +105,53 @@ export const useModule = () => {
             })
             .catch(error => {
                 setLoading(false);
-                if (error.response.status !== 422) {
-                    console.log(error);
-                } else {
+                if (error.response.status === 422) {
                     setErrors(error.response.data.errors);
+                } else if (error.response.status === 403) {
+                    if (error.response.data.message === "set-semester") {
+                        setModalOpen(false);
+                        toast.error("Set Semester", {
+                            position: toast.POSITION.TOP_RIGHT,
+                        });
+                    }
+                } else {
+                    console.log(error);
                 }
             });
     };
 
+    // Edit Mounted Moudle
     const editMountModule = async ({ setErrors, setStatus, ...props }) => {
         setLoading(true);
         setErrors([]);
         setStatus(null);
 
-        console.log(props.id);
-
         await csrf();
         axios
             .put(`/api/v1/modules/${props.id}`, props)
             .then(res => {
-                if (res.data.status === "module-editted") {
+                if (res.data.status === "success") {
                     setLoading(false);
                     setModalOpen(false);
-                    toast.success("Module Mounted Successfully!", {
+                    toast.success("Mounted module editted successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
                     });
                 }
             })
             .catch(error => {
-                if (error.response.status !== 422) throw error;
-                setErrors(error.response.data.errors);
                 setLoading(false);
+                if (error.response.status === 422) {
+                    setErrors(error.response.data.errors);
+                } else if (error.response.status === 403) {
+                    if (error.response.data.message === "set-semester") {
+                        setModalOpen(false);
+                        toast.error("Set Semester", {
+                            position: toast.POSITION.TOP_RIGHT,
+                        });
+                    }
+                } else {
+                    console.log(error);
+                }
             });
     };
 

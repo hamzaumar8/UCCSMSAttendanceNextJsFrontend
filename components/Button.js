@@ -2,7 +2,7 @@ import Loader from "./Loader";
 
 const Button = ({
     children,
-    type = "submit",
+    type = "button",
     className,
     loader = false,
     danger = "",

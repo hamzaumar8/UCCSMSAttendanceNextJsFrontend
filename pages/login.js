@@ -136,7 +136,10 @@ const Login = () => {
                         </Link>
                     </div>
                     <div className="flex items-center justify-end mt-4">
-                        <Button className="w-full" loader={loading}>
+                        <Button
+                            type="submit"
+                            className="w-full"
+                            loader={loading}>
                             Login
                         </Button>
                     </div>

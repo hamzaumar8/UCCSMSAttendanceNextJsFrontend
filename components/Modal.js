@@ -10,6 +10,7 @@ import StudentAddForm from "./Modals/students/StudentAddForm";
 import SlideUp from "./SlideUp";
 import ModuleMountForm from "./Modals/Module/ModuleMountForm";
 import ModuleAddForm from "./Modals/Module/ModuleAddForm";
+import ModuleMountEditForm from "./Modals/Module/ModuleMountEditForm";
 
 const dropIn = {
     hidden: {
@@ -87,6 +88,23 @@ const Modal = ({ handleClose, type }) => {
                 </Backdrop>
             )}
 
+            {type === "editModule" && (
+                <Backdrop>
+                    <motion.div
+                        onClick={e => e.stopPropagation()}
+                        variants={dropIn}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        className="rounded-lg flex flex-col justify-center z-0 bg-primary-accent w-full max-w-xl mx-6  after:absolute after:-top-2 after:-left-2 after:w-full after:h-full after:bg-white after:-z-10 after:rounded-lg after:shadow-md">
+                        <ModuleEditForm
+                            onClick={handleClose}
+                            module={modalEdit}
+                        />
+                    </motion.div>
+                </Backdrop>
+            )}
+
             {type === "mountModule" && (
                 <Backdrop>
                     <motion.div
@@ -101,7 +119,7 @@ const Modal = ({ handleClose, type }) => {
                 </Backdrop>
             )}
 
-            {type === "editModule" && (
+            {type === "editmountModule" && (
                 <Backdrop>
                     <motion.div
                         onClick={e => e.stopPropagation()}
@@ -110,7 +128,7 @@ const Modal = ({ handleClose, type }) => {
                         animate="visible"
                         exit="exit"
                         className="rounded-lg flex flex-col justify-center z-0 bg-primary-accent w-full max-w-xl mx-6  after:absolute after:-top-2 after:-left-2 after:w-full after:h-full after:bg-white after:-z-10 after:rounded-lg after:shadow-md">
-                        <ModuleEditForm
+                        <ModuleMountEditForm
                             onClick={handleClose}
                             module={modalEdit}
                         />

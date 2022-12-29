@@ -125,7 +125,9 @@ const Register = () => {
                             Already registered?
                         </Link>
 
-                        <Button className="ml-4">Register</Button>
+                        <Button type="submit" className="ml-4">
+                            Register
+                        </Button>
                     </div>
                 </form>
             </AuthCard>

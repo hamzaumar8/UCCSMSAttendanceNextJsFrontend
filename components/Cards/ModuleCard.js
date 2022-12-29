@@ -24,7 +24,6 @@ const ModuleCard = ({ module, active = "" }) => {
     const [modalType, setModalType] = useRecoilState(modalTypeState);
     const [modalEdit, setModalEdit] = useRecoilState(modalEditState);
 
-    console.log(module);
     return (
         <div
             className={`${
@@ -53,7 +52,7 @@ const ModuleCard = ({ module, active = "" }) => {
                     <DropdownButton
                         onClick={() => {
                             setModalOpen(true);
-                            setModalType("editModule");
+                            setModalType("editmountModule");
                             setModalEdit(module);
                         }}>
                         <PencilSquareIcon className="h-5 w-5 mr-1 text-primary" />
