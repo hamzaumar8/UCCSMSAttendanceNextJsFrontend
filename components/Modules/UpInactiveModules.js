@@ -44,7 +44,7 @@ const UpInactiveModules = ({ modules }) => {
                 {(modulesInactive > 3 || modulesUpcoming > 3) && (
                     <div className="">
                         <button
-                            className="inline-flex items-center px-5 py-3 bg-primary-accent text-primary border border-transparent rounded-full font-semibold text-xs capitalize tracking-widest hover:bg-blue-700 hover:text-white active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity:25 transition ease-in-out duration-500"
+                            className="inline-flex items-center px-4 py-2 bg-primary-accent text-primary border border-transparent rounded-full font-semibold text-xs capitalize tracking-widest hover:bg-blue-700 hover:text-white active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity:25 transition ease-in-out duration-150 space-x-2"
                             onClick={() => setUpViewAll(!upViewAll)}>
                             View {upViewAll ? "less" : "all"}
                         </button>

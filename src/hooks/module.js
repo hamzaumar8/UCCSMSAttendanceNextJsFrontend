@@ -5,7 +5,10 @@ import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { modalState } from "../atoms/modalAtom";
 import { toast } from "react-toastify";
-import { handleModuleBankState } from "../atoms/moduleAtom";
+import {
+    handleModuleBankState,
+    handleModuleMountState,
+} from "../atoms/moduleAtom";
 
 export const useModule = () => {
     const router = useRouter();
@@ -13,7 +16,9 @@ export const useModule = () => {
     const [handleModuleBank, setHandleModuleBank] = useRecoilState(
         handleModuleBankState,
     );
-
+    const [handleModuleMount, setHandleModuleMount] = useRecoilState(
+        handleModuleMountState,
+    );
     const [loading, setLoading] = useState(false);
 
     // CSRF
@@ -97,6 +102,7 @@ export const useModule = () => {
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
+                    setHandleModuleMount(true);
                     setModalOpen(false);
                     toast.success("Module Mounted Successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
@@ -132,6 +138,7 @@ export const useModule = () => {
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
+                    setHandleModuleMount(true);
                     setModalOpen(false);
                     toast.success("Mounted module editted successfully!", {
                         position: toast.POSITION.TOP_RIGHT,

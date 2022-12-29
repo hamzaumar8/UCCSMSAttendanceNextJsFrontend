@@ -1,8 +1,14 @@
+import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
 import ActiveModules from "../../components/Modules/ActiveModules";
 import ModuleBankFeed from "../../components/Modules/ModuleBankFeed";
 import UpInactiveModules from "../../components/Modules/UpInactiveModules";
+import {
+    handleModuleMountState,
+    useSSRModuleMountState,
+} from "../../src/atoms/moduleAtom";
 import axios from "../../src/lib/axios";
 
 const Modules = ({ modules, modulesBank }) => {
@@ -11,13 +17,50 @@ const Modules = ({ modules, modulesBank }) => {
         itm => itm.status == "upcoming" || itm.status == "inactive",
     );
 
+    const [realtimeModuleMount, setRealtimeModuleMount] = useState([]);
+    const [useSSRModuleMount, setUseSSRModuleMount] = useRecoilState(
+        useSSRModuleMountState,
+    );
+    const [handleModuleMount, setHandleModuleMount] = useRecoilState(
+        handleModuleMountState,
+    );
+
+    useEffect(() => {
+        const fetchModuleMount = async () => {
+            const response = await axios.get("/api/v1/modules");
+            const moduleMount = response.data.data;
+            setRealtimeModuleMount(moduleMount);
+            setHandleModuleMount(false);
+            setUseSSRModuleMount(false);
+        };
+        fetchModuleMount();
+    }, [handleModuleMount]);
+
+    const realtimeModulesActive = realtimeModuleMount.filter(
+        itm => itm.status == "active",
+    );
+    const realtimeModulesUpInactive = realtimeModuleMount.filter(
+        itm => itm.status == "upcoming" || itm.status == "inactive",
+    );
+
     return (
         <AppLayout header="Modules">
             <HeadTitle title="Modules" />
 
             <div className="relative space-y-8">
-                <ActiveModules modules={modulesActive} />
-                <UpInactiveModules modules={modulesUpInactive} />
+                {!useSSRModuleMount ? (
+                    <>
+                        <ActiveModules modules={realtimeModulesActive} />
+                        <UpInactiveModules
+                            modules={realtimeModulesUpInactive}
+                        />
+                    </>
+                ) : (
+                    <>
+                        <ActiveModules modules={modulesActive} />
+                        <UpInactiveModules modules={modulesUpInactive} />
+                    </>
+                )}
                 <ModuleBankFeed modules={modulesBank} />
             </div>
         </AppLayout>
