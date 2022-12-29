@@ -26,6 +26,6 @@ export const useSSRModuleMountState = atom({
 });
 
 export const getModuleMountState = atom({
-    key: "getModuleBankState",
+    key: "getModuleMountState",
     default: {},
 });

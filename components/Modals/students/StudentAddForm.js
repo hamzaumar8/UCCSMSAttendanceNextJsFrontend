@@ -10,7 +10,7 @@ import InputError from "../../InputError";
 const StudentAddForm = ({ onClick }) => {
     const { addStudent, loading } = useStudent();
     const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+    const [surname, setSurname] = useState("");
     const [otherName, setOtherName] = useState("");
     const [indexNumber, setIndexNumber] = useState("");
     const [level, setLevel] = useState("");
@@ -47,15 +47,17 @@ const StudentAddForm = ({ onClick }) => {
 
     const submitForm = event => {
         event.preventDefault();
+        const formData = new FormData();
+        formData.append("first_name", firstName);
+        formData.append("surname", surname);
+        formData.append("other_name", otherName);
+        formData.append("index_number", indexNumber);
+        formData.append("email", email);
+        formData.append("level", level);
+        formData.append("phone", phone);
+        formData.append("picture", picture);
         addStudent({
-            first_name: firstName,
-            surname: lastName,
-            other_name: otherName,
-            index_number: indexNumber,
-            level,
-            email,
-            phone,
-            picture,
+            formData,
             setErrors,
             setStatus,
         });
@@ -109,15 +111,15 @@ const StudentAddForm = ({ onClick }) => {
                             />
                         </div>
                         <div className="">
-                            <Label htmlFor="lastName">Last Name</Label>
+                            <Label htmlFor="surname">Last Name</Label>
                             <Input
-                                id="lastName"
+                                id="surname"
                                 type="text"
-                                value={lastName}
+                                value={surname}
                                 placeholder="eg: Amponsah"
                                 className="block mt-1 w-full"
                                 onChange={event =>
-                                    setLastName(event.target.value)
+                                    setSurname(event.target.value)
                                 }
                                 required
                             />{" "}
@@ -185,7 +187,9 @@ const StudentAddForm = ({ onClick }) => {
                                 loadOptions={levelLoadOptions}
                                 defaultOptions
                                 className="block mt-1 w-full"
-                                onChange={event => setLevel(event.value)}
+                                onChange={event => {
+                                    setLevel(event.value);
+                                }}
                                 required
                             />
                             {level === "" && (

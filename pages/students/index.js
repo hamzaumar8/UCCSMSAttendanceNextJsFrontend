@@ -11,16 +11,17 @@ import { modalState, modalTypeState } from "../../src/atoms/modalAtom";
 import { AnimatePresence, motion } from "framer-motion";
 
 const Student = ({ students, levels, modules }) => {
+    const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
 
-    console.log(students);
+    console.log(modules);
     const [modelLevelToggler, setModelLevelToggler] = useState(true);
     const [levelSelectedValue, setLevelSelectedValue] = useState(
         levels[0].name,
     );
     const [moduleSelectedValue, setModuleSelectedValue] = useState(
-        modules[0].code,
+        modules[0].module.code,
     );
     return (
         <AppLayout header="Students">
@@ -127,12 +128,12 @@ const Student = ({ students, levels, modules }) => {
                                     Photo
                                 </th>
                                 <th className="capitalize font-bold px-2 pr-4 py-3 text-left text-sm text-primary tracking-wider whitespace-nowrap">
-                                    ID
+                                    Index Number
                                 </th>
                                 <th className="capitalize font-bold px-2 pr-4 py-3 text-left text-sm text-primary tracking-wider whitespace-nowrap">
                                     Name
                                 </th>
-                                <th className="capitalize font-bold px-2 pr-4 py-3 text-right text-sm text-primary tracking-wider whitespace-nowrap">
+                                <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
                                     Absents(%)
                                 </th>
                                 <th className="capitalize font-bold px-2 pr-6 py-3 text-sm text-primary tracking-wider whitespace-nowrap text-right">
@@ -141,62 +142,21 @@ const Student = ({ students, levels, modules }) => {
                             </tr>
                         </thead>
                         <tbody className="text-gray-text text-sm !border-[#E6EAEF]">
-                            {modelLevelToggler
-                                ? students
-                                      .filter(
-                                          itm =>
-                                              itm.level?.name ==
-                                              levelSelectedValue,
-                                      )
-                                      .map(student => (
-                                          <tr className="" key={student.id}>
-                                              <td className="capitalize p-3 whitespace-nowrap">
-                                                  <Image
-                                                      src={student.picture_url}
-                                                      height={100}
-                                                      width={100}
-                                                      alt={student.index_number}
-                                                      className="w-10 h-10 my-0 mx-auto"
-                                                  />
-                                              </td>
-                                              <td className="capitalize p-3 whitespace-nowrap border-b">
-                                                  <span>
-                                                      <div>
-                                                          {student.index_number}
-                                                      </div>
-                                                  </span>
-                                              </td>
-                                              <td className="capitalize p-3 whitespace-nowrap border-b">
-                                                  <span>
-                                                      <div>
-                                                          {student.full_name}
-                                                      </div>
-                                                  </span>
-                                              </td>
-                                              <td className="capitalize p-3 whitespace-nowrap border-b text-right">
-                                                  <span>
-                                                      <div>40</div>
-                                                  </span>
-                                              </td>
-                                              <td className="capitalize p-3 whitespace-nowrap border-b text-right pr-6">
-                                                  <span>
-                                                      <div>30</div>
-                                                  </span>
-                                              </td>
-                                          </tr>
-                                      ))
-                                : modules
-                                      .filter(
-                                          itm =>
-                                              itm?.code == moduleSelectedValue,
-                                      )
-                                      .map(module =>
-                                          module.students.map(student => (
+                            {
+                                modelLevelToggler
+                                    ? students
+                                          .filter(
+                                              itm =>
+                                                  itm.level?.name ==
+                                                  levelSelectedValue,
+                                          )
+                                          .map(student => (
                                               <tr className="" key={student.id}>
                                                   <td className="capitalize p-3 whitespace-nowrap">
                                                       <Image
                                                           src={
-                                                              student.picture_url
+                                                              student.picture ??
+                                                              defaultImg
                                                           }
                                                           height={100}
                                                           width={100}
@@ -206,7 +166,7 @@ const Student = ({ students, levels, modules }) => {
                                                           className="w-10 h-10 my-0 mx-auto"
                                                       />
                                                   </td>
-                                                  <td className="capitalize p-3 whitespace-nowrap border-b">
+                                                  <td className="uppercase p-3 whitespace-nowrap border-b">
                                                       <span>
                                                           <div>
                                                               {
@@ -219,16 +179,12 @@ const Student = ({ students, levels, modules }) => {
                                                       <span>
                                                           <div>
                                                               {
-                                                                  student.first_name
-                                                              }{" "}
-                                                              {student.other_name &&
-                                                                  student.other_name +
-                                                                      " "}
-                                                              {student.surname}
+                                                                  student.full_name
+                                                              }
                                                           </div>
                                                       </span>
                                                   </td>
-                                                  <td className="capitalize p-3 whitespace-nowrap border-b text-right">
+                                                  <td className="capitalize p-3 whitespace-nowrap border-b text-center">
                                                       <span>
                                                           <div>40</div>
                                                       </span>
@@ -239,8 +195,68 @@ const Student = ({ students, levels, modules }) => {
                                                       </span>
                                                   </td>
                                               </tr>
-                                          )),
-                                      )}
+                                          ))
+                                    : ""
+                                // students
+                                //       .filter(
+                                //           itm =>
+                                //               itm.module?.code ==
+                                //               moduleSelectedValue,
+                                //       )
+                                //       .map(
+                                //           module => <div></div>,
+                                //   module.students.map(student => (
+                                //       <tr className="" key={student.id}>
+                                //           <td className="capitalize p-3 whitespace-nowrap">
+                                //               <Image
+                                //                   src={
+                                //                       student.picture ??
+                                //                       defaultImg
+                                //                   }
+                                //                   height={100}
+                                //                   width={100}
+                                //                   alt={
+                                //                       student.index_number
+                                //                   }
+                                //                   className="w-10 h-10 my-0 mx-auto"
+                                //               />
+                                //           </td>
+                                //           <td className="capitalize p-3 whitespace-nowrap border-b">
+                                //               <span>
+                                //                   <div>
+                                //                       {
+                                //                           student.index_number
+                                //                       }
+                                //                   </div>
+                                //               </span>
+                                //           </td>
+                                //           <td className="capitalize p-3 whitespace-nowrap border-b">
+                                //               <span>
+                                //                   <div>
+                                //                       {
+                                //                           student.first_name
+                                //                       }{" "}
+                                //                       {student.other_name &&
+                                //                           student.other_name +
+                                //                               " "}
+                                //                       {student.surname}
+                                //                   </div>
+                                //               </span>
+                                //           </td>
+                                //           <td className="capitalize p-3 whitespace-nowrap border-b text-right">
+                                //               <span>
+                                //                   <div>40</div>
+                                //               </span>
+                                //           </td>
+                                //           <td className="capitalize p-3 whitespace-nowrap border-b text-right pr-6">
+                                //               <span>
+                                //                   <div>30</div>
+                                //               </span>
+                                //           </td>
+                                //       </tr>
+                                //   )),
+                                //   )
+                            }
                         </tbody>
                     </table>
                 </div>

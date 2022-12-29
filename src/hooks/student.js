@@ -15,14 +15,15 @@ export const useStudent = () => {
     // CSRF
     const csrf = () => axios.get("/sanctum/csrf-cookie");
 
-    const addStudent = async ({ setErrors, setStatus, ...props }) => {
+    const addStudent = async ({ setErrors, setStatus, formData, ...props }) => {
         setLoading(true);
         setErrors([]);
         setStatus(null);
 
         await csrf();
+
         axios
-            .post("/api/v1/students", props)
+            .post("/api/v1/students", formData)
             .then(res => {
                 if (res.data.status === "student-added-succesffully") {
                     setLoading(false);
@@ -34,10 +35,11 @@ export const useStudent = () => {
             })
             .catch(error => {
                 setLoading(false);
-                // if (error.response.status !== 422) throw error;
-                if (error.response.status !== 422) console.log(error);
-
-                setErrors(error.response.data.errors);
+                if (error.response.status !== 422) {
+                    console.log(error);
+                } else {
+                    setErrors(error.response.data.errors);
+                }
             });
     };
 
