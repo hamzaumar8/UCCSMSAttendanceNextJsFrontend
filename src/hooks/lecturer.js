@@ -17,6 +17,8 @@ export const useLecturer = () => {
 
     // CSRF
     const csrf = () => axios.get("/sanctum/csrf-cookie");
+
+    // Add Lecturer
     const addLecturer = async ({
         setErrors,
         setStatus,
@@ -50,8 +52,46 @@ export const useLecturer = () => {
             });
     };
 
+    const editLecturer = async ({
+        setErrors,
+        setStatus,
+        formData,
+        ...props
+    }) => {
+        setLoading(true);
+        setErrors([]);
+        setStatus(null);
+
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + " - " + pair[1]);
+        }
+
+        await csrf();
+        axios
+            .put(`/api/v1/lecturers/${props.id}`, formData)
+            .then(res => {
+                if (res.data.status === "success") {
+                    setLoading(false);
+                    setHandleLecturer(true);
+                    setModalOpen(false);
+                    toast.success("Lecturer was editted successfully!", {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                }
+            })
+            .catch(error => {
+                setLoading(false);
+                if (error.response.status !== 422) {
+                    console.log(error);
+                } else {
+                    setErrors(error.response.data.errors);
+                }
+            });
+    };
+
     return {
         loading,
         addLecturer,
+        editLecturer,
     };
 };

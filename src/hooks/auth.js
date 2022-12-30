@@ -6,10 +6,8 @@ import { useRouter } from "next/router";
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const router = useRouter();
 
-    // Loading
     const [isLoading, setIsLoading] = useState(true);
 
-    // User
     const {
         data: user,
         error,
@@ -17,7 +15,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     } = useSWR("/api/v1/user", () =>
         axios
             .get("/api/v1/user")
-            .then(res => res.data.data)
+            .then(res => res.data)
             .catch(error => {
                 if (error.response.status !== 409) throw error;
 
@@ -25,7 +23,6 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             }),
     );
 
-    // CSRF
     const csrf = () => axios.get("/sanctum/csrf-cookie");
 
     const register = async ({ setErrors, ...props }) => {
@@ -43,7 +40,6 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             });
     };
 
-    // Login
     const login = async ({ setErrors, setStatus, ...props }) => {
         await csrf();
 
@@ -57,7 +53,6 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
                 if (error.response.status !== 422) throw error;
 
                 setErrors(error.response.data.errors);
-                // setErrors(Object.values(error.response.data.errors).flat());
             });
     };
 
@@ -101,7 +96,6 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             .then(response => setStatus(response.data.status));
     };
 
-    // Logout
     const logout = async () => {
         if (!error) {
             await axios.post("/logout").then(() => mutate());
@@ -115,15 +109,12 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
         if (middleware === "guest" && redirectIfAuthenticated && user)
             router.push(redirectIfAuthenticated);
-
         if (
             window.location.pathname === "/verify-email" &&
             user?.email_verified_at
         )
             router.push(redirectIfAuthenticated);
-
-        if (middleware === "auth" && error && !user) logout();
-        // if (middleware == "auth" && !user) logout();
+        if (middleware === "auth" && error) logout();
     }, [user, error]);
 
     return {
@@ -133,8 +124,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         forgotPassword,
         resetPassword,
         resendEmailVerification,
-        isLoading,
-        csrf,
         logout,
+        isLoading,
     };
 };

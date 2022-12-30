@@ -124,9 +124,9 @@ const ModuleCard = ({ module, active = "" }) => {
                         />
                     </div>
                     <div>
-                        {module.lecturers.map(lecturer => (
+                        {module.lecturers.map((lecturer, index) => (
                             <h2
-                                key={lecturer.key}
+                                key={index}
                                 className="text-xs font-bold text-black-text">
                                 {lecturer.title} {lecturer.first_name}{" "}
                                 {lecturer.surname}

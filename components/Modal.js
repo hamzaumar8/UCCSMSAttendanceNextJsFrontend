@@ -11,6 +11,7 @@ import SlideUp from "./SlideUp";
 import ModuleMountForm from "./Modals/Module/ModuleMountForm";
 import ModuleAddForm from "./Modals/Module/ModuleAddForm";
 import ModuleMountEditForm from "./Modals/Module/ModuleMountEditForm";
+import LecturerEditForm from "./Modals/Lecturers/LecturerEditForm";
 
 const dropIn = {
     hidden: {
@@ -146,6 +147,23 @@ const Modal = ({ handleClose, type }) => {
                         exit="exit"
                         className="rounded-lg flex flex-col justify-center z-0 bg-primary-accent w-full max-w-xl mx-6  after:absolute after:-top-2 after:-left-2 after:w-full after:h-full after:bg-white after:-z-10 after:rounded-lg after:shadow-md">
                         <LecturerAddForm onClick={handleClose} />
+                    </motion.div>
+                </Backdrop>
+            )}
+
+            {type === "editLecturer" && (
+                <Backdrop>
+                    <motion.div
+                        onClick={e => e.stopPropagation()}
+                        variants={dropIn}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        className="rounded-lg flex flex-col justify-center z-0 bg-primary-accent w-full max-w-xl mx-6  after:absolute after:-top-2 after:-left-2 after:w-full after:h-full after:bg-white after:-z-10 after:rounded-lg after:shadow-md">
+                        <LecturerEditForm
+                            onClick={handleClose}
+                            lecturer={modalEdit}
+                        />
                     </motion.div>
                 </Backdrop>
             )}

@@ -1,17 +1,22 @@
 import { PlusIcon } from "@heroicons/react/24/solid";
+import { EyeIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import Pagination from "react-js-pagination";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
-import { modalState, modalTypeState } from "../../src/atoms/modalAtom";
+import {
+    modalEditState,
+    modalState,
+    modalTypeState,
+} from "../../src/atoms/modalAtom";
 import axios from "../../src/lib/axios";
-import ReactPaginate from "react-paginate";
-import Pagination from "react-js-pagination";
 import { handleLecturerState } from "../../src/atoms/lecturerAtom";
+
 const Lecturer = ({ lecturers, lecturersSummary }) => {
     const router = useRouter();
     const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
@@ -20,7 +25,7 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
     const [modalType, setModalType] = useRecoilState(modalTypeState);
     const [handleLecturer, setHandleLecturer] =
         useRecoilState(handleLecturerState);
-
+    const [modalEdit, setModalEdit] = useRecoilState(modalEditState);
     const [page, setPage] = useState(router.query?.page || 1);
     const [loading, setLoading] = useState(false);
     const [lecturerData, setLecturerData] = useState(null);
@@ -37,6 +42,7 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
         setLoading(false);
     }, [page, handleLecturer]);
 
+    console.log(lecturers);
     return (
         <AppLayout header="Lecturers">
             {/* Title */}
@@ -75,16 +81,16 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
                                     Photo
                                 </th>
                                 <th className="capitalize font-bold px-2 pr-4 py-3 text-left text-sm text-primary tracking-wider whitespace-nowrap">
+                                    Staff ID
+                                </th>
+                                <th className="capitalize font-bold px-2 pr-4 py-3 text-left text-sm text-primary tracking-wider whitespace-nowrap">
                                     Name
                                 </th>
                                 <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
                                     Modules
                                 </th>
-                                <th className="capitalize font-bold px-2 pr-4 py-3  text-sm text-primary tracking-wider whitespace-nowrap">
-                                    Absents(%)
-                                </th>
                                 <th className="capitalize font-bold px-2 pr-6 py-3 text-sm text-primary tracking-wider whitespace-nowrap text-right">
-                                    Absents(%)
+                                    Actions
                                 </th>
                             </tr>
                         </thead>
@@ -108,6 +114,13 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
                                             <td className="capitalize p-3 whitespace-nowrap border-b">
                                                 <span>
                                                     <div>
+                                                        {lecturer.staff_id}
+                                                    </div>
+                                                </span>
+                                            </td>
+                                            <td className="capitalize p-3 whitespace-nowrap border-b">
+                                                <span>
+                                                    <div>
                                                         {lecturer.title}{" "}
                                                         {lecturer.first_name}{" "}
                                                         {lecturer.other_name &&
@@ -117,52 +130,65 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
                                                     </div>
                                                 </span>
                                             </td>
-                                            <td className="capitalize py-3 whitespace-nowrap border-b text-center">
-                                                {lecturer.modules.length > 0
-                                                    ? lecturer.modules.map(
-                                                          (module, index) => (
-                                                              <div
-                                                                  key={index}
-                                                                  className="uppercase py-3 last:border-b-0 border-b">
-                                                                  {
-                                                                      module
-                                                                          .module
-                                                                          .code
-                                                                  }
-                                                              </div>
-                                                          ),
-                                                      )
-                                                    : "---"}
+                                            <td className="capitalize py-3  border-b text-center">
+                                                <div className="space-x-2">
+                                                    {lecturer.modules.length > 0
+                                                        ? lecturer.modules
+                                                              .slice(0, 3)
+                                                              .map(
+                                                                  (
+                                                                      module,
+                                                                      index,
+                                                                  ) => (
+                                                                      <span
+                                                                          key={
+                                                                              index
+                                                                          }
+                                                                          className="uppercase py-1 rounded-sm text-xs font-bold shadow-sm px-2 bg-primary-accent">
+                                                                          {
+                                                                              module
+                                                                                  .module
+                                                                                  .code
+                                                                          }
+                                                                      </span>
+                                                                  ),
+                                                              )
+                                                        : "---"}
+                                                    {lecturer.modules.length >
+                                                        3 && (
+                                                        <span className="underline text-primary">
+                                                            all
+                                                        </span>
+                                                    )}
+                                                </div>
                                             </td>
-                                            <td className="capitalize py-3 whitespace-nowrap border-b text-center">
-                                                {lecturer.modules.length > 0
-                                                    ? lecturer.modules.map(
-                                                          module => (
-                                                              <div
-                                                                  key={
-                                                                      module.id
-                                                                  }
-                                                                  className="py-3 last:border-b-0 border-b">
-                                                                  40
-                                                              </div>
-                                                          ),
-                                                      )
-                                                    : "---"}
-                                            </td>
-                                            <td className="capitalize py-3 whitespace-nowrap border-b text-right pr-6">
-                                                {lecturer.modules.length > 0
-                                                    ? lecturer.modules.map(
-                                                          module => (
-                                                              <div
-                                                                  key={
-                                                                      module.id
-                                                                  }
-                                                                  className="py-3 last:border-b-0 border-b">
-                                                                  20
-                                                              </div>
-                                                          ),
-                                                      )
-                                                    : "---"}
+
+                                            <td className="capitalize py-3 whitespace-nowrap border-b !text-right pr-6">
+                                                <div className="space-x-3">
+                                                    <Link
+                                                        href={`/lecturers/${lecturer.id}`}
+                                                        legacyBehavior>
+                                                        <a
+                                                            className="inline-flex cursor-pointer text-gray-text hover:!text-secondary transition duration-500"
+                                                            title="Details">
+                                                            <EyeIcon className="h-6 w-6 " />
+                                                        </a>
+                                                    </Link>
+                                                    <button
+                                                        className="inline-flex cursor-pointer text-gray-text hover:!text-primary transition duration-500"
+                                                        title="Edit"
+                                                        onClick={() => {
+                                                            setModalOpen(true);
+                                                            setModalType(
+                                                                "editLecturer",
+                                                            );
+                                                            setModalEdit(
+                                                                lecturer,
+                                                            );
+                                                        }}>
+                                                        <PencilSquareIcon className="h-6 w-6 " />
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     ))}
