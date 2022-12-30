@@ -11,7 +11,7 @@ const LecturerAddForm = ({ onClick }) => {
 
     const [title, setTitle] = useState("");
     const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+    const [surname, setSurname] = useState("");
     const [otherName, setOtherName] = useState("");
     const [staffId, setStaffId] = useState("");
     const [email, setEmail] = useState("");
@@ -34,15 +34,17 @@ const LecturerAddForm = ({ onClick }) => {
 
     const submitForm = event => {
         event.preventDefault();
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("first_name", firstName);
+        formData.append("surname", surname);
+        formData.append("other_name", otherName);
+        formData.append("staff_id", staffId);
+        formData.append("email", email);
+        formData.append("phone", phone);
+        formData.append("picture", picture);
         addLecturer({
-            title,
-            first_name: firstName,
-            surname: lastName,
-            other_name: otherName,
-            staff_id: staffId,
-            email,
-            phone,
-            picture,
+            formData,
             setErrors,
             setStatus,
         });
@@ -113,15 +115,15 @@ const LecturerAddForm = ({ onClick }) => {
                             />
                         </div>
                         <div className="">
-                            <Label htmlFor="lastName">Last Name</Label>
+                            <Label htmlFor="surname">Last Name</Label>
                             <Input
-                                id="lastName"
+                                id="surname"
                                 type="text"
-                                value={lastName}
+                                value={surname}
                                 placeholder="eg: Amponsah"
                                 className="block mt-1 w-full"
                                 onChange={event =>
-                                    setLastName(event.target.value)
+                                    setSurname(event.target.value)
                                 }
                                 required
                             />

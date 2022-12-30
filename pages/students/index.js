@@ -23,7 +23,6 @@ const Student = ({ students, levels, modules }) => {
         modules[0].module.code,
     );
 
-    console.log(students);
     return (
         <AppLayout header="Students">
             {/* Title */}
@@ -195,8 +194,6 @@ const Student = ({ students, levels, modules }) => {
                             )}
                         </tbody>
                     </table>
-                    {/* pagination */}
-                    <div></div>
                 </div>
             </div>
         </AppLayout>

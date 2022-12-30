@@ -11,14 +11,16 @@ import { modalState, modalTypeState } from "../../src/atoms/modalAtom";
 import axios from "../../src/lib/axios";
 import ReactPaginate from "react-paginate";
 import Pagination from "react-js-pagination";
+import { handleLecturerState } from "../../src/atoms/lecturerAtom";
 const Lecturer = ({ lecturers, lecturersSummary }) => {
+    const router = useRouter();
     const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
+
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
+    const [handleLecturer, setHandleLecturer] =
+        useRecoilState(handleLecturerState);
 
-    console.log(lecturers);
-
-    const router = useRouter();
     const [page, setPage] = useState(router.query?.page || 1);
     const [loading, setLoading] = useState(false);
     const [lecturerData, setLecturerData] = useState(null);
@@ -33,9 +35,7 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
         router.push({ pathname: "lecturers", query: { page } });
         fetchLecturers();
         setLoading(false);
-    }, [page]);
-
-    console.log(lecturerData);
+    }, [page, handleLecturer]);
 
     return (
         <AppLayout header="Lecturers">
@@ -50,7 +50,7 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
                             Total Lecturers
                         </h1>
                         <span className="p-1 h-7 w-7 inline-flex items-center justify-center rounded-full text-xs text-white bg-primary">
-                            {lecturers.length}
+                            {lecturersSummary.count}
                         </span>
                     </div>
                     <div>
