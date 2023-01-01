@@ -5,7 +5,7 @@ import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
 import axios from "../../src/lib/axios";
 
-const Cordinators = ({ modules, moduleSummay }) => {
+const Assesments = ({ modules, moduleSummay }) => {
     const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
     return (
         <AppLayout header="Cordinators">
@@ -108,7 +108,7 @@ const Cordinators = ({ modules, moduleSummay }) => {
     );
 };
 
-export default Cordinators;
+export default Assesments;
 
 export async function getStaticProps() {
     const response = await axios.get("api/v1/modules");
