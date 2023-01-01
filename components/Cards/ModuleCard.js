@@ -1,14 +1,15 @@
 import { useState } from "react";
 import {
     EllipsisHorizontalIcon,
-    PencilSquareIcon,
     TrashIcon,
     XCircleIcon,
     XMarkIcon,
 } from "@heroicons/react/24/solid";
+import { EyeIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
+
 import Image from "next/image";
 import Dropdown from "../Dropdown";
-import { DropdownButton } from "../DropdownLink";
+import DropdownLink, { DropdownButton } from "../DropdownLink";
 import { useRecoilState } from "recoil";
 import {
     modalEditState,
@@ -24,6 +25,7 @@ const ModuleCard = ({ module, active = "" }) => {
     const [modalType, setModalType] = useRecoilState(modalTypeState);
     const [modalEdit, setModalEdit] = useRecoilState(modalEditState);
 
+    console.log(module);
     return (
         <div
             className={`${
@@ -49,15 +51,23 @@ const ModuleCard = ({ module, active = "" }) => {
                             <EllipsisHorizontalIcon />
                         </button>
                     }>
-                    <DropdownButton
-                        onClick={() => {
-                            setModalOpen(true);
-                            setModalType("editmountModule");
-                            setModalEdit(module);
-                        }}>
-                        <PencilSquareIcon className="h-5 w-5 mr-1 text-primary" />
-                        Edit Module
-                    </DropdownButton>
+                    <DropdownLink href={`modules/${module.id}`}>
+                        <PencilSquareIcon className="h-5 w-5 mr-1 text-secondary" />
+                        Details
+                    </DropdownLink>
+
+                    {module.status === "upcoming" && (
+                        <DropdownButton
+                            onClick={() => {
+                                setModalOpen(true);
+                                setModalType("editmountModule");
+                                setModalEdit(module);
+                            }}>
+                            <EyeIcon className="h-5 w-5 mr-1 text-primary" />
+                            Edit Module
+                        </DropdownButton>
+                    )}
+
                     <DropdownButton onClick={""}>
                         <TrashIcon className="h-5 w-5 mr-1 text-red-500" />{" "}
                         Delete Module

@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 const Dashboard = ({ modules, lecturers, cordinators, students }) => {
     const [attendanceLecStu, setAttendanceLecStu] = useState(true);
     const modulesActive = modules.filter(itm => itm.status == "active");
-    
+
     return (
         <AppLayout header="Dashboard">
             <HeadTitle title="Dashboard" />
@@ -170,105 +170,107 @@ const Dashboard = ({ modules, lecturers, cordinators, students }) => {
                     </div>
                     <div className="p-20 relative text-gray-text ">
                         <AnimatePresence mode="wait">
-                <motion.div
-                    key={attendanceLecStu ? "Lecturer" : "Student"}
-                    initial={{ y: 10, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -10, opacity: 0 }}
-                    transition={{ duration: 0.2 }}>
-                        <div className="h-[20rem] flex overflow-hidden relative  space-x-8 w-full">
-                            <div className="flex flex-col">
-                                <div className="h-[4rem] flex items-baseline before:absolute before:w-full before:h-[1px] before:bg-gray-300 before:z-0">
-                                    100
-                                </div>
-                                <div className="h-[4rem] flex items-baseline before:absolute before:w-full before:h-[1px] before:bg-gray-300 before:z-0">
-                                    80
-                                </div>
-                                <div className="h-[4rem] flex items-baseline before:absolute before:w-full before:h-[1px] before:bg-gray-300 before:z-0">
-                                    60
-                                </div>
-                                <div className="h-[4rem] flex items-baseline before:absolute before:w-full before:h-[1px] before:bg-gray-300 before:z-0">
-                                    40
-                                </div>
-                                <div className="h-[4rem] flex items-baseline before:absolute before:w-full before:h-[1px] before:bg-gray-300 before:z-0">
-                                    20
-                                </div>
-                            </div>
-                            <div className="flex z-10 space-x-10 h-[20rem] items-end overflow-y-auto relative ">
-                                {
-                                attendanceLecStu? ( modulesActive.map(activeModule => (
-                                    <div
-                                        key={activeModule.id}
-                                        className={`${(100*(
-                                                activeModule.attendance
-                                                        .total.present /
-                                                        activeModule.attendance.total.count,
-                                                )) >= 80 ? 'bg-secondary' :'bg-[#E4572E]' } w-20 flex items-end justify-center rounded-lg`} style={{ 
-                                            "height": (100*(
-                                                activeModule.attendance
-                                                        .total.present /
-                                                        activeModule.attendance.total.count,
-                                                ))+"%",
-                                         }}>
-                                              <span className="text-xs text-black-text font-bold">
-                                            {(100*(
-                                                activeModule.attendance
-                                                        .total.present /
-                                                        activeModule.attendance.total.count,
-                                                )
-                                            ).toFixed(2)}%
-                                        </span>
+                            <motion.div
+                                key={attendanceLecStu ? "Lecturer" : "Student"}
+                                initial={{ y: 10, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                exit={{ y: -10, opacity: 0 }}
+                                transition={{ duration: 0.2 }}>
+                                <div className="h-[20rem] flex overflow-hidden relative  space-x-8 w-full">
+                                    <div className="flex flex-col">
+                                        <div className="chart-bar">100</div>
+                                        <div className="chart-bar">80</div>
+                                        <div className="chart-bar">60</div>
+                                        <div className="chart-bar">40</div>
+                                        <div className="chart-bar">20</div>
                                     </div>
-                                ))):(
-                                modulesActive.map(activeModule => (
-                                    <div
-                                        key={activeModule.id}
-                                        className={`${(100*(
-                                                activeModule.attendance
-                                                        .total
-                                                        .student_attendance
-                                                        .present /
-                                                        activeModule.module
-                                                            .students.length,
-                                                )) >= 80 ? 'bg-secondary' :'bg-[#E4572E]' } w-20 flex items-end justify-center rounded-lg`} style={{ 
-                                            "height":  (100*(
-                                                activeModule.attendance
-                                                        .total
-                                                        .student_attendance
-                                                        .present /
-                                                        activeModule.module
-                                                            .students.length,
-                                                ))+"%",
-                                         }}>
-                                              <span className="text-xs text-black-text font-bold">
-                                            {activeModule.attendance.total.student_attendance.present > 0 || activeModule.module.students.length > 0 ? (100*(
-                                                activeModule.attendance
-                                                        .total
-                                                        .student_attendance
-                                                        .present /
-                                                        activeModule.module
-                                                            .students.length,
-                                                )
-                                            ).toFixed(2) : '0.00'}%
-                                        </span>
+                                    <div className="flex z-10 space-x-10 h-[20rem] items-end overflow-y-auto relative ">
+                                        {attendanceLecStu
+                                            ? modulesActive.map(
+                                                  activeModule => (
+                                                      <div
+                                                          key={activeModule.id}
+                                                          className={`${
+                                                              activeModule
+                                                                  .attendance
+                                                                  .total
+                                                                  .present_percentage >=
+                                                              80
+                                                                  ? "bg-secondary"
+                                                                  : "bg-[#E4572E]"
+                                                          } w-20 flex items-end justify-center rounded-lg`}
+                                                          style={{
+                                                              height:
+                                                                  activeModule
+                                                                      .attendance
+                                                                      .total
+                                                                      .present_percentage +
+                                                                  "%",
+                                                          }}>
+                                                          <span className="text-xs text-black-text font-bold">
+                                                              {
+                                                                  activeModule
+                                                                      .attendance
+                                                                      .total
+                                                                      .present_percentage
+                                                              }
+                                                              %
+                                                          </span>
+                                                      </div>
+                                                  ),
+                                              )
+                                            : modulesActive.map(
+                                                  activeModule => (
+                                                      <div
+                                                          key={activeModule.id}
+                                                          className={`${
+                                                              activeModule
+                                                                  .attendance
+                                                                  .total
+                                                                  .student_attendance
+                                                                  .present_percentage >=
+                                                              80
+                                                                  ? "bg-secondary"
+                                                                  : "bg-[#E4572E]"
+                                                          } w-20 flex items-end justify-center rounded-lg`}
+                                                          style={{
+                                                              height:
+                                                                  activeModule
+                                                                      .attendance
+                                                                      .total
+                                                                      .student_attendance
+                                                                      .present_percentage +
+                                                                  "%",
+                                                          }}>
+                                                          <span className="text-xs text-black-text font-bold">
+                                                              {
+                                                                  activeModule
+                                                                      .attendance
+                                                                      .total
+                                                                      .student_attendance
+                                                                      .present_percentage
+                                                              }
+                                                              %
+                                                          </span>
+                                                      </div>
+                                                  ),
+                                              )}
                                     </div>
-                                ))) }
-                            </div>
-                        </div>
-                        <div className="border-t flex border-gray-300  space-x-8 w-full">
-                            <div className="w-[30px]">0</div>
-                            <div className="space-x-10 flex">
-                                {modulesActive.map(activeModule => (
-                                    <div
-                                        key={activeModule.id}
-                                        className="w-20 text-sm text-center">
-                                        {activeModule.module.code}  
+                                </div>
+                                <div className="border-t flex border-gray-300  space-x-8 w-full">
+                                    <div className="w-[30px]">0</div>
+                                    <div className="space-x-10 flex">
+                                        {modulesActive.map(activeModule => (
+                                            <div
+                                                key={activeModule.id}
+                                                className="w-20 text-sm text-center">
+                                                {activeModule.module.code}
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
-                            </div>
-                        </div>
-                          </motion.div>
-            </AnimatePresence>
+                                </div>
+                            </motion.div>
+                        </AnimatePresence>
                     </div>
                 </div>
             </div>

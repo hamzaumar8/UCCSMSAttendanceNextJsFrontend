@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .tab {
+        @apply transition duration-500 ease-in-out flex items-center space-x-2 relative after:absolute after:bottom-0 after:h-[4px] after:w-full pb-3 after:transition after:duration-500 after:ease-in-out after:rounded-t-full;
+    }
+    .chart-bar {
+        @apply h-[4rem] flex items-baseline before:absolute before:w-full before:h-[1px] before:bg-gray-200 before:z-0;
+    }
+}
+
 .phone-card {
     min-height: calc(100vh - 200px);
 }
@@ -126,4 +135,8 @@ linkLast {
     border-right-width: 1px;
     border-top-right-radius: 0.25rem;
     border-bottom-right-radius: 0.25rem;
+}
+
+.card {
+    box-shadow: 0 2px 3px #cdd8df;
 }

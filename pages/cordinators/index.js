@@ -1,10 +1,12 @@
+import { EyeIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
 import axios from "../../src/lib/axios";
 
-const Cordinators = ({ modules, modeulesSummary }) => {
+const Cordinators = ({ modules, moduleSummay }) => {
+    const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
     return (
         <AppLayout header="Cordinators">
             {/* Title */}
@@ -62,6 +64,9 @@ const Cordinators = ({ modules, modeulesSummary }) => {
                                 <th className="capitalize font-bold px-2 pr-4 py-3 text-left text-sm text-primary tracking-wider whitespace-nowrap">
                                     Name
                                 </th>
+                                <th className="capitalize font-bold px-2 pr-6 py-3 text-sm text-primary tracking-wider whitespace-nowrap text-center">
+                                    Cordinating Modules
+                                </th>
                                 <th className="capitalize font-bold px-2 pr-6 py-3 text-sm text-primary tracking-wider whitespace-nowrap text-right">
                                     Cordinating Modules
                                 </th>
@@ -74,7 +79,10 @@ const Cordinators = ({ modules, modeulesSummary }) => {
                                         <Image
                                             width={100}
                                             height={100}
-                                            src={module.cordinator.picture_url}
+                                            src={
+                                                module.cordinator.picture ??
+                                                defaultImg
+                                            }
                                             className="h-10 w-10 my-0 mx-auto"
                                             alt={module.cordinator.first_name}
                                         />
@@ -91,10 +99,24 @@ const Cordinators = ({ modules, modeulesSummary }) => {
                                             </div>
                                         </span>
                                     </td>
-                                    <td className="capitalize p-3 whitespace-nowrap border-b text-right pr-6">
+                                    <td className="capitalize p-3 whitespace-nowrap border-b text-center pr-6">
                                         <span>
-                                            <div>{module.code}</div>
+                                            <div>{module.module.code}</div>
                                         </span>
+                                    </td>
+
+                                    <td className="capitalize py-3 whitespace-nowrap border-b !text-right pr-6">
+                                        <div className="space-x-3">
+                                            <Link
+                                                href={`/cordinators/${module.id}`}
+                                                legacyBehavior>
+                                                <a
+                                                    className="inline-flex cursor-pointer text-gray-text hover:!text-secondary transition duration-500"
+                                                    title="Details">
+                                                    <EyeIcon className="h-6 w-6 " />
+                                                </a>
+                                            </Link>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
@@ -111,11 +133,11 @@ export default Cordinators;
 export async function getStaticProps() {
     const response = await axios.get("api/v1/modules");
     const modules = response.data.data;
-    const modeulesSummary = response.data.summary;
+    const moduleSummay = response.data.summary;
     return {
         props: {
             modules,
-            modeulesSummary,
+            moduleSummay,
         },
     };
 }
