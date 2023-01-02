@@ -8,6 +8,12 @@ import makeAnimated from "react-select/animated";
 import { useModule } from "../../../src/hooks/module";
 import Errors from "../../Errors";
 import InputError from "../../InputError";
+import {
+    courseRepLoadOptions,
+    lecturerLoadOptions,
+    levelLoadOptions,
+    moduleLoadOption,
+} from "../../../src/lib/selectoptions";
 const animatedCompnent = makeAnimated();
 
 const ModuleMountForm = ({ onClick }) => {
@@ -39,63 +45,6 @@ const ModuleMountForm = ({ onClick }) => {
             setErrors,
             setStatus,
         });
-    };
-
-    const levelLoadOptions = async (inputText, callback) => {
-        const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/lev/backend?s=${inputText}`,
-        );
-        const json = await response.json();
-        callback(
-            json.map(i => ({
-                label: i.name,
-                value: i.id,
-            })),
-        );
-    };
-
-    const loadOptions = async (inputText, callback) => {
-        const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/lect/backend?s=${inputText}`,
-        );
-        const json = await response.json();
-        callback(
-            json.map(i => ({
-                label:
-                    i.other_name != null
-                        ? `${i.title} ${i.first_name} ${i.other_name} ${i.surname} (${i.staff_id})`
-                        : `${i.title} ${i.first_name} ${i.surname} (${i.staff_id})`,
-                value: i.id,
-            })),
-        );
-    };
-
-    const courseRepLoadOptions = async (inputText, callback) => {
-        const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/stud/backend?s=${inputText}`,
-        );
-        const json = await response.json();
-        callback(
-            json.map(i => ({
-                label:
-                    i.other_name != null
-                        ? `${i.first_name} ${i.surname} ${i.other_name} (${i.index_number})`
-                        : `${i.first_name} ${i.surname} (${i.index_number})`,
-                value: i.id,
-            })),
-        );
-    };
-    const moduleLoadOption = async (inputText, callback) => {
-        const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/mod_bank/backend?s=${inputText}`,
-        );
-        const json = await response.json();
-        callback(
-            json.map(i => ({
-                label: `${i.title} (${i.code})`,
-                value: i.id,
-            })),
-        );
     };
 
     return (
@@ -232,7 +181,7 @@ const ModuleMountForm = ({ onClick }) => {
                             isMulti
                             components={animatedCompnent}
                             cacheOptions
-                            loadOptions={loadOptions}
+                            loadOptions={lecturerLoadOptions}
                             defaultOptions
                             className="block mt-1 w-full"
                             onChange={event => setLecturer(event)}
@@ -258,7 +207,7 @@ const ModuleMountForm = ({ onClick }) => {
                         <Label htmlFor="cordinator">Cordinator</Label>
                         <AsyncSelect
                             cacheOptions
-                            loadOptions={loadOptions}
+                            loadOptions={lecturerLoadOptions}
                             defaultOptions
                             className="block mt-1 w-full"
                             onChange={event => setCordinator(event.value)}

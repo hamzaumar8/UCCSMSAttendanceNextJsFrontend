@@ -25,12 +25,45 @@ export const useStudent = () => {
         axios
             .post("/api/v1/students", formData)
             .then(res => {
-                if (res.data.status === "student-added-succesffully") {
+                if (res.data.status === "success") {
                     setLoading(false);
+                    setModalOpen(false);
                     toast.success("Student was added successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
                     });
+                }
+            })
+            .catch(error => {
+                setLoading(false);
+                if (error.response.status !== 422) {
+                    console.log(error);
+                } else {
+                    setErrors(error.response.data.errors);
+                }
+            });
+    };
+
+    const editStudent = async ({
+        setErrors,
+        setStatus,
+        formData,
+        ...props
+    }) => {
+        setLoading(true);
+        setErrors([]);
+        setStatus(null);
+
+        await csrf();
+
+        axios
+            .post(`/api/v1/students/${props.id}`, formData)
+            .then(res => {
+                if (res.data.status === "success") {
+                    setLoading(false);
                     setModalOpen(false);
+                    toast.success("Student was added successfully!", {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
                 }
             })
             .catch(error => {
@@ -46,5 +79,6 @@ export const useStudent = () => {
     return {
         loading,
         addStudent,
+        editStudent,
     };
 };

@@ -11,6 +11,12 @@ import InputError from "../../InputError";
 import { useRecoilState } from "recoil";
 import { modalEditState } from "../../../src/atoms/modalAtom";
 import axios from "../../../src/lib/axios";
+import {
+    courseRepLoadOptions,
+    lecturerLoadOptions,
+    levelLoadOptions,
+    moduleLoadOption,
+} from "../../../src/lib/selectoptions";
 const animatedCompnent = makeAnimated();
 
 const ModuleMountEditForm = ({ onClick, module }) => {
@@ -65,59 +71,6 @@ const ModuleMountEditForm = ({ onClick, module }) => {
         });
     };
 
-    const levelLoadOptions = async (inputText, callback) => {
-        const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/lev/backend?s=${inputText}`,
-        );
-        const json = await response.json();
-        callback(
-            json.map(i => ({
-                label: i.name,
-                value: i.id,
-            })),
-        );
-    };
-    const loadOptions = async (inputText, callback) => {
-        const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/lect/backend?s=${inputText}`,
-        );
-        const json = await response.json();
-        callback(
-            json.map(i => ({
-                label: `${i.title} ${i.first_name} ${
-                    i.other_name && i.other_name + " "
-                }${i.surname} (${i.staff_id})`,
-                value: i.id,
-            })),
-        );
-    };
-    const courseRepLoadOptions = async (inputText, callback) => {
-        const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/stud/backend?s=${inputText}`,
-        );
-        const json = await response.json();
-        callback(
-            json.map(i => ({
-                label: `${i.full_nme} ${i.surname} ${
-                    i.other_name && i.other_name + " "
-                } (${i.index_number})`,
-                value: i.id,
-            })),
-        );
-    };
-
-    const moduleLoadOption = async (inputText, callback) => {
-        const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/mod_bank/backend?s=${inputText}`,
-        );
-        const json = await response.json();
-        callback(
-            json.map(i => ({
-                label: `${i.title} (${i.code})`,
-                value: i.id,
-            })),
-        );
-    };
     return (
         <form onSubmit={submitForm} className="-ml-2">
             <div className="flex items-center justify-between border-b px-8 py-4 ">
@@ -228,7 +181,7 @@ const ModuleMountEditForm = ({ onClick, module }) => {
                             components={animatedCompnent}
                             defaultValue={lecturer}
                             cacheOptions
-                            loadOptions={loadOptions}
+                            loadOptions={lecturerLoadOptions}
                             defaultOptions
                             className="block mt-1 w-full"
                             onChange={event => setLecturer(event)}
@@ -255,7 +208,7 @@ const ModuleMountEditForm = ({ onClick, module }) => {
                         <AsyncSelect
                             defaultValue={cordinator}
                             cacheOptions
-                            loadOptions={loadOptions}
+                            loadOptions={lecturerLoadOptions}
                             defaultOptions
                             className="block mt-1 w-full"
                             onChange={event => setCordinator(event)}

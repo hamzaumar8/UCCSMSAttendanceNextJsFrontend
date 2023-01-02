@@ -8,17 +8,20 @@ import Errors from "../../Errors";
 import InputError from "../../InputError";
 import { levelLoadOptions } from "../../../src/lib/selectoptions";
 
-const StudentAddForm = ({ onClick }) => {
-    const { addStudent, loading } = useStudent();
-    const [firstName, setFirstName] = useState("");
-    const [surname, setSurname] = useState("");
-    const [otherName, setOtherName] = useState("");
-    const [indexNumber, setIndexNumber] = useState("");
-    const [level, setLevel] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
+const StudentEditForm = ({ onClick, student }) => {
+    const { editStudent, loading } = useStudent();
+    const [firstName, setFirstName] = useState(student.first_name);
+    const [surname, setSurname] = useState(student.surname);
+    const [otherName, setOtherName] = useState(student.other_name);
+    const [indexNumber, setIndexNumber] = useState(student.index_number);
+    const [level, setLevel] = useState({
+        label: student.level.name,
+        value: student.level.id,
+    });
+    const [email, setEmail] = useState(student.user.email);
+    const [phone, setPhone] = useState(student.phone);
     const [picture, setPicture] = useState("");
-    const [previewImage, setPreviewImage] = useState(null);
+    const [previewImage, setPreviewImage] = useState(student.picture);
 
     const [errors, setErrors] = useState([]);
     const [status, setStatus] = useState(null);
@@ -36,15 +39,17 @@ const StudentAddForm = ({ onClick }) => {
     const submitForm = event => {
         event.preventDefault();
         const formData = new FormData();
+        formData.append("_method", "PATCH");
         formData.append("first_name", firstName);
         formData.append("surname", surname);
         formData.append("other_name", otherName);
         formData.append("index_number", indexNumber);
         formData.append("email", email);
-        formData.append("level", level);
+        formData.append("level", level.value);
         formData.append("phone", phone);
         formData.append("picture", picture);
-        addStudent({
+        editStudent({
+            id: student.id,
             formData,
             setErrors,
             setStatus,
@@ -171,13 +176,12 @@ const StudentAddForm = ({ onClick }) => {
                         <div className="">
                             <Label htmlFor="level">Level (Class)</Label>
                             <AsyncSelect
+                                defaultValue={level}
                                 cacheOptions
                                 loadOptions={levelLoadOptions}
                                 defaultOptions
                                 className="block mt-1 w-full"
-                                onChange={event => {
-                                    setLevel(event.value);
-                                }}
+                                onChange={event => setLevel(event)}
                                 required
                             />
                             {level === "" && (
@@ -242,4 +246,4 @@ const StudentAddForm = ({ onClick }) => {
     );
 };
 
-export default StudentAddForm;
+export default StudentEditForm;

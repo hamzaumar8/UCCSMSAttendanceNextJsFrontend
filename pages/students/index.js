@@ -7,13 +7,19 @@ import AppLayout from "../../components/Layouts/AppLayout";
 import axios from "../../src/lib/axios";
 import { ChevronDownIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { useRecoilState } from "recoil";
-import { modalState, modalTypeState } from "../../src/atoms/modalAtom";
+import {
+    modalEditState,
+    modalState,
+    modalTypeState,
+} from "../../src/atoms/modalAtom";
 import { AnimatePresence, motion } from "framer-motion";
+import { PencilSquareIcon } from "@heroicons/react/24/outline";
 
 const Student = ({ students, levels, modules }) => {
     const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
+    const [modalEdit, setModalEdit] = useRecoilState(modalEditState);
 
     const [modelLevelToggler, setModelLevelToggler] = useState(true);
     const [levelSelectedValue, setLevelSelectedValue] = useState(
@@ -136,8 +142,11 @@ const Student = ({ students, levels, modules }) => {
                                 <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
                                     Absents(%)
                                 </th>
-                                <th className="capitalize font-bold px-2 pr-6 py-3 text-sm text-primary tracking-wider whitespace-nowrap text-right">
+                                <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
                                     Absents(%)
+                                </th>
+                                <th className="capitalize font-bold px-2 pr-6 py-3 text-sm text-primary tracking-wider whitespace-nowrap text-right">
+                                    Action
                                 </th>
                             </tr>
                         </thead>
@@ -182,9 +191,31 @@ const Student = ({ students, levels, modules }) => {
                                                     <div>40</div>
                                                 </span>
                                             </td>
+                                            <td className="capitalize p-3 whitespace-nowrap border-b text-center">
+                                                <span>
+                                                    <div>40</div>
+                                                </span>
+                                            </td>
                                             <td className="capitalize p-3 whitespace-nowrap border-b text-right pr-6">
                                                 <span>
-                                                    <div>30</div>
+                                                    <div>
+                                                        <button
+                                                            className="inline-flex cursor-pointer text-gray-text hover:!text-primary transition duration-500"
+                                                            title="Edit"
+                                                            onClick={() => {
+                                                                setModalOpen(
+                                                                    true,
+                                                                );
+                                                                setModalType(
+                                                                    "editStudent",
+                                                                );
+                                                                setModalEdit(
+                                                                    student,
+                                                                );
+                                                            }}>
+                                                            <PencilSquareIcon className="h-6 w-6 " />
+                                                        </button>
+                                                    </div>
                                                 </span>
                                             </td>
                                         </tr>
