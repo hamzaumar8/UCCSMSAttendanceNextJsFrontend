@@ -41,8 +41,6 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
         fetchLecturers();
         setLoading(false);
     }, [page, handleLecturer]);
-
-    console.log(lecturers);
     return (
         <AppLayout header="Lecturers">
             {/* Title */}

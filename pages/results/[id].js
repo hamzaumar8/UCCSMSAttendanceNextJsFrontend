@@ -3,10 +3,10 @@ import Link from "next/link";
 import Button from "../../components/Button";
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
+import SemesterTag from "../../components/SemesterTag";
 import axios from "../../src/lib/axios";
 
 const Result = ({ result }) => {
-    console.log(result);
     return (
         <AppLayout header={`${result.module.module.code} Results`}>
             <HeadTitle title="" />
@@ -20,10 +20,7 @@ const Result = ({ result }) => {
                             <h1 className="text-2xl font-extrabold ">
                                 {result.module.module.code}
                             </h1>
-                            <div className="flex border border-primary p-1 px-6 space-x-2 rounded-full text-sm capitalize font-bold text-primary">
-                                <span>2022-2023</span>
-                                <span>first semester</span>
-                            </div>
+                            <SemesterTag />
                         </div>
                         <div>
                             <Button className="!rounded-full !capitalize px-6">

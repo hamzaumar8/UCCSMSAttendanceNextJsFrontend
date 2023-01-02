@@ -3,7 +3,6 @@ import AppLayout from "../../components/Layouts/AppLayout";
 import axios from "../../src/lib/axios";
 
 const Lecturer = ({ lecturer }) => {
-    console.log(lecturer);
     return (
         <AppLayout header="Lecturer details page">
             <HeadTitle title="Lecturers" />

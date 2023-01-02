@@ -13,8 +13,6 @@ const StaffDashboard = ({ modules }) => {
     const lecturerModules = modules.filter(
         item => item.lecturer_id == user?.id,
     );
-
-    console.log(modules, user?.id, lecturerModules);
     return (
         <LecturerLayout header="Here's an overview of all attendaces">
             <HeadTitle title="Lecturer Dashboard" />

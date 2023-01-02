@@ -2,17 +2,32 @@ import { EyeIcon } from "@heroicons/react/24/outline";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModuleCard from "../../components/Cards/ModuleCard";
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
 import AllResults from "../../components/Results/AllResults";
+import CordinatingModules from "../../components/Results/CordinatingModules";
+import SemesterTag from "../../components/SemesterTag";
 import axios from "../../src/lib/axios";
 
 const Results = ({ results }) => {
     const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
 
     const [upInactiveToggle, setUpInactiveToggle] = useState(false);
+    const [cordinatingModules, setCordinatingModules] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const fetchCordinatingModules = async () => {
+        const response = await axios.get("api/v1/cordinating/modules");
+        response.status === 200 && setCordinatingModules(response.data.data);
+    };
+    useEffect(() => {
+        setIsLoading(true);
+        fetchCordinatingModules();
+        setIsLoading(false);
+    }, []);
+
     return (
         <AppLayout header="Results">
             {/* Title */}
@@ -47,10 +62,7 @@ const Results = ({ results }) => {
                                 </h1>
                             </button>
                         </div>
-                        <div className="flex border border-primary p-1 px-6 space-x-2 rounded-full text-sm capitalize font-bold text-primary">
-                            <span>2022-2023</span>
-                            <span>first semester</span>
-                        </div>
+                        <SemesterTag />
                         <div></div>
                     </div>
                     <AnimatePresence mode="wait">
@@ -64,7 +76,17 @@ const Results = ({ results }) => {
                                 {!upInactiveToggle ? (
                                     <AllResults results={results} />
                                 ) : (
-                                    <div>hamza</div>
+                                    <>
+                                        {isLoading ? (
+                                            "LOADING ..."
+                                        ) : (
+                                            <CordinatingModules
+                                                cordinatingModules={
+                                                    cordinatingModules
+                                                }
+                                            />
+                                        )}
+                                    </>
                                 )}
                             </div>
                         </motion.div>
@@ -80,6 +102,7 @@ export default Results;
 export async function getStaticProps() {
     const response = await axios.get("api/v1/results");
     const results = response.data.data;
+
     return {
         props: {
             results,

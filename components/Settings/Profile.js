@@ -38,7 +38,6 @@ const Profile = () => {
             reader.readAsDataURL(file);
         }
     };
-    console.log(user);
 
     const submitForm = event => {
         event.preventDefault();

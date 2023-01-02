@@ -8,7 +8,6 @@ import Select from "../../Select";
 
 const LecturerEditForm = ({ onClick, lecturer }) => {
     const { editLecturer, loading } = useLecturer();
-    console.log(lecturer);
     const [title, setTitle] = useState(lecturer.title);
     const [firstName, setFirstName] = useState(lecturer.first_name);
     const [surname, setSurname] = useState(lecturer.surname);
