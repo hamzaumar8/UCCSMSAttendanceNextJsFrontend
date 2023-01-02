@@ -25,7 +25,6 @@ const Module = ({ module }) => {
     const [attendanceLecStu, setAttendanceLecStu] = useState(true);
 
     const week = Object.values(module.attendance.weekly);
-    console.log(module, week);
     return (
         <AppLayout header={module.module.code}>
             <HeadTitle title="Lecturers" />

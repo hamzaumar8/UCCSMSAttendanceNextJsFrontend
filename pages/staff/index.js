@@ -6,14 +6,10 @@ import { CalendarDaysIcon } from "@heroicons/react/24/solid";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../src/atoms/modalAtom";
 import { useAuth } from "../../src/hooks/auth";
-import { useSWRConfig } from "swr";
-import { useLecturer } from "../../src/hooks/lecturer";
 
 const StaffDashboard = ({ modules }) => {
     const { user } = useAuth({ middleware: "auth" });
-
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
-
     const lecturerModules = modules.filter(
         item => item.lecturer_id == user?.id,
     );

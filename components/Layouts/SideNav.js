@@ -2,6 +2,7 @@ import {
     AcademicCapIcon,
     ArrowLeftOnRectangleIcon,
     ChartBarIcon,
+    CloudArrowDownIcon,
     Cog6ToothIcon,
     PencilSquareIcon,
     UserGroupIcon,
@@ -64,8 +65,14 @@ const SideNav = () => {
                         <span>Cordinators</span>
                     </NavLink>
                     <NavLink
+                        href="/results"
+                        active={router.pathname === "/results"}>
+                        <CloudArrowDownIcon className="w-6 h-6" />
+                        <span>Results</span>
+                    </NavLink>
+                    <NavLink
                         href="/settings"
-                        active={router.pathname === "/cordinators"}>
+                        active={router.pathname === "/settings"}>
                         <Cog6ToothIcon className="w-6 h-6" />
                         <span>Settings</span>
                     </NavLink>
