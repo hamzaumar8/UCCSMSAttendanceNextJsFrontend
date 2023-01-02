@@ -15,7 +15,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     } = useSWR("/api/v1/user", () =>
         axios
             .get("/api/v1/user")
-            .then(res => res.data)
+            .then(res => res.data.data)
             .catch(error => {
                 if (error.response.status !== 409) throw error;
 

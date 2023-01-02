@@ -35,6 +35,7 @@ const LecturerEditForm = ({ onClick, lecturer }) => {
     const submitForm = event => {
         event.preventDefault();
         const formData = new FormData();
+        formData.append("_method", "PATCH");
         formData.append("title", title);
         formData.append("first_name", firstName);
         formData.append("surname", surname);

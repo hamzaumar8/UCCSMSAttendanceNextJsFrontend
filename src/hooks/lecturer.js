@@ -68,7 +68,7 @@ export const useLecturer = () => {
 
         await csrf();
         axios
-            .put(`/api/v1/lecturers/${props.id}`, formData)
+            .post(`/api/v1/lecturers/${props.id}`, formData)
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
