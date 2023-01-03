@@ -7,7 +7,6 @@ import SemesterTag from "../../components/SemesterTag";
 import axios from "../../src/lib/axios";
 
 const Result = ({ result }) => {
-    console.log(result);
     return (
         <AppLayout header={`${result.module.module.code} Results`}>
             <HeadTitle title="" />

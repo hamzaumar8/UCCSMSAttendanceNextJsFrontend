@@ -7,22 +7,16 @@ import HeadTitle from "../../../components/HeadTitle";
 import InputError from "../../../components/InputError";
 import AppLayout from "../../../components/Layouts/AppLayout";
 import SemesterTag from "../../../components/SemesterTag";
-import { handleResultState } from "../../../src/atoms/resultAtom";
+import {
+    handleResultState,
+    useSSRResultState,
+} from "../../../src/atoms/resultAtom";
 import { useResult } from "../../../src/hooks/result";
 import axios from "../../../src/lib/axios";
 
 const EditResult = ({ result }) => {
     const { editResult, loading } = useResult();
-    const [scores, setScores] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [handleResult, setHandleResult] = useRecoilState(handleResultState);
-
-    useEffect(() => {
-        setIsLoading(true);
-        setScores(result.assessments);
-        setIsLoading(false);
-        console.log("hamza");
-    }, [handleResult]);
+    const [scores, setScores] = useState(result.assessments);
 
     const handleChange = (e, index) => {
         const { name, value } = e.target;
@@ -56,7 +50,7 @@ const EditResult = ({ result }) => {
 
     return (
         <AppLayout header={`${result.module.module.code} Results`}>
-            <HeadTitle title="" />
+            <HeadTitle title={`${result.module.module.code} Results`} />
 
             {/* Main content */}
             <div className="relative space-y-8">
@@ -163,9 +157,7 @@ const EditResult = ({ result }) => {
                                                                     )
                                                                 }
                                                                 value={
-                                                                    scores[
-                                                                        index
-                                                                    ].score
+                                                                    assessment.score
                                                                 }
                                                             />
                                                             <InputError className="mt-2" />
