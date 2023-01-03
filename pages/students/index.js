@@ -13,7 +13,7 @@ import {
     modalTypeState,
 } from "../../src/atoms/modalAtom";
 import { AnimatePresence, motion } from "framer-motion";
-import { PencilSquareIcon } from "@heroicons/react/24/outline";
+import { ArrowUpTrayIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 
 const Student = ({ students, levels, modules }) => {
     const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
@@ -45,7 +45,7 @@ const Student = ({ students, levels, modules }) => {
                             {students.length}
                         </span>
                     </div>
-                    <div className="space-x-6 flex items-center">
+                    <div className="space-x-2 flex items-center">
                         <div className="rounded-full border border-primary p-0.5 space-x-2">
                             <button
                                 onClick={() => setModelLevelToggler(true)}
@@ -112,7 +112,11 @@ const Student = ({ students, levels, modules }) => {
                             </Dropdown>
                         </div>
                     </div>
-                    <div>
+                    <div className="space-x-4 flex items-center">
+                        <button className="inline-flex items-center px-6 py-2 bg-white text-primary rounded-full font-bold text-xs capitalize border border-primary tracking-widest transition ease-in-out duration-150">
+                            <ArrowUpTrayIcon className="w-4 h-4 mr-1" />
+                            Improt CSV
+                        </button>
                         <motion.button
                             whileHover={{ scale: 1.01 }}
                             whileTap={{ scale: 0.99 }}
@@ -120,8 +124,8 @@ const Student = ({ students, levels, modules }) => {
                                 setModalOpen(true);
                                 setModalType("addStudent");
                             }}
-                            className="inline-flex items-center px-4 py-2 bg-primary text-white border border-transparent rounded-full font-semibold text-xs capitalize tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity:25 transition ease-in-out duration-150">
-                            <PlusIcon className="w-4 h-4 mr-2" />
+                            className="inline-flex items-center px-6 py-2 bg-primary text-white border border-transparent rounded-full font-semibold text-xs capitalize tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity:25 transition ease-in-out duration-150">
+                            <PlusIcon className="w-4 h-4 mr-1" />
                             Add Student
                         </motion.button>
                     </div>
@@ -169,7 +173,7 @@ const Student = ({ students, levels, modules }) => {
                                                     height={100}
                                                     width={100}
                                                     alt={student.index_number}
-                                                    className="w-10 h-10 my-0 mx-auto"
+                                                    className="w-14 h-12 my-0 mx-auto"
                                                 />
                                             </td>
                                             <td className="uppercase p-3 whitespace-nowrap border-b">
