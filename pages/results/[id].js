@@ -7,6 +7,7 @@ import SemesterTag from "../../components/SemesterTag";
 import axios from "../../src/lib/axios";
 
 const Result = ({ result }) => {
+    console.log(result);
     return (
         <AppLayout header={`${result.module.module.code} Results`}>
             <HeadTitle title="" />
@@ -22,11 +23,15 @@ const Result = ({ result }) => {
                             </h1>
                             <SemesterTag />
                         </div>
-                        <div>
-                            <Button className="!rounded-full !capitalize px-6">
-                                Edit Results
-                            </Button>
-                        </div>
+                        {result.status === "save" && (
+                            <div>
+                                <Link
+                                    href={`/results/edit/${result.id}`}
+                                    className="bg-primary py-2 px-6 rounded-full capitalize text-xs font-bold text-white">
+                                    Edit Results
+                                </Link>
+                            </div>
+                        )}
                     </div>
                     <div className="overflow-x-auto rounded-t-2xl bg-white overflow-y-auto relative">
                         <table className="table  min-w-full">

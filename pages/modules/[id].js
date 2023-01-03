@@ -296,16 +296,6 @@ const Module = ({ module }) => {
                                 {module.students.length}
                             </span>
                         </div>
-                        <div className="space-x-6 flex items-center">
-                            <div className="rounded-full border border-primary p-0.5 space-x-2">
-                                <button
-                                    onClick={() => setModelLevelToggler(true)}
-                                    className="bg-primary text-white
-                                           rounded-full inline-block px-8 py-2 text-xs font-bold transition duration-500 ease-in-out">
-                                    levels
-                                </button>
-                            </div>
-                        </div>
                         <div>
                             <motion.button
                                 whileHover={{ scale: 1.01 }}
@@ -336,8 +326,11 @@ const Module = ({ module }) => {
                                     <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
                                         Absents(%)
                                     </th>
-                                    <th className="capitalize font-bold px-2 pr-6 py-3 text-sm text-primary tracking-wider whitespace-nowrap text-right">
+                                    <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
                                         Absents(%)
+                                    </th>
+                                    <th className="capitalize font-bold px-2 pr-6 py-3 text-sm text-primary tracking-wider whitespace-nowrap text-right">
+                                        Action
                                     </th>
                                 </tr>
                             </thead>
@@ -366,6 +359,11 @@ const Module = ({ module }) => {
                                         <td className="capitalize p-3 whitespace-nowrap border-b">
                                             <span>
                                                 <div>{student.full_name}</div>
+                                            </span>
+                                        </td>
+                                        <td className="capitalize p-3 whitespace-nowrap border-b text-center">
+                                            <span>
+                                                <div>40</div>
                                             </span>
                                         </td>
                                         <td className="capitalize p-3 whitespace-nowrap border-b text-center">

@@ -72,9 +72,9 @@ const Cordinators = ({ modules, moduleSummay }) => {
                                             <div>
                                                 {module.cordinator.title}{" "}
                                                 {module.cordinator.first_name}{" "}
-                                                {module.cordinator.other_name}
                                                 {module.cordinator.other_name &&
-                                                    " "}
+                                                    module.cordinator
+                                                        .other_name + " "}
                                                 {module.cordinator.surname}
                                             </div>
                                         </span>
@@ -88,7 +88,7 @@ const Cordinators = ({ modules, moduleSummay }) => {
                                     <td className="capitalize py-3 whitespace-nowrap border-b !text-right pr-6">
                                         <div className="space-x-3">
                                             <Link
-                                                href={`/cordinators/${module.id}`}
+                                                href={`/modules/${module.id}`}
                                                 legacyBehavior>
                                                 <a
                                                     className="inline-flex cursor-pointer text-gray-text hover:!text-secondary transition duration-500"
