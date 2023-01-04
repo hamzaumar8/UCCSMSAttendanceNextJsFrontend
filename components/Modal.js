@@ -13,6 +13,7 @@ import ModuleAddForm from "./Modals/Module/ModuleAddForm";
 import ModuleMountEditForm from "./Modals/Module/ModuleMountEditForm";
 import LecturerEditForm from "./Modals/Lecturers/LecturerEditForm";
 import StudentEditForm from "./Modals/students/StudentEditForm";
+import AddGroup from "./Modals/Groups/AddGroup";
 
 const dropIn = {
     hidden: {
@@ -62,6 +63,19 @@ const Modal = ({ handleClose, type }) => {
     const [modalEdit, setModalEdit] = useRecoilState(modalEditState);
     return (
         <>
+            {type === "addGroup" && (
+                <Backdrop>
+                    <motion.div
+                        onClick={e => e.stopPropagation()}
+                        variants={dropIn}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        className="rounded-lg flex flex-col justify-center z-0 bg-primary-accent w-full max-w-xl mx-6  after:absolute after:-top-2 after:-left-2 after:w-full after:h-full after:bg-white after:-z-10 after:rounded-lg after:shadow-md">
+                        <AddGroup onClick={handleClose} />
+                    </motion.div>
+                </Backdrop>
+            )}
             {type === "addStudent" && (
                 <Backdrop>
                     <motion.div

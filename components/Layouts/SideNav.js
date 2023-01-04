@@ -5,6 +5,7 @@ import {
     CloudArrowDownIcon,
     Cog6ToothIcon,
     PencilSquareIcon,
+    RectangleGroupIcon,
     UserGroupIcon,
     UsersIcon,
 } from "@heroicons/react/24/outline";
@@ -69,6 +70,12 @@ const SideNav = () => {
                         active={router.pathname === "/results"}>
                         <CloudArrowDownIcon className="w-6 h-6" />
                         <span>Results</span>
+                    </NavLink>
+                    <NavLink
+                        href="/groups"
+                        active={router.pathname === "/groups"}>
+                        <RectangleGroupIcon className="w-6 h-6" />
+                        <span>Groups</span>
                     </NavLink>
                     <NavLink
                         href="/settings"

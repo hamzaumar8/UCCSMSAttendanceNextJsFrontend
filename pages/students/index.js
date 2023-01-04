@@ -144,6 +144,9 @@ const Student = ({ students, levels, modules }) => {
                                     Name
                                 </th>
                                 <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
+                                    Group Number
+                                </th>
+                                <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
                                     Absents(%)
                                 </th>
                                 <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
@@ -188,6 +191,11 @@ const Student = ({ students, levels, modules }) => {
                                                     <div>
                                                         {student.full_name}
                                                     </div>
+                                                </span>
+                                            </td>
+                                            <td className="capitalize p-3 whitespace-nowrap border-b text-center">
+                                                <span>
+                                                    <div>1</div>
                                                 </span>
                                             </td>
                                             <td className="capitalize p-3 whitespace-nowrap border-b text-center">
