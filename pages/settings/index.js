@@ -28,15 +28,18 @@ const Settings = () => {
                         )}
                     </div>
                     {/* Active Modules Card */}
+
                     <div className="col-span-1 xl:col-span-3">
-                        <Card
-                            header={
-                                <h1 className="text-black-text font-extrabold capitalize">
-                                    Active Mdoules
-                                </h1>
-                            }>
-                            <div className="space-y-3"></div>
-                        </Card>
+                        {semester && (
+                            <Card
+                                header={
+                                    <h1 className="text-black-text font-extrabold capitalize">
+                                        Student Promotion
+                                    </h1>
+                                }>
+                                <div className="space-y-3"></div>
+                            </Card>
+                        )}
                     </div>
                 </div>
                 {/* Profile */}

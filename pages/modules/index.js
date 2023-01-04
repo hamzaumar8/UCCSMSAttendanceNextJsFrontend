@@ -9,9 +9,13 @@ import {
     handleModuleMountState,
     useSSRModuleMountState,
 } from "../../src/atoms/moduleAtom";
+import { useSemester } from "../../src/hooks/semester";
 import axios from "../../src/lib/axios";
-
+import Card from "../../components/Card";
+import Link from "next/link";
+import SemesterNotFound from "../../components/SemesterNotFound";
 const Modules = ({ modules, modulesBank }) => {
+    const { semester } = useSemester();
     const modulesActive = modules.filter(itm => itm.status == "active");
     const modulesUpInactive = modules.filter(
         itm => itm.status == "upcoming" || itm.status == "inactive",
@@ -48,18 +52,28 @@ const Modules = ({ modules, modulesBank }) => {
             <HeadTitle title="Modules" />
 
             <div className="relative space-y-8">
-                {!useSSRModuleMount ? (
+                {semester ? (
                     <>
-                        <ActiveModules modules={realtimeModulesActive} />
-                        <UpInactiveModules
-                            modules={realtimeModulesUpInactive}
-                        />
+                        {!useSSRModuleMount ? (
+                            <>
+                                <ActiveModules
+                                    modules={realtimeModulesActive}
+                                />
+                                <UpInactiveModules
+                                    modules={realtimeModulesUpInactive}
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <ActiveModules modules={modulesActive} />
+                                <UpInactiveModules
+                                    modules={modulesUpInactive}
+                                />
+                            </>
+                        )}
                     </>
                 ) : (
-                    <>
-                        <ActiveModules modules={modulesActive} />
-                        <UpInactiveModules modules={modulesUpInactive} />
-                    </>
+                    <SemesterNotFound />
                 )}
                 <ModuleBankFeed modules={modulesBank} />
             </div>

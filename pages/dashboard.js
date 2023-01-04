@@ -5,8 +5,11 @@ import HeadTitle from "../components/HeadTitle";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
+import SemesterNotFound from "../components/SemesterNotFound";
+import { useSemester } from "../src/hooks/semester";
 
 const Dashboard = ({ modules, lecturers, cordinators, students }) => {
+    const { semester } = useSemester();
     const [attendanceLecStu, setAttendanceLecStu] = useState(true);
     const modulesActive = modules.filter(itm => itm.status == "active");
 
@@ -78,190 +81,209 @@ const Dashboard = ({ modules, lecturers, cordinators, students }) => {
                     </div>
                     {/* Active Modules Card */}
                     <div className="col-span-1 xl:col-span-3">
-                        <Card
-                            header={
-                                <h1 className="text-black-text font-extrabold capitalize">
-                                    Active Mdoules
-                                </h1>
-                            }>
-                            <div className="space-y-3">
-                                {modulesActive.map(activeModule => (
-                                    <div
-                                        key={activeModule.id}
-                                        className="flex items-center justify-between p-1">
-                                        <div className="flex space-x-2 items-center">
-                                            <div className="flex items-center justify-center bg-primary-accent text-primary rounded-full text-xs w-[80px] py-1 font-bold uppercase">
-                                                {activeModule.module.code}
+                        {semester ? (
+                            <Card
+                                header={
+                                    <h1 className="text-black-text font-extrabold capitalize">
+                                        Active Mdoules
+                                    </h1>
+                                }>
+                                <div className="space-y-3">
+                                    {modulesActive.map(activeModule => (
+                                        <div
+                                            key={activeModule.id}
+                                            className="flex items-center justify-between p-1">
+                                            <div className="flex space-x-2 items-center">
+                                                <div className="flex items-center justify-center bg-primary-accent text-primary rounded-full text-xs w-[80px] py-1 font-bold uppercase">
+                                                    {activeModule.module.code}
+                                                </div>
+                                                <h3 className="text-gray-text text-xs capitalized">
+                                                    {activeModule.module.title}
+                                                </h3>
                                             </div>
-                                            <h3 className="text-gray-text text-xs capitalized">
-                                                {activeModule.module.title}
-                                            </h3>
-                                        </div>
-                                        <div className="flex items-center space-x-4">
-                                            <div className="bg-gray-200 h-2 w-40 rounded-full relative overflow-hidden">
-                                                <div
-                                                    className="bg-secondary block  h-full rounded-full"
-                                                    style={{
-                                                        width:
+                                            <div className="flex items-center space-x-4">
+                                                <div className="bg-gray-200 h-2 w-40 rounded-full relative overflow-hidden">
+                                                    <div
+                                                        className="bg-secondary block  h-full rounded-full"
+                                                        style={{
+                                                            width:
+                                                                activeModule
+                                                                    .days
+                                                                    .covered_percentage +
+                                                                "%",
+                                                        }}></div>
+                                                </div>
+                                                <div className="text-xs text-gray-text">
+                                                    <span>
+                                                        {
                                                             activeModule.days
-                                                                .covered_percentage +
-                                                            "%",
-                                                    }}></div>
-                                            </div>
-                                            <div className="text-xs text-gray-text">
-                                                <span>
-                                                    {
-                                                        activeModule.days
-                                                            .covered_percentage
-                                                    }
-                                                    %
-                                                </span>
+                                                                .covered_percentage
+                                                        }
+                                                        %
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </Card>
+                                    ))}
+                                </div>
+                            </Card>
+                        ) : (
+                            <SemesterNotFound />
+                        )}
                     </div>
                 </div>
 
-                <div className="bg-white relative overflow-hidden shadow-sm sm:rounded-lg transition duration-200 ease-in-out">
-                    {/* Header */}
-                    <div className="p-5 sm:flex items-center justify-between border-b ">
-                        <div className="flex items-center justify-center space-x-4">
-                            <h1 className="text-xl font-extrabold">
-                                Attendance Overview
-                            </h1>
-                        </div>
-                        <div className="space-x-20 flex items-center">
-                            <div className="flex space-x-4 rounded-full p-1 bg-primary-accent">
-                                <button
-                                    onClick={() => setAttendanceLecStu(true)}
-                                    className={`${
-                                        attendanceLecStu
-                                            ? "bg-primary text-white"
-                                            : "bg-primary-accent text-primary"
-                                    } cursor  text-sm py-2 px-4 rounded-full transition duration-500 ease-in-ou`}>
-                                    Lecturers
-                                </button>
-                                <button
-                                    onClick={() => setAttendanceLecStu(false)}
-                                    className={`${
-                                        !attendanceLecStu
-                                            ? "bg-primary text-white"
-                                            : "bg-primary-accent text-primary"
-                                    } cursor text-sm py-2 px-4 rounded-full transition duration-500 ease-in-out`}>
-                                    Students
-                                </button>
+                {semester && (
+                    <div className="bg-white relative overflow-hidden shadow-sm sm:rounded-lg transition duration-200 ease-in-out">
+                        {/* Header */}
+                        <div className="p-5 sm:flex items-center justify-between border-b ">
+                            <div className="flex items-center justify-center space-x-4">
+                                <h1 className="text-xl font-extrabold">
+                                    Attendance Overview
+                                </h1>
                             </div>
-                            <div></div>
+                            <div className="space-x-20 flex items-center">
+                                <div className="flex space-x-4 rounded-full p-1 bg-primary-accent">
+                                    <button
+                                        onClick={() =>
+                                            setAttendanceLecStu(true)
+                                        }
+                                        className={`${
+                                            attendanceLecStu
+                                                ? "bg-primary text-white"
+                                                : "bg-primary-accent text-primary"
+                                        } cursor  text-sm py-2 px-4 rounded-full transition duration-500 ease-in-ou`}>
+                                        Lecturers
+                                    </button>
+                                    <button
+                                        onClick={() =>
+                                            setAttendanceLecStu(false)
+                                        }
+                                        className={`${
+                                            !attendanceLecStu
+                                                ? "bg-primary text-white"
+                                                : "bg-primary-accent text-primary"
+                                        } cursor text-sm py-2 px-4 rounded-full transition duration-500 ease-in-out`}>
+                                        Students
+                                    </button>
+                                </div>
+                                <div></div>
+                            </div>
+                        </div>
+                        <div className="p-20 relative text-gray-text ">
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={
+                                        attendanceLecStu
+                                            ? "Lecturer"
+                                            : "Student"
+                                    }
+                                    initial={{ y: 10, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    exit={{ y: -10, opacity: 0 }}
+                                    transition={{ duration: 0.2 }}>
+                                    <div className="h-[20rem] flex overflow-hidden relative  space-x-8 w-full">
+                                        <div className="flex flex-col">
+                                            <div className="chart-bar">100</div>
+                                            <div className="chart-bar">80</div>
+                                            <div className="chart-bar">60</div>
+                                            <div className="chart-bar">40</div>
+                                            <div className="chart-bar">20</div>
+                                        </div>
+                                        <div className="flex z-10 space-x-10 h-[20rem] items-end overflow-y-auto relative ">
+                                            {attendanceLecStu
+                                                ? modulesActive.map(
+                                                      activeModule => (
+                                                          <div
+                                                              key={
+                                                                  activeModule.id
+                                                              }
+                                                              className={`${
+                                                                  activeModule
+                                                                      .attendance
+                                                                      .total
+                                                                      .present_percentage >=
+                                                                  80
+                                                                      ? "bg-secondary"
+                                                                      : "bg-[#E4572E]"
+                                                              } w-20 flex items-end justify-center rounded-lg`}
+                                                              style={{
+                                                                  height:
+                                                                      activeModule
+                                                                          .attendance
+                                                                          .total
+                                                                          .present_percentage +
+                                                                      "%",
+                                                              }}>
+                                                              <span className="text-xs text-black-text font-bold">
+                                                                  {
+                                                                      activeModule
+                                                                          .attendance
+                                                                          .total
+                                                                          .present_percentage
+                                                                  }
+                                                                  %
+                                                              </span>
+                                                          </div>
+                                                      ),
+                                                  )
+                                                : modulesActive.map(
+                                                      activeModule => (
+                                                          <div
+                                                              key={
+                                                                  activeModule.id
+                                                              }
+                                                              className={`${
+                                                                  activeModule
+                                                                      .attendance
+                                                                      .total
+                                                                      .student_attendance
+                                                                      .present_percentage >=
+                                                                  80
+                                                                      ? "bg-secondary"
+                                                                      : "bg-[#E4572E]"
+                                                              } w-20 flex items-end justify-center rounded-lg`}
+                                                              style={{
+                                                                  height:
+                                                                      activeModule
+                                                                          .attendance
+                                                                          .total
+                                                                          .student_attendance
+                                                                          .present_percentage +
+                                                                      "%",
+                                                              }}>
+                                                              <span className="text-xs text-black-text font-bold">
+                                                                  {
+                                                                      activeModule
+                                                                          .attendance
+                                                                          .total
+                                                                          .student_attendance
+                                                                          .present_percentage
+                                                                  }
+                                                                  %
+                                                              </span>
+                                                          </div>
+                                                      ),
+                                                  )}
+                                        </div>
+                                    </div>
+                                    <div className="border-t flex border-gray-300  space-x-8 w-full">
+                                        <div className="w-[30px]">0</div>
+                                        <div className="space-x-10 flex">
+                                            {modulesActive.map(activeModule => (
+                                                <div
+                                                    key={activeModule.id}
+                                                    className="w-20 text-sm text-center">
+                                                    {activeModule.module.code}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            </AnimatePresence>
                         </div>
                     </div>
-                    <div className="p-20 relative text-gray-text ">
-                        <AnimatePresence mode="wait">
-                            <motion.div
-                                key={attendanceLecStu ? "Lecturer" : "Student"}
-                                initial={{ y: 10, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                exit={{ y: -10, opacity: 0 }}
-                                transition={{ duration: 0.2 }}>
-                                <div className="h-[20rem] flex overflow-hidden relative  space-x-8 w-full">
-                                    <div className="flex flex-col">
-                                        <div className="chart-bar">100</div>
-                                        <div className="chart-bar">80</div>
-                                        <div className="chart-bar">60</div>
-                                        <div className="chart-bar">40</div>
-                                        <div className="chart-bar">20</div>
-                                    </div>
-                                    <div className="flex z-10 space-x-10 h-[20rem] items-end overflow-y-auto relative ">
-                                        {attendanceLecStu
-                                            ? modulesActive.map(
-                                                  activeModule => (
-                                                      <div
-                                                          key={activeModule.id}
-                                                          className={`${
-                                                              activeModule
-                                                                  .attendance
-                                                                  .total
-                                                                  .present_percentage >=
-                                                              80
-                                                                  ? "bg-secondary"
-                                                                  : "bg-[#E4572E]"
-                                                          } w-20 flex items-end justify-center rounded-lg`}
-                                                          style={{
-                                                              height:
-                                                                  activeModule
-                                                                      .attendance
-                                                                      .total
-                                                                      .present_percentage +
-                                                                  "%",
-                                                          }}>
-                                                          <span className="text-xs text-black-text font-bold">
-                                                              {
-                                                                  activeModule
-                                                                      .attendance
-                                                                      .total
-                                                                      .present_percentage
-                                                              }
-                                                              %
-                                                          </span>
-                                                      </div>
-                                                  ),
-                                              )
-                                            : modulesActive.map(
-                                                  activeModule => (
-                                                      <div
-                                                          key={activeModule.id}
-                                                          className={`${
-                                                              activeModule
-                                                                  .attendance
-                                                                  .total
-                                                                  .student_attendance
-                                                                  .present_percentage >=
-                                                              80
-                                                                  ? "bg-secondary"
-                                                                  : "bg-[#E4572E]"
-                                                          } w-20 flex items-end justify-center rounded-lg`}
-                                                          style={{
-                                                              height:
-                                                                  activeModule
-                                                                      .attendance
-                                                                      .total
-                                                                      .student_attendance
-                                                                      .present_percentage +
-                                                                  "%",
-                                                          }}>
-                                                          <span className="text-xs text-black-text font-bold">
-                                                              {
-                                                                  activeModule
-                                                                      .attendance
-                                                                      .total
-                                                                      .student_attendance
-                                                                      .present_percentage
-                                                              }
-                                                              %
-                                                          </span>
-                                                      </div>
-                                                  ),
-                                              )}
-                                    </div>
-                                </div>
-                                <div className="border-t flex border-gray-300  space-x-8 w-full">
-                                    <div className="w-[30px]">0</div>
-                                    <div className="space-x-10 flex">
-                                        {modulesActive.map(activeModule => (
-                                            <div
-                                                key={activeModule.id}
-                                                className="w-20 text-sm text-center">
-                                                {activeModule.module.code}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </motion.div>
-                        </AnimatePresence>
-                    </div>
-                </div>
+                )}
             </div>
         </AppLayout>
     );
