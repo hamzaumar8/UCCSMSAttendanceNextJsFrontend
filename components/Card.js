@@ -1,7 +1,14 @@
-const Card = ({ header = "", button = "", className, children }) => (
+const Card = ({
+    header = "",
+    button = "",
+    titleClassName = "",
+    className,
+    children,
+}) => (
     <div
         className={`${className} bg-white overflow-hidden shadow-sm sm:rounded-lg relative block`}>
-        <div className="py-4 px-5 flex items-center justify-between relative border-b ">
+        <div
+            className={`${titleClassName} py-4 px-5 flex items-center justify-between relative border-b `}>
             {header}
             {button ? (
                 button

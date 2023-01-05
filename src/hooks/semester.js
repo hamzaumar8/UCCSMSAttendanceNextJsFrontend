@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
 export const useSemester = () => {
-    const router = useRouter();
     const [loading, setLoading] = useState(false);
 
     // CSRF
@@ -87,7 +86,7 @@ export const useSemester = () => {
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
-                    toast.success("Semester update successfully!", {
+                    toast.success("Promotion done successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
                     });
                 }
@@ -101,6 +100,10 @@ export const useSemester = () => {
                 }
             });
     };
+
+    // useEffect(() => {
+    //     // if (semester) setIsLoading(false);
+    // }, []);
 
     return {
         loading,

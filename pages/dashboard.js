@@ -2,7 +2,7 @@ import AppLayout from "../components/Layouts/AppLayout";
 import axios from "../src/lib/axios";
 import Card from "../components/Card";
 import HeadTitle from "../components/HeadTitle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import SemesterNotFound from "../components/SemesterNotFound";
@@ -21,18 +21,51 @@ const Dashboard = ({ modules, lecturers, cordinators, students }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-8">
                     <div className="col-span-1 xl:col-span-2 ">
                         <Card
+                            titleClassName="!items-start"
                             header={
-                                <h1 className="flex text-gray-text space-x-2 items-center uppercase text-sm font-semibold">
-                                    <CalendarDaysIcon className="h-5 w-5" />
-                                    <span>
-                                        {new Date().toLocaleString("en-US", {
-                                            day: "2-digit",
-                                        })}{" "}
-                                        {new Date().toLocaleString("en-US", {
-                                            month: "long",
-                                        })}
-                                    </span>
-                                </h1>
+                                semester && (
+                                    <h1 className="text-black-text  uppercase text-xl py-2 font-bold">
+                                        {semester?.semester} semester
+                                    </h1>
+                                )
+                            }
+                            button={
+                                semester && (
+                                    <div className="bg-[#F3F3F3] py-2 rounded-lg">
+                                        <div className="flex space-x-2 border-b px-3 pb-1">
+                                            <CalendarDaysIcon className="h-5 w-5 text-gray-text" />
+                                            <div className="font-bold uppercase">
+                                                {new Date(
+                                                    semester?.start_date,
+                                                ).toLocaleString("en-US", {
+                                                    day: "2-digit",
+                                                })}{" "}
+                                                {new Date(
+                                                    semester?.start_date,
+                                                ).toLocaleString("en-US", {
+                                                    month: "short",
+                                                })}
+                                                {" - "}
+                                                {new Date(
+                                                    semester?.start_date,
+                                                ).toLocaleString("en-US", {
+                                                    day: "2-digit",
+                                                })}{" "}
+                                                {new Date(
+                                                    semester?.end_date,
+                                                ).toLocaleString("en-US", {
+                                                    month: "short",
+                                                })}
+                                            </div>
+                                        </div>
+                                        <div className="px-3 pt-1 text-gray-text">
+                                            <div>
+                                                {semester?.academic_year}{" "}
+                                                Academic Year
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
                             }>
                             <div className="mr-16 space-y-4">
                                 <h1 className="text-black-text text-lg font-bold">
@@ -89,42 +122,51 @@ const Dashboard = ({ modules, lecturers, cordinators, students }) => {
                                     </h1>
                                 }>
                                 <div className="space-y-3">
-                                    {modulesActive.map(activeModule => (
-                                        <div
-                                            key={activeModule.id}
-                                            className="flex items-center justify-between p-1">
-                                            <div className="flex space-x-2 items-center">
-                                                <div className="flex items-center justify-center bg-primary-accent text-primary rounded-full text-xs w-[80px] py-1 font-bold uppercase">
-                                                    {activeModule.module.code}
+                                    {modulesActive
+                                        .slice(0, 8)
+                                        .map(activeModule => (
+                                            <div
+                                                key={activeModule.id}
+                                                className="flex items-center justify-between p-1">
+                                                <div className="flex space-x-2 items-center">
+                                                    <div className="flex items-center justify-center bg-primary-accent text-primary rounded-full text-xs w-[80px] py-1 font-bold uppercase">
+                                                        {
+                                                            activeModule.module
+                                                                .code
+                                                        }
+                                                    </div>
+                                                    <h3 className="text-gray-text text-xs capitalized">
+                                                        {
+                                                            activeModule.module
+                                                                .title
+                                                        }
+                                                    </h3>
                                                 </div>
-                                                <h3 className="text-gray-text text-xs capitalized">
-                                                    {activeModule.module.title}
-                                                </h3>
-                                            </div>
-                                            <div className="flex items-center space-x-4">
-                                                <div className="bg-gray-200 h-2 w-40 rounded-full relative overflow-hidden">
-                                                    <div
-                                                        className="bg-secondary block  h-full rounded-full"
-                                                        style={{
-                                                            width:
+                                                <div className="flex items-center space-x-4">
+                                                    <div className="bg-gray-200 h-2 w-40 rounded-full relative overflow-hidden">
+                                                        <div
+                                                            className="bg-secondary block  h-full rounded-full"
+                                                            style={{
+                                                                width:
+                                                                    activeModule
+                                                                        .days
+                                                                        .covered_percentage +
+                                                                    "%",
+                                                            }}></div>
+                                                    </div>
+                                                    <div className="text-xs text-gray-text">
+                                                        <span>
+                                                            {
                                                                 activeModule
                                                                     .days
-                                                                    .covered_percentage +
-                                                                "%",
-                                                        }}></div>
-                                                </div>
-                                                <div className="text-xs text-gray-text">
-                                                    <span>
-                                                        {
-                                                            activeModule.days
-                                                                .covered_percentage
-                                                        }
-                                                        %
-                                                    </span>
+                                                                    .covered_percentage
+                                                            }
+                                                            %
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    ))}
+                                        ))}
                                 </div>
                             </Card>
                         ) : (
