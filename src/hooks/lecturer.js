@@ -19,12 +19,7 @@ export const useLecturer = () => {
     const csrf = () => axios.get("/sanctum/csrf-cookie");
 
     // Add Lecturer
-    const addLecturer = async ({
-        setErrors,
-        setStatus,
-        formData,
-        ...props
-    }) => {
+    const addLecturer = async ({ setErrors, setStatus, formData }) => {
         setLoading(true);
         setErrors([]);
         setStatus(null);

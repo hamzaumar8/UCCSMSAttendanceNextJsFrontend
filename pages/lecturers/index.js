@@ -20,6 +20,7 @@ import {
 } from "../../src/atoms/modalAtom";
 import axios from "../../src/lib/axios";
 import { handleLecturerState } from "../../src/atoms/lecturerAtom";
+import CSVButton from "../../components/CSVButton";
 
 const Lecturer = ({ lecturers, lecturersSummary }) => {
     const router = useRouter();
@@ -63,14 +64,15 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
                         </span>
                     </div>
                     <button
-                        className="inline-flex items-center px-6 py-2 bg-white text-primary rounded-full font-bold text-xs capitalize border-2 border-primary tracking-widest transition ease-in-out duration-150"
                         onClick={() => {
                             setModalOpen(true);
                             setModalType("importLecturer");
-                        }}>
+                        }}
+                        className="inline-flex items-center px-6 py-2 bg-white text-primary rounded-full font-bold text-xs capitalize border-2 border-primary tracking-widest transition ease-in-out duration-150">
                         <ArrowUpTrayIcon className="w-4 h-4 mr-1" />
                         Improt CSV
                     </button>
+
                     <div>
                         <motion.button
                             whileHover={{ scale: 1.01 }}

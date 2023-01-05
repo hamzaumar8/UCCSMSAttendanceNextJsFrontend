@@ -76,9 +76,36 @@ export const useStudent = () => {
             });
     };
 
+    const importStudent = async ({ setErrors, setStatus, formData }) => {
+        setLoading(true);
+        setErrors([]);
+        setStatus(null);
+
+        await csrf();
+        axios
+            .post("/api/v1/import/students/", formData)
+            .then(res => {
+                if (res.data.status === "success") {
+                    setLoading(false);
+                    setModalOpen(false);
+                    toast.success("CSV imported successfully!", {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                }
+            })
+            .catch(error => {
+                setLoading(false);
+                if (error.response.status !== 422) {
+                    console.log(error);
+                } else {
+                    setErrors(error.response.data.errors);
+                }
+            });
+    };
     return {
         loading,
         addStudent,
         editStudent,
+        importStudent,
     };
 };

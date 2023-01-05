@@ -113,7 +113,12 @@ const Student = ({ students, levels, modules }) => {
                         </div>
                     </div>
                     <div className="space-x-4 flex items-center">
-                        <button className="inline-flex items-center px-6 py-2 bg-white text-primary rounded-full font-bold text-xs capitalize border border-primary tracking-widest transition ease-in-out duration-150">
+                        <button
+                            className="inline-flex items-center px-6 py-2 bg-white text-primary rounded-full font-bold text-xs capitalize border-2 border-primary tracking-widest transition ease-in-out duration-150"
+                            onClick={() => {
+                                setModalOpen(true);
+                                setModalType("importStudent");
+                            }}>
                             <ArrowUpTrayIcon className="w-4 h-4 mr-1" />
                             Improt CSV
                         </button>
