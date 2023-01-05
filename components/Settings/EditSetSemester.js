@@ -1,6 +1,6 @@
 import { CalendarDaysIcon } from "@heroicons/react/24/solid";
-import { useEffect, useState } from "react";
-import axios from "../../src/lib/axios";
+import { useState } from "react";
+import { useSemester } from "../../src/hooks/semester";
 import Button from "../Button";
 import Card from "../Card";
 import Input from "../Input";
@@ -8,6 +8,8 @@ import InputError from "../InputError";
 import Label from "../Label";
 
 const EditSetSemester = ({ currentSemester }) => {
+    const { editSemester, loading } = useSemester();
+
     const [semesterName, setSemesterName] = useState(currentSemester.semester);
     const [academicYear, setAcademicYear] = useState(
         currentSemester.academic_year,
@@ -37,11 +39,15 @@ const EditSetSemester = ({ currentSemester }) => {
 
     const submitForm = event => {
         event.preventDefault();
-        // addLecturer({
-        //     formData,
-        //     setErrors,
-        //     setStatus,
-        // });
+        editSemester({
+            id: currentSemester.id,
+            semester_name: semesterName,
+            academic_year: academicYear,
+            start_date: startDate,
+            end_date: endDate,
+            setErrors,
+            setStatus,
+        });
     };
     return (
         <form onSubmit={submitForm}>
@@ -53,7 +59,10 @@ const EditSetSemester = ({ currentSemester }) => {
                     </h1>
                 }
                 button={
-                    <Button type="submit" className="!rounded-full px-6">
+                    <Button
+                        type="submit"
+                        loader={loading}
+                        className="!rounded-full px-6">
                         update
                     </Button>
                 }>
@@ -124,28 +133,6 @@ const EditSetSemester = ({ currentSemester }) => {
                         />
                         <InputError
                             messages={errors.endDate}
-                            className="mt-1"
-                        />
-                    </div>
-                    <div className="">
-                        <Label htmlFor="assessmentStatus">
-                            Assessment Status
-                        </Label>
-                        <select
-                            id="assessmentStatus"
-                            value={assessmentStatus}
-                            className="block mt-1 w-full placeholder:text-gray-text text-gray-700 border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            onChange={event =>
-                                setAssessmentStatus(event.target.value)
-                            }
-                            required>
-                            <option></option>
-                            <option value="open">Opened</option>
-                            <option value="close">Closed</option>
-                        </select>
-
-                        <InputError
-                            messages={errors.assessmentStatus}
                             className="mt-1"
                         />
                     </div>

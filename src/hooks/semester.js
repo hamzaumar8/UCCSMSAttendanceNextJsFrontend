@@ -76,10 +76,37 @@ export const useSemester = () => {
                 }
             });
     };
+    const promoteStudent = async ({ setErrors, setStatus, ...props }) => {
+        setLoading(true);
+        setErrors([]);
+        setStatus(null);
+
+        await csrf();
+        axios
+            .put(`/api/v1/student/level/promotion/${props.id}`, props)
+            .then(res => {
+                if (res.data.status === "success") {
+                    setLoading(false);
+                    toast.success("Semester update successfully!", {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                }
+            })
+            .catch(error => {
+                setLoading(false);
+                if (error.response.status !== 422) {
+                    console.log(error);
+                } else {
+                    setErrors(error.response.data.errors);
+                }
+            });
+    };
 
     return {
         loading,
         semester,
         addSemester,
+        editSemester,
+        promoteStudent,
     };
 };

@@ -19,6 +19,9 @@ const AllResults = ({ results }) => {
                         <th className="capitalize font-bold px-2 pr-4 py-3 text-left text-sm text-primary tracking-wider whitespace-nowrap">
                             Cordinator
                         </th>
+                        <th className="capitalize font-bold px-2 pr-4 py-3 text-left text-sm text-primary tracking-wider whitespace-nowrap">
+                            Status
+                        </th>
                         <th className="capitalize font-bold px-2 pr-6 py-3 text-sm text-primary tracking-wider whitespace-nowrap text-right">
                             Actions
                         </th>
@@ -44,6 +47,19 @@ const AllResults = ({ results }) => {
                             </td>
                             <td className="capitalize py-3  border-b">
                                 <div>{result.module.cordinator.full_name}</div>
+                            </td>
+                            <td className="capitalize py-3  border-b">
+                                <div>
+                                    {result.status === "save" ? (
+                                        <span className="bg-primary-accent py-1 px-3 rounded-md text-xs font-bold text-primary">
+                                            save
+                                        </span>
+                                    ) : (
+                                        <span className="bg-secondary-accent py-1 px-3 rounded-md text-xs font-bold text-green-600">
+                                            submitted
+                                        </span>
+                                    )}
+                                </div>
                             </td>
 
                             <td className="capitalize py-3 whitespace-nowrap border-b !text-right pr-6">

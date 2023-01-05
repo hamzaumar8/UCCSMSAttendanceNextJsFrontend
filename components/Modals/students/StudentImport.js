@@ -38,7 +38,7 @@ const StudentImport = ({ onClick }) => {
             enctype="multipart/form-data">
             <div className="flex items-center justify-between border-b px-8 py-4 ">
                 <h4 className="text-2xl font-bold text-black-text">
-                    Import lecturer (CSV)
+                    Import Student (CSV)
                 </h4>
                 <div className="space-x-4">
                     <Button
