@@ -1,5 +1,9 @@
 import { PlusIcon } from "@heroicons/react/24/solid";
-import { EyeIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
+import {
+    ArrowUpTrayIcon,
+    EyeIcon,
+    PencilSquareIcon,
+} from "@heroicons/react/24/outline";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -41,6 +45,7 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
         fetchLecturers();
         setLoading(false);
     }, [page, handleLecturer]);
+
     return (
         <AppLayout header="Lecturers">
             {/* Title */}
@@ -57,6 +62,15 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
                             {lecturersSummary.count}
                         </span>
                     </div>
+                    <button
+                        className="inline-flex items-center px-6 py-2 bg-white text-primary rounded-full font-bold text-xs capitalize border-2 border-primary tracking-widest transition ease-in-out duration-150"
+                        onClick={() => {
+                            setModalOpen(true);
+                            setModalType("importLecturer");
+                        }}>
+                        <ArrowUpTrayIcon className="w-4 h-4 mr-1" />
+                        Improt CSV
+                    </button>
                     <div>
                         <motion.button
                             whileHover={{ scale: 1.01 }}

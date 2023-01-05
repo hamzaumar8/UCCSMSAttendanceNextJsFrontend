@@ -89,9 +89,38 @@ export const useLecturer = () => {
             });
     };
 
+    const importLecturer = async ({ setErrors, setStatus, formData }) => {
+        setLoading(true);
+        setErrors([]);
+        setStatus(null);
+
+        await csrf();
+        axios
+            .post("/api/v1/import/lecturers/", formData)
+            .then(res => {
+                if (res.data.status === "success") {
+                    setLoading(false);
+                    setHandleLecturer(true);
+                    setModalOpen(false);
+                    toast.success("Lecturer was editted successfully!", {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                }
+            })
+            .catch(error => {
+                setLoading(false);
+                if (error.response.status !== 422) {
+                    console.log(error);
+                } else {
+                    setErrors(error.response.data.errors);
+                }
+            });
+    };
+
     return {
         loading,
         addLecturer,
         editLecturer,
+        importLecturer,
     };
 };
