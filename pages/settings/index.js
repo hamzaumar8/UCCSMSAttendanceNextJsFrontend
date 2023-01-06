@@ -16,7 +16,6 @@ const Settings = ({ promotion }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState([]);
     const [status, setStatus] = useState(null);
-    console.log(promotion);
 
     const handlePromotion = event => {
         event.preventDefault();

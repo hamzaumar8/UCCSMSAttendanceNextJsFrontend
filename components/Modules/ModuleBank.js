@@ -15,8 +15,6 @@ const ModuleBank = ({ modules }) => {
     const [searchToggle, setSearchToggle] = useState(false);
     const [query, setQuery] = useState("");
 
-    console.log(modules);
-
     return (
         <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg transition duration-500 ease-in-out">
             {/* Header */}

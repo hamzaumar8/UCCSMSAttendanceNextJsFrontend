@@ -14,9 +14,11 @@ import {
     modalState,
     modalTypeState,
 } from "../../src/atoms/modalAtom";
+import { useModule } from "../../src/hooks/module";
 import axios from "../../src/lib/axios";
 
 const Module = ({ module }) => {
+    const { endModule, loading } = useModule();
     const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
 
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
@@ -25,6 +27,13 @@ const Module = ({ module }) => {
     const [attendanceLecStu, setAttendanceLecStu] = useState(true);
 
     const week = Object.values(module.attendance.weekly);
+
+    const handleEndModule = e => {
+        e.preventDefault();
+        endModule({
+            id: module.id,
+        });
+    };
     return (
         <AppLayout header={module.module.code}>
             <HeadTitle title="Lecturers" />
@@ -56,11 +65,15 @@ const Module = ({ module }) => {
                             </div>
                         </div>
                         <div className="flex space-x-6 items-center">
-                            <Button
-                                danger
-                                className="!capitalize !rounded-full !px-6">
-                                End Module
-                            </Button>
+                            {module.status !== "upcoming" && (
+                                <Button
+                                    onClick={handleEndModule}
+                                    danger
+                                    loader={loading}
+                                    className="!capitalize !rounded-full !px-6">
+                                    End Module
+                                </Button>
+                            )}
                             {module.status === "upcoming" && (
                                 <Button
                                     className="!capitalize !rounded-full !px-6"

@@ -115,6 +115,32 @@ export const useModule = () => {
             });
     };
 
+    const endModule = async ({ id }) => {
+        setLoading(true);
+
+        await csrf();
+        axios
+            .get(`/api/v1/end/module/${id}`)
+            .then(res => {
+                if (res.data.status === "success") {
+                    setLoading(false);
+                    toast.success("Module ended successfully!", {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                }
+            })
+            .catch(error => {
+                setLoading(false);
+                if (error.response.status === 500) {
+                    toast.error(error.response.message, {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                } else {
+                    console.log(error);
+                }
+            });
+    };
+
     // Add Mounted Moudle
     const mountModule = async ({ setErrors, setStatus, ...props }) => {
         setLoading(true);
@@ -194,5 +220,6 @@ export const useModule = () => {
         mountModule,
         editMountModule,
         deleteModule,
+        endModule,
     };
 };
