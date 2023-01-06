@@ -1,15 +1,19 @@
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { PlusIcon } from "@heroicons/react/24/solid";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { modalState, modalTypeState } from "../../src/atoms/modalAtom";
 import ModuleBankCard from "../Cards/ModuleBankCard";
+import Input from "../Input";
 
 const ModuleBank = ({ modules }) => {
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
 
     const [viewAll, setViewAll] = useState(false);
+    const [searchToggle, setSearchToggle] = useState(false);
+    const [query, setQuery] = useState("");
 
     return (
         <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg transition duration-500 ease-in-out">
@@ -21,7 +25,23 @@ const ModuleBank = ({ modules }) => {
                         {modules.length}
                     </div>
                 </div>
-                <div className="space-x-20 flex items-center">
+                {searchToggle && viewAll && (
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            initial={{ x: 50, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ x: -50, opacity: 0 }}
+                            transition={{ duration: 0.2 }}>
+                            <Input
+                                type="text"
+                                placeholder="Search..."
+                                className="bg-white border-primary text-sm text-gray-text outline-none min-w-max px-8 py-2 rounded-sm shadow-sm"
+                                onChange={e => setQuery(e.target.value)}
+                            />
+                        </motion.div>
+                    </AnimatePresence>
+                )}
+                <div className="space-x-10 flex items-center">
                     {modules.length > 3 && (
                         <button
                             className="inline-flex items-center px-4 py-2 bg-primary-accent text-primary border border-transparent rounded-full font-semibold text-xs capitalize tracking-widest hover:bg-blue-700 hover:text-white active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity:25 transition ease-in-out duration-150 space-x-2"
@@ -30,6 +50,13 @@ const ModuleBank = ({ modules }) => {
                         </button>
                     )}
                     <div className="space-x-2">
+                        {viewAll && (
+                            <button
+                                onClick={() => setSearchToggle(!searchToggle)}
+                                className="text-white bg-primary p-2 rounded-full">
+                                <MagnifyingGlassIcon className="h-5 w-5" />
+                            </button>
+                        )}
                         <motion.button
                             whileHover={{ scale: 1.01 }}
                             whileTap={{ scale: 0.99 }}
@@ -58,12 +85,22 @@ const ModuleBank = ({ modules }) => {
                             </>
                         ) : (
                             <>
-                                {modules.map(module => (
-                                    <ModuleBankCard
-                                        key={module.id}
-                                        module={module}
-                                    />
-                                ))}
+                                {modules
+                                    .filter(
+                                        mod =>
+                                            mod.title
+                                                .toLowerCase()
+                                                .includes(query) ||
+                                            mod.code
+                                                .toLowerCase()
+                                                .includes(query),
+                                    )
+                                    .map(module => (
+                                        <ModuleBankCard
+                                            key={module.id}
+                                            module={module}
+                                        />
+                                    ))}
                             </>
                         )
                     ) : (

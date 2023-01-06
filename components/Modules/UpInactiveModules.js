@@ -7,6 +7,10 @@ const UpInactiveModules = ({ modules }) => {
 
     const modulesUpcoming = modules.filter(itm => itm.status == "upcoming");
     const modulesInactive = modules.filter(itm => itm.status == "inactive");
+
+    const [searchToggle, setSearchToggle] = useState(false);
+    const [query, setQuery] = useState("");
+
     return (
         <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg transition duration-500 ease-in-out">
             {/* Header */}

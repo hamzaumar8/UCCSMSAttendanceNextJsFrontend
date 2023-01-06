@@ -71,9 +71,11 @@ const ModuleMountForm = ({ onClick }) => {
 
             <div className="pb-10">
                 <div className="py-6 px-8 pr-10 space-y-5 border-b">
-                    <p className="text-sm text-red-600 bg-red-100 p-1">
-                        {errors.msg}
-                    </p>
+                    {errors.msg && (
+                        <p className="text-sm text-red-600 bg-red-100 p-1">
+                            {errors.msg}
+                        </p>
+                    )}
                     <div className="">
                         <Label htmlFor="module">Module</Label>
                         <AsyncSelect
