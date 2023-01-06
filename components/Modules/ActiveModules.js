@@ -1,16 +1,20 @@
-import { PlusIcon } from "@heroicons/react/24/solid";
-import { motion } from "framer-motion";
+import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/solid";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { modalState, modalTypeState } from "../../src/atoms/modalAtom";
 import Button from "../Button";
 import ModuleCard from "../Cards/ModuleCard";
+import Input from "../Input";
 
 const ActiveModules = ({ modules }) => {
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
 
     const [viewAll, setViewAll] = useState(false);
+    const [searchToggle, setSearchToggle] = useState(false);
+    const [query, setQuery] = useState("");
+
     return (
         <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg transition duration-500 ease-in-out">
             {/* Header */}
@@ -21,7 +25,23 @@ const ActiveModules = ({ modules }) => {
                         {modules.length}
                     </div>
                 </div>
-                <div className="space-x-20 flex items-center">
+                {searchToggle && viewAll && (
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            initial={{ x: 50, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ x: -50, opacity: 0 }}
+                            transition={{ duration: 0.2 }}>
+                            <Input
+                                type="text"
+                                placeholder="Search..."
+                                className="bg-white border-primary text-sm text-gray-text outline-none min-w-max px-8 py-2 rounded-sm shadow-sm"
+                                onChange={e => setQuery(e.target.value)}
+                            />
+                        </motion.div>
+                    </AnimatePresence>
+                )}
+                <div className="space-x-10 flex items-center">
                     {modules.length > 3 && (
                         <div>
                             <button
@@ -32,6 +52,13 @@ const ActiveModules = ({ modules }) => {
                         </div>
                     )}
                     <div className="space-x-2">
+                        {viewAll && (
+                            <button
+                                onClick={() => setSearchToggle(!searchToggle)}
+                                className="text-white bg-primary p-2 rounded-full">
+                                <MagnifyingGlassIcon className="h-5 w-5" />
+                            </button>
+                        )}
                         <motion.button
                             whileHover={{ scale: 1.01 }}
                             whileTap={{ scale: 0.99 }}
@@ -61,13 +88,23 @@ const ActiveModules = ({ modules }) => {
                             </>
                         ) : (
                             <>
-                                {modules.map(module => (
-                                    <ModuleCard
-                                        key={module.id}
-                                        module={module}
-                                        active={true}
-                                    />
-                                ))}
+                                {modules
+                                    .filter(
+                                        mod =>
+                                            mod.module.title
+                                                .toLowerCase()
+                                                .includes(query) ||
+                                            mod.module.code
+                                                .toLowerCase()
+                                                .includes(query),
+                                    )
+                                    .map(module => (
+                                        <ModuleCard
+                                            key={module.id}
+                                            module={module}
+                                            active={true}
+                                        />
+                                    ))}
                             </>
                         )
                     ) : (

@@ -19,7 +19,6 @@ import {
 
 const ModuleCard = ({ module, active = "" }) => {
     const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
-    const [menuToggle, setMenuToggle] = useState(false);
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
     const [modalEdit, setModalEdit] = useRecoilState(modalEditState);
