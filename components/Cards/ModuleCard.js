@@ -1,10 +1,4 @@
-import { useState } from "react";
-import {
-    EllipsisHorizontalIcon,
-    TrashIcon,
-    XCircleIcon,
-    XMarkIcon,
-} from "@heroicons/react/24/solid";
+import { EllipsisHorizontalIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { EyeIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 
 import Image from "next/image";
@@ -16,12 +10,21 @@ import {
     modalState,
     modalTypeState,
 } from "../../src/atoms/modalAtom";
+import { useModule } from "../../src/hooks/module";
 
 const ModuleCard = ({ module, active = "" }) => {
+    const { deleteMountModule, loading } = useModule();
     const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
     const [modalEdit, setModalEdit] = useRecoilState(modalEditState);
+
+    const handleDelete = e => {
+        e.preventDefault();
+        deleteMountModule({
+            id: module.id,
+        });
+    };
     return (
         <div
             className={`${
@@ -63,8 +66,10 @@ const ModuleCard = ({ module, active = "" }) => {
                                 <EyeIcon className="h-5 w-5 mr-1 text-primary" />
                                 Edit Module
                             </DropdownButton>
-                            <DropdownButton onClick={""}>
-                                <TrashIcon className="h-5 w-5 mr-1 text-red-500" />{" "}
+                            <DropdownButton
+                                loader={loading}
+                                onClick={handleDelete}>
+                                <TrashIcon className="h-5 w-5 mr-1 text-red-500" />
                                 Delete Module
                             </DropdownButton>
                         </>

@@ -213,6 +213,31 @@ export const useModule = () => {
             });
     };
 
+    const deleteMountModule = async ({ id }) => {
+        setLoading(true);
+
+        await csrf();
+        axios
+            .delete(`/api/v1/modules/${id}`)
+            .then(res => {
+                setLoading(false);
+                setHandleModuleMount(true);
+                toast.success("Module deleted successfully!", {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+            })
+            .catch(error => {
+                setLoading(false);
+                if (error.response.status === 500) {
+                    toast.error(error.response.message, {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                } else {
+                    console.log(error);
+                }
+            });
+    };
+
     return {
         loading,
         addModule,
@@ -221,5 +246,6 @@ export const useModule = () => {
         editMountModule,
         deleteModule,
         endModule,
+        deleteMountModule,
     };
 };
