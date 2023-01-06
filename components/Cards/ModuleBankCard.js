@@ -16,13 +16,22 @@ import {
     modalState,
     modalTypeState,
 } from "../../src/atoms/modalAtom";
+import { useModule } from "../../src/hooks/module";
 
 const ModuleBankCard = ({ module, active = "" }) => {
+    const { deleteModule, loading } = useModule();
     const [menuToggle, setMenuToggle] = useState(false);
 
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
     const [modalEdit, setModalEdit] = useRecoilState(modalEditState);
+
+    const handleDelete = e => {
+        e.preventDefault();
+        deleteModule({
+            id: module.id,
+        });
+    };
     return (
         <div className="bg-secondary-accent rounded-lg block transition ease-in-out duration-300">
             <div className="border-b border-[#00000029] flex items-center justify-between p-4 pb-2">
@@ -44,10 +53,12 @@ const ModuleBankCard = ({ module, active = "" }) => {
                         <PencilSquareIcon className="h-5 w-5 mr-1 text-primary" />
                         Edit Module
                     </DropdownButton>
-                    <DropdownButton onClick={""}>
-                        <TrashIcon className="h-5 w-5 mr-1 text-red-500" />{" "}
-                        Delete Module
-                    </DropdownButton>
+                    {module.modules === 0 && (
+                        <DropdownButton onClick={handleDelete} loader={loading}>
+                            <TrashIcon className="h-5 w-5 mr-1 text-red-500" />
+                            Delete Module
+                        </DropdownButton>
+                    )}
                 </Dropdown>
             </div>
             <div className="px-4 py-3 space-y-3">

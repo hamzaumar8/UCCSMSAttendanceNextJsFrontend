@@ -15,6 +15,8 @@ const ModuleBank = ({ modules }) => {
     const [searchToggle, setSearchToggle] = useState(false);
     const [query, setQuery] = useState("");
 
+    console.log(modules);
+
     return (
         <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg transition duration-500 ease-in-out">
             {/* Header */}
@@ -35,7 +37,7 @@ const ModuleBank = ({ modules }) => {
                             <Input
                                 type="text"
                                 placeholder="Search..."
-                                className="bg-white border-primary text-sm text-gray-text outline-none min-w-max px-8 py-2 rounded-sm shadow-sm"
+                                className="bg-primary-accent border-primary text-sm text-gray-text outline-none min-w-max px-8 py-2 rounded-sm shadow-sm"
                                 onChange={e => setQuery(e.target.value)}
                             />
                         </motion.div>

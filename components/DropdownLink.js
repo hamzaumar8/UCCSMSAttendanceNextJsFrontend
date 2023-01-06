@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Menu } from "@headlessui/react";
+import Loader from "./Loader";
 
 const DropdownLink = ({ children, ...props }) => (
     <Menu.Item>
@@ -15,7 +16,7 @@ const DropdownLink = ({ children, ...props }) => (
     </Menu.Item>
 );
 
-export const DropdownButton = ({ children, ...props }) => (
+export const DropdownButton = ({ children, loader = false, ...props }) => (
     <Menu.Item>
         {({ active }) => (
             <button
@@ -23,7 +24,7 @@ export const DropdownButton = ({ children, ...props }) => (
                     active ? "bg-gray-100" : ""
                 } focus:outline-none transition duration-150 ease-in-out`}
                 {...props}>
-                {children}
+                {children} {loader && <Loader />}
             </button>
         )}
     </Menu.Item>

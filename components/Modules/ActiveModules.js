@@ -35,7 +35,7 @@ const ActiveModules = ({ modules }) => {
                             <Input
                                 type="text"
                                 placeholder="Search..."
-                                className="bg-white border-primary text-sm text-gray-text outline-none min-w-max px-8 py-2 rounded-sm shadow-sm"
+                                className="bg-primary-accent border-primary text-sm text-gray-text outline-none min-w-max px-8 py-2 rounded-sm shadow-sm"
                                 onChange={e => setQuery(e.target.value)}
                             />
                         </motion.div>
