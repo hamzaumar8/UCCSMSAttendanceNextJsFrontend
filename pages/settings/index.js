@@ -2,7 +2,7 @@ import AppLayout from "../../components/Layouts/AppLayout";
 import axios from "../../src/lib/axios";
 import Card from "../../components/Card";
 import HeadTitle from "../../components/HeadTitle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SetSemester from "../../components/Settings/SetSemster";
 import EditSetSemester from "../../components/Settings/EditSetSemester";
 import { useSemester } from "../../src/hooks/semester";
@@ -10,8 +10,7 @@ import Profile from "../../components/Settings/Profile";
 import Button from "../../components/Button";
 
 const Settings = ({ promotion }) => {
-    const { semester: getSemester, promoteStudent, loading } = useSemester();
-    const [semester, setSemester] = useState(null);
+    const { semester, promoteStudent, loading } = useSemester();
     const [errors, setErrors] = useState([]);
     const [status, setStatus] = useState(null);
 
