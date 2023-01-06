@@ -53,21 +53,22 @@ const ModuleCard = ({ module, active = "" }) => {
                     </DropdownLink>
 
                     {module.status === "upcoming" && (
-                        <DropdownButton
-                            onClick={() => {
-                                setModalOpen(true);
-                                setModalType("editmountModule");
-                                setModalEdit(module);
-                            }}>
-                            <EyeIcon className="h-5 w-5 mr-1 text-primary" />
-                            Edit Module
-                        </DropdownButton>
+                        <>
+                            <DropdownButton
+                                onClick={() => {
+                                    setModalOpen(true);
+                                    setModalType("editmountModule");
+                                    setModalEdit(module);
+                                }}>
+                                <EyeIcon className="h-5 w-5 mr-1 text-primary" />
+                                Edit Module
+                            </DropdownButton>
+                            <DropdownButton onClick={""}>
+                                <TrashIcon className="h-5 w-5 mr-1 text-red-500" />{" "}
+                                Delete Module
+                            </DropdownButton>
+                        </>
                     )}
-
-                    <DropdownButton onClick={""}>
-                        <TrashIcon className="h-5 w-5 mr-1 text-red-500" />{" "}
-                        Delete Module
-                    </DropdownButton>
                 </Dropdown>
             </div>
             <div className="px-4 py-3 space-y-3">

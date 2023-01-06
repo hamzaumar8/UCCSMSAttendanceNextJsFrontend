@@ -34,8 +34,8 @@ export const courseRepLoadOptions = async (inputText, callback) => {
     const json = await response.json();
     callback(
         json.map(i => ({
-            label: `${i.full_nme} ${i.surname} ${
-                i.other_name && i.other_name + " "
+            label: `${i.first_name} ${i.surname} ${
+                i.other_name ? i.other_name + " " : ""
             } (${i.index_number})`,
             value: i.id,
         })),

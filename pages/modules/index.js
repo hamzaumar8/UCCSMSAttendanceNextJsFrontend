@@ -14,8 +14,7 @@ import axios from "../../src/lib/axios";
 import Card from "../../components/Card";
 import Link from "next/link";
 import SemesterNotFound from "../../components/SemesterNotFound";
-const Modules = ({ modules, modulesBank }) => {
-    const { semester } = useSemester();
+const Modules = ({ semester, modules, modulesBank }) => {
     const modulesActive = modules.filter(itm => itm.status == "active");
     const modulesUpInactive = modules.filter(
         itm => itm.status == "upcoming" || itm.status == "inactive",
@@ -89,8 +88,12 @@ export async function getStaticProps() {
 
     const responseModuleBank = await axios.get("api/v1/module_banks");
     const modulesBank = responseModuleBank.data.data;
+
+    const responseSemester = await axios.get("api/v1/semester");
+    const semester = responseSemester.data;
     return {
         props: {
+            semester,
             modules,
             modulesBank,
         },

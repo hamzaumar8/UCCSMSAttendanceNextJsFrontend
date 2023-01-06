@@ -8,8 +8,7 @@ import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import SemesterNotFound from "../components/SemesterNotFound";
 import { useSemester } from "../src/hooks/semester";
 
-const Dashboard = ({ modules, lecturers, cordinators, students }) => {
-    const { semester } = useSemester();
+const Dashboard = ({ semester, modules, lecturers, cordinators, students }) => {
     const [attendanceLecStu, setAttendanceLecStu] = useState(true);
     const modulesActive = modules.filter(itm => itm.status == "active");
 
@@ -345,12 +344,16 @@ export async function getStaticProps() {
 
     const modulesResponse = await axios.get("api/v1/modules");
     const modules = modulesResponse.data.data;
+
+    const responseSemester = await axios.get("api/v1/semester");
+    const semester = responseSemester.data;
     return {
         props: {
             modules,
             lecturers,
             students,
             cordinators,
+            semester,
         },
     };
 }
