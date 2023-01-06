@@ -37,7 +37,7 @@ const Dropdown = ({
     return (
         <Menu as="div" className="relative">
             {({ open }) => (
-                <>
+                <div>
                     <Menu.Button as={React.Fragment}>{trigger}</Menu.Button>
 
                     <Transition
@@ -57,7 +57,7 @@ const Dropdown = ({
                             </Menu.Items>
                         </div>
                     </Transition>
-                </>
+                </div>
             )}
         </Menu>
     );

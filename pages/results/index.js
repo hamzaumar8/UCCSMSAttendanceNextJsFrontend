@@ -76,7 +76,7 @@ const Results = ({ results }) => {
                                 {!upInactiveToggle ? (
                                     <AllResults results={results} />
                                 ) : (
-                                    <>
+                                    <div>
                                         {isLoading ? (
                                             "LOADING ..."
                                         ) : (
@@ -86,7 +86,7 @@ const Results = ({ results }) => {
                                                 }
                                             />
                                         )}
-                                    </>
+                                    </div>
                                 )}
                             </div>
                         </motion.div>

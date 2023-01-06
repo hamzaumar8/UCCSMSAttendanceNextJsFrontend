@@ -52,25 +52,25 @@ const Modules = ({ semester, modules, modulesBank }) => {
 
             <div className="relative space-y-8">
                 {semester ? (
-                    <>
+                    <div>
                         {!useSSRModuleMount ? (
-                            <>
+                            <div>
                                 <ActiveModules
                                     modules={realtimeModulesActive}
                                 />
                                 <UpInactiveModules
                                     modules={realtimeModulesUpInactive}
                                 />
-                            </>
+                            </div>
                         ) : (
-                            <>
+                            <div>
                                 <ActiveModules modules={modulesActive} />
                                 <UpInactiveModules
                                     modules={modulesUpInactive}
                                 />
-                            </>
+                            </div>
                         )}
-                    </>
+                    </div>
                 ) : (
                     <SemesterNotFound />
                 )}

@@ -1,4 +1,3 @@
-import ModuleCardLecturer from "../../components/Cards/ModuleCardLecturer";
 import HeadTitle from "../../components/HeadTitle";
 import LecturerLayout from "../../components/Layouts/LecturerLayout";
 import axios from "../../src/lib/axios";
@@ -91,7 +90,7 @@ const StaffDashboard = ({ modules }) => {
                                 item.attendance.data[index].filter(item => i),
                             )
                             .map(lecturermodule => (
-                                <>
+                                <div>
                                     {lecturermodule.attendance.data.map(
                                         <div>ha,za</div>,
                                     )}
@@ -102,7 +101,7 @@ const StaffDashboard = ({ modules }) => {
                                         active
                                     />,
                                 )} */}
-                                </>
+                                </div>
                             ))}
                     </div>
                     <div className="fixed bottom-20 right-4">

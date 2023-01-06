@@ -50,7 +50,7 @@ const Settings = ({ promotion }) => {
                                 }>
                                 <div className="space-y-3">
                                     {promotion.data === "set" ? (
-                                        <>
+                                        <div>
                                             {semester?.promotion_status ===
                                             "open" ? (
                                                 <div>Promotion is done</div>
@@ -67,7 +67,7 @@ const Settings = ({ promotion }) => {
                                                     </div>
                                                 </form>
                                             )}
-                                        </>
+                                        </div>
                                     ) : (
                                         <div>
                                             All Module Assessment is not

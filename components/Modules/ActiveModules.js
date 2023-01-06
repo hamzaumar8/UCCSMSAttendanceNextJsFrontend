@@ -77,7 +77,7 @@ const ActiveModules = ({ modules }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {modules.length > 0 ? (
                         !viewAll ? (
-                            <>
+                            <div>
                                 {modules.slice(0, 3).map(module => (
                                     <ModuleCard
                                         key={module.id}
@@ -85,9 +85,9 @@ const ActiveModules = ({ modules }) => {
                                         active={true}
                                     />
                                 ))}
-                            </>
+                            </div>
                         ) : (
-                            <>
+                            <div>
                                 {modules
                                     .filter(
                                         mod =>
@@ -105,7 +105,7 @@ const ActiveModules = ({ modules }) => {
                                             active={true}
                                         />
                                     ))}
-                            </>
+                            </div>
                         )
                     ) : (
                         <div>no Active module</div>

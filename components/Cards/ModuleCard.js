@@ -56,7 +56,7 @@ const ModuleCard = ({ module, active = "" }) => {
                     </DropdownLink>
 
                     {module.status === "upcoming" && (
-                        <>
+                        <div>
                             <DropdownButton
                                 onClick={() => {
                                     setModalOpen(true);
@@ -72,7 +72,7 @@ const ModuleCard = ({ module, active = "" }) => {
                                 <TrashIcon className="h-5 w-5 mr-1 text-red-500" />
                                 Delete Module
                             </DropdownButton>
-                        </>
+                        </div>
                     )}
                 </Dropdown>
             </div>
