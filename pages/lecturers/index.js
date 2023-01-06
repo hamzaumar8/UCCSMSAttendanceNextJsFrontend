@@ -1,52 +1,47 @@
-import { PlusIcon } from "@heroicons/react/24/solid";
-import {
-    ArrowUpTrayIcon,
-    EyeIcon,
-    PencilSquareIcon,
-} from "@heroicons/react/24/outline";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
+import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/solid";
+import { ArrowUpTrayIcon, ServerStackIcon } from "@heroicons/react/24/outline";
+import { AnimatePresence, motion } from "framer-motion";
 import Pagination from "react-js-pagination";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
-import {
-    modalEditState,
-    modalState,
-    modalTypeState,
-} from "../../src/atoms/modalAtom";
+import { modalState, modalTypeState } from "../../src/atoms/modalAtom";
 import axios from "../../src/lib/axios";
 import { handleLecturerState } from "../../src/atoms/lecturerAtom";
-import CSVButton from "../../components/CSVButton";
+import LecturerTable from "../../components/Lecturers/Table";
+import Input from "../../components/Input";
 
 const Lecturer = ({ lecturers, lecturersSummary }) => {
     const router = useRouter();
-    const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
-
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
     const [handleLecturer, setHandleLecturer] =
         useRecoilState(handleLecturerState);
-    const [modalEdit, setModalEdit] = useRecoilState(modalEditState);
     const [page, setPage] = useState(router.query?.page || 1);
+    const [searchToggle, setSearchToggle] = useState(false);
     const [loading, setLoading] = useState(false);
     const [lecturerData, setLecturerData] = useState(null);
-
-    const fetchLecturers = async () => {
-        const response = await axios.get(`api/v1/lecturers?page=${page}`);
-        response.status === 200 && setLecturerData(response.data);
-    };
+    const [query, setQuery] = useState("");
 
     useEffect(() => {
-        setLoading(true);
         router.push({ pathname: "lecturers", query: { page } });
+        const fetchLecturers = async () => {
+            const response = await axios.get(`api/v1/lecturers?page=${page}`);
+            response.status === 200 && setLecturerData(response.data);
+        };
+        setLoading(true);
         fetchLecturers();
         setLoading(false);
     }, [page, handleLecturer]);
 
+    const searchKeys = ["full_name", "staff_id"];
+    const search = data => {
+        return data?.filter(item =>
+            searchKeys.some(key => item[key].toLowerCase().includes(query)),
+        );
+    };
     return (
         <AppLayout header="Lecturers">
             {/* Title */}
@@ -63,17 +58,40 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
                             {lecturersSummary.count}
                         </span>
                     </div>
-                    <button
-                        onClick={() => {
-                            setModalOpen(true);
-                            setModalType("importLecturer");
-                        }}
-                        className="inline-flex items-center px-6 py-2 bg-white text-primary rounded-full font-bold text-xs capitalize border-2 border-primary tracking-widest transition ease-in-out duration-150">
-                        <ArrowUpTrayIcon className="w-4 h-4 mr-1" />
-                        Improt CSV
-                    </button>
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={searchToggle ? "search" : "csv"}
+                            initial={{ x: 50, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ x: -50, opacity: 0 }}
+                            transition={{ duration: 0.2 }}>
+                            {searchToggle ? (
+                                <Input
+                                    type="text"
+                                    placeholder="Search..."
+                                    className="bg-white border-primary text-sm text-gray-text outline-none min-w-max px-8 py-2 rounded-sm shadow-sm"
+                                    onChange={e => setQuery(e.target.value)}
+                                />
+                            ) : (
+                                <button
+                                    onClick={() => {
+                                        setModalOpen(true);
+                                        setModalType("importLecturer");
+                                    }}
+                                    className="inline-flex items-center px-6 py-2 bg-white text-primary rounded-full font-bold text-xs capitalize border-2 border-primary tracking-widest transition ease-in-out duration-150">
+                                    <ArrowUpTrayIcon className="w-4 h-4 mr-1" />
+                                    Improt CSV
+                                </button>
+                            )}
+                        </motion.div>
+                    </AnimatePresence>
 
-                    <div>
+                    <div className="space-x-2 flex items-center">
+                        <button
+                            onClick={() => setSearchToggle(!searchToggle)}
+                            className="text-white bg-primary p-2 rounded-full">
+                            <MagnifyingGlassIcon className="h-5 w-5" />
+                        </button>
                         <motion.button
                             whileHover={{ scale: 1.01 }}
                             whileTap={{ scale: 0.99 }}
@@ -88,128 +106,7 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
                     </div>
                 </div>
                 <div className="my-3 overflow-x-auto bg-white shadow-lg rounded-lg overflow-y-auto relative">
-                    <table className="table power-grid-table rounded-lg min-w-full border border-slate-200">
-                        <thead className="shadow-sm bg-primary-accent border border-slate-200">
-                            <tr>
-                                <th className="capitalize font-bold px-2 pr-4 py-3 text-sm text-primary tracking-wider whitespace-nowrap">
-                                    Photo
-                                </th>
-                                <th className="capitalize font-bold px-2 pr-4 py-3 text-left text-sm text-primary tracking-wider whitespace-nowrap">
-                                    Staff ID
-                                </th>
-                                <th className="capitalize font-bold px-2 pr-4 py-3 text-left text-sm text-primary tracking-wider whitespace-nowrap">
-                                    Name
-                                </th>
-                                <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
-                                    Modules
-                                </th>
-                                <th className="capitalize font-bold px-2 pr-6 py-3 text-sm text-primary tracking-wider whitespace-nowrap text-right">
-                                    Actions
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className="text-gray-text text-sm !border-[#E6EAEF]">
-                            {lecturerData !== null && (
-                                <>
-                                    {lecturerData?.data.map(lecturer => (
-                                        <tr className="" key={lecturer.id}>
-                                            <td className="capitalize text-center p-3 whitespace-nowrap">
-                                                <Image
-                                                    src={
-                                                        lecturer.picture ??
-                                                        defaultImg
-                                                    }
-                                                    className="h-10 w-10 my-0 mx-auto"
-                                                    width={100}
-                                                    height={100}
-                                                    alt={lecturer.surname}
-                                                />
-                                            </td>
-                                            <td className="capitalize p-3 whitespace-nowrap border-b">
-                                                <span>
-                                                    <div>
-                                                        {lecturer.staff_id}
-                                                    </div>
-                                                </span>
-                                            </td>
-                                            <td className="capitalize p-3 whitespace-nowrap border-b">
-                                                <span>
-                                                    <div>
-                                                        {lecturer.title}{" "}
-                                                        {lecturer.first_name}{" "}
-                                                        {lecturer.other_name &&
-                                                            lecturer.other_name +
-                                                                " "}
-                                                        {lecturer.surname}
-                                                    </div>
-                                                </span>
-                                            </td>
-                                            <td className="capitalize py-3  border-b text-center">
-                                                <div className="space-x-2">
-                                                    {lecturer.modules.length > 0
-                                                        ? lecturer.modules
-                                                              .slice(0, 3)
-                                                              .map(
-                                                                  (
-                                                                      module,
-                                                                      index,
-                                                                  ) => (
-                                                                      <span
-                                                                          key={
-                                                                              index
-                                                                          }
-                                                                          className="uppercase py-1 rounded-sm text-xs font-bold shadow-sm px-2 bg-primary-accent">
-                                                                          {
-                                                                              module
-                                                                                  .module
-                                                                                  .code
-                                                                          }
-                                                                      </span>
-                                                                  ),
-                                                              )
-                                                        : "---"}
-                                                    {lecturer.modules.length >
-                                                        3 && (
-                                                        <span className="underline text-primary">
-                                                            all
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-
-                                            <td className="capitalize py-3 whitespace-nowrap border-b !text-right pr-6">
-                                                <div className="space-x-3">
-                                                    <Link
-                                                        href={`/lecturers/${lecturer.id}`}
-                                                        legacyBehavior>
-                                                        <a
-                                                            className="inline-flex cursor-pointer text-gray-text hover:!text-secondary transition duration-500"
-                                                            title="Details">
-                                                            <EyeIcon className="h-6 w-6 " />
-                                                        </a>
-                                                    </Link>
-                                                    <button
-                                                        className="inline-flex cursor-pointer text-gray-text hover:!text-primary transition duration-500"
-                                                        title="Edit"
-                                                        onClick={() => {
-                                                            setModalOpen(true);
-                                                            setModalType(
-                                                                "editLecturer",
-                                                            );
-                                                            setModalEdit(
-                                                                lecturer,
-                                                            );
-                                                        }}>
-                                                        <PencilSquareIcon className="h-6 w-6 " />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </>
-                            )}
-                        </tbody>
-                    </table>
+                    <LecturerTable data={search(lecturerData?.data)} />
                     {/* pagination */}
                     {lecturerData !== null && (
                         <>
