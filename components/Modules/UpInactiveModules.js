@@ -67,7 +67,7 @@ const UpInactiveModules = ({ modules }) => {
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                                 {modulesUpcoming.length > 0 ? (
                                     !upViewAll ? (
-                                        <div>
+                                        <>
                                             {modulesUpcoming
                                                 .slice(0, 3)
                                                 .map(module => (
@@ -76,16 +76,16 @@ const UpInactiveModules = ({ modules }) => {
                                                         module={module}
                                                     />
                                                 ))}
-                                        </div>
+                                        </>
                                     ) : (
-                                        <div>
+                                        <>
                                             {modulesUpcoming.map(module => (
                                                 <ModuleCard
                                                     key={module.id}
                                                     module={module}
                                                 />
                                             ))}
-                                        </div>
+                                        </>
                                     )
                                 ) : (
                                     <div>no Active module</div>
@@ -95,7 +95,7 @@ const UpInactiveModules = ({ modules }) => {
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                                 {modulesInactive.length > 0 ? (
                                     !upViewAll ? (
-                                        <div>
+                                        <>
                                             {modulesInactive
                                                 .slice(0, 3)
                                                 .map(module => (
@@ -104,16 +104,16 @@ const UpInactiveModules = ({ modules }) => {
                                                         module={module}
                                                     />
                                                 ))}
-                                        </div>
+                                        </>
                                     ) : (
-                                        <div>
+                                        <>
                                             {modulesInactive.map(module => (
                                                 <ModuleCard
                                                     key={module.id}
                                                     module={module}
                                                 />
                                             ))}
-                                        </div>
+                                        </>
                                     )
                                 ) : (
                                     <div>no Active module</div>

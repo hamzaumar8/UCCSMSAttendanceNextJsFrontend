@@ -109,10 +109,10 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
                     <LecturerTable data={search(lecturerData?.data)} />
                     {/* pagination */}
                     {lecturerData !== null && (
-                        <div>
+                        <>
                             {lecturerData.meta.total >
                                 lecturerData.meta.per_page && (
-                                <div>
+                                <>
                                     <Pagination
                                         activePage={
                                             lecturerData.meta.current_page
@@ -128,9 +128,9 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
                                             setPage(pageNumber)
                                         }
                                     />
-                                </div>
+                                </>
                             )}
-                        </div>
+                        </>
                     )}
                 </div>
             </div>

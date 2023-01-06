@@ -28,13 +28,13 @@ const ModuleBankFeed = ({ modules }) => {
     }, [handleModuleBank]);
 
     return (
-        <div>
+        <>
             {!useSSRModuleBank ? (
                 <ModuleBank modules={realtimeModuleBank} />
             ) : (
                 <ModuleBank modules={modules} />
             )}
-        </div>
+        </>
     );
 };
 

@@ -1,6 +1,6 @@
 const Errors = ({ errors = [], ...props }) => {
     return (
-        <div>
+        <>
             {errors.length > 0 && (
                 <div {...props}>
                     <div className="text-red-700 font-bold">Error!</div>
@@ -11,7 +11,7 @@ const Errors = ({ errors = [], ...props }) => {
                     </ul>
                 </div>
             )}
-        </div>
+        </>
     );
 };
 

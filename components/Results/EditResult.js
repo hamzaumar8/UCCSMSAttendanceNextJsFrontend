@@ -49,7 +49,7 @@ const EditResult = ({ result }) => {
     };
 
     return (
-        <div>
+        <>
             {scores.map((assessment, index) => {
                 const err = errors.includes(`assessments.${index}.score`);
                 return (
@@ -113,7 +113,7 @@ const EditResult = ({ result }) => {
                     </tr>
                 );
             })}
-        </div>
+        </>
     );
 };
 

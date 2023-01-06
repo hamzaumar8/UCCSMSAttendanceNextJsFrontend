@@ -10,14 +10,15 @@ import Profile from "../../components/Settings/Profile";
 import Button from "../../components/Button";
 
 const Settings = ({ promotion }) => {
-    const { semester, promoteStudent, loading } = useSemester();
+    const { semester: getSemester, promoteStudent, loading } = useSemester();
+    const [semester, setSemester] = useState(null);
     const [errors, setErrors] = useState([]);
     const [status, setStatus] = useState(null);
 
     const handlePromotion = event => {
         event.preventDefault();
         promoteStudent({
-            id: semester.id,
+            id: semester?.id,
             setErrors,
             setStatus,
         });
@@ -47,7 +48,7 @@ const Settings = ({ promotion }) => {
                                 }>
                                 <div className="space-y-3">
                                     {promotion.data === "set" ? (
-                                        <div>
+                                        <>
                                             {semester?.promotion_status ===
                                             "open" ? (
                                                 <div>Promotion is done</div>
@@ -64,7 +65,7 @@ const Settings = ({ promotion }) => {
                                                     </div>
                                                 </form>
                                             )}
-                                        </div>
+                                        </>
                                     ) : (
                                         <div>
                                             All Module Assessment is not

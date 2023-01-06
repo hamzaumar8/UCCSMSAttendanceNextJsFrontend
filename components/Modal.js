@@ -64,7 +64,7 @@ const gifYouUp = {
 const Modal = ({ handleClose, type }) => {
     const [modalEdit, setModalEdit] = useRecoilState(modalEditState);
     return (
-        <div>
+        <>
             {type === "addGroup" && (
                 <Backdrop>
                     <motion.div
@@ -255,7 +255,7 @@ const Modal = ({ handleClose, type }) => {
                     <CheckInModal />
                 </SlideUp>
             )}
-        </div>
+        </>
     );
 };
 

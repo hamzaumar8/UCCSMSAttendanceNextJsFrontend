@@ -18,7 +18,7 @@ const AppLayout = ({ header = "", children }) => {
     const { user, isLoading } = useAuth({ middleware: "auth" });
 
     if (isLoading || !user) {
-        return <div>Loading...</div>;
+        return <>Loading...</>;
     }
 
     if (user.role !== "ADM") {

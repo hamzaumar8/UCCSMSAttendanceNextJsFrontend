@@ -37,7 +37,7 @@ const LecturerTable = ({ data }) => {
             </thead>
             <tbody className="text-gray-text text-sm !border-[#E6EAEF]">
                 {data?.length > 0 ? (
-                    <div>
+                    <>
                         {data?.map((lecturer, index) => (
                             <tr className="" key={index}>
                                 <td className="capitalize text-center p-3 whitespace-nowrap">
@@ -111,7 +111,7 @@ const LecturerTable = ({ data }) => {
                                 </td>
                             </tr>
                         ))}
-                    </div>
+                    </>
                 ) : (
                     <tr className="">
                         <td

@@ -90,7 +90,7 @@ const StaffDashboard = ({ modules }) => {
                                 item.attendance.data[index].filter(item => i),
                             )
                             .map(lecturermodule => (
-                                <div>
+                                <>
                                     {lecturermodule.attendance.data.map(
                                         <div>ha,za</div>,
                                     )}
@@ -101,7 +101,7 @@ const StaffDashboard = ({ modules }) => {
                                         active
                                     />,
                                 )} */}
-                                </div>
+                                </>
                             ))}
                     </div>
                     <div className="fixed bottom-20 right-4">
