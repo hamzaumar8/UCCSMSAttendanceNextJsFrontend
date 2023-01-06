@@ -200,7 +200,9 @@ const Student = ({ students, levels, modules }) => {
                                             </td>
                                             <td className="capitalize p-3 whitespace-nowrap border-b text-center">
                                                 <span>
-                                                    <div>1</div>
+                                                    <div>
+                                                        {student.group_no}
+                                                    </div>
                                                 </span>
                                             </td>
                                             <td className="capitalize p-3 whitespace-nowrap border-b text-center">

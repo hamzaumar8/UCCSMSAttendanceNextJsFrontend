@@ -32,7 +32,7 @@ export async function getStaticPaths() {
     const response = await axios.get("/api/v1/students");
     return {
         paths: response.data.data.map(student => ({
-            params: { id: student.id },
+            params: { id: student.id.toString() },
         })),
         fallback: false, // can also be true or 'blocking'
     };
