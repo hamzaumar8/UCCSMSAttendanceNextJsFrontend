@@ -10,7 +10,6 @@ import { useModule } from "../../../src/hooks/module";
 
 const animatedCompnent = makeAnimated();
 const ModuleStudentAddForm = ({ module, onClick }) => {
-    console.log(module);
     const { addStudentModule, loading } = useModule();
     const [student, setStudent] = useState([]);
     const [errors, setErrors] = useState([]);

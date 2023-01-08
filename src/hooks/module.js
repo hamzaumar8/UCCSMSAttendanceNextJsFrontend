@@ -206,6 +206,8 @@ export const useModule = () => {
                         toast.error("Set Semester", {
                             position: toast.POSITION.TOP_RIGHT,
                         });
+                    } else {
+                        console.log(error);
                     }
                 } else {
                     console.log(error);

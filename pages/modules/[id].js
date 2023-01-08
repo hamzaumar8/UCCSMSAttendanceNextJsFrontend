@@ -25,7 +25,8 @@ const Module = ({ module }) => {
     const [modalEdit, setModalEdit] = useRecoilState(modalEditState);
     const [attendanceLecStu, setAttendanceLecStu] = useState(true);
 
-    const week = Object.values(module.attendance.weekly);
+    const lectureWeekly = Object.values(module.attendance.weekly.lecturer);
+    const studentsWeekly = Object.values(module.attendance.weekly.students);
 
     const handleEndModule = e => {
         e.preventDefault();
@@ -162,13 +163,25 @@ const Module = ({ module }) => {
                                                 </div>
                                                 <div className="flex z-10 space-x-10 h-[20rem] items-end overflow-y-auto relative ">
                                                     {attendanceLecStu
-                                                        ? week.map(
+                                                        ? lectureWeekly.map(
                                                               (data, index) => (
                                                                   <div
                                                                       className="flex flex-col-reverse h-full"
                                                                       key={
                                                                           index
                                                                       }>
+                                                                      {data.total ===
+                                                                          0 && (
+                                                                          <div className="w-16 flex items-center justify-center">
+                                                                              <span className="text-xs text-black-text font-bold">
+                                                                                  {
+                                                                                      data.total
+                                                                                  }
+
+                                                                                  %
+                                                                              </span>
+                                                                          </div>
+                                                                      )}
                                                                       {data.present_percentage >
                                                                           0 && (
                                                                           <div
@@ -218,7 +231,74 @@ const Module = ({ module }) => {
                                                                   </div>
                                                               ),
                                                           )
-                                                        : "---"}
+                                                        : studentsWeekly.map(
+                                                              (data, index) => (
+                                                                  <div
+                                                                      className="flex flex-col-reverse h-full"
+                                                                      key={
+                                                                          index
+                                                                      }>
+                                                                      {data.total ===
+                                                                          0 && (
+                                                                          <div className="w-16 flex items-center justify-center">
+                                                                              <span className="text-xs text-black-text font-bold">
+                                                                                  {
+                                                                                      data.total
+                                                                                  }
+
+                                                                                  %
+                                                                              </span>
+                                                                          </div>
+                                                                      )}
+                                                                      {data.present_percentage >
+                                                                          0 && (
+                                                                          <div
+                                                                              className={`bg-secondary w-16 flex items-center justify-center  ${
+                                                                                  data.absent_percentage >
+                                                                                  0
+                                                                                      ? "rounded-b-lg"
+                                                                                      : "rounded-lg"
+                                                                              }`}
+                                                                              style={{
+                                                                                  height:
+                                                                                      data.present_percentage +
+                                                                                      "%",
+                                                                              }}>
+                                                                              <span className="text-xs text-black-text font-bold">
+                                                                                  {
+                                                                                      data.present_percentage
+                                                                                  }
+
+                                                                                  %
+                                                                              </span>
+                                                                          </div>
+                                                                      )}
+                                                                      {data.absent_percentage >
+                                                                          0 && (
+                                                                          <div
+                                                                              className={`bg-danger w-16 flex items-center justify-center  ${
+                                                                                  data.absent_percentage >
+                                                                                  0
+                                                                                      ? "rounded-t-lg"
+                                                                                      : "rounded-lg"
+                                                                              }`}
+                                                                              style={{
+                                                                                  height:
+                                                                                      data.absent_percentage +
+                                                                                      "%",
+                                                                              }}>
+                                                                              <span className="text-xs text-white font-bold">
+                                                                                  {
+                                                                                      data.absent_percentage
+                                                                                  }
+
+                                                                                  %
+                                                                              </span>
+                                                                          </div>
+                                                                      )}
+                                                                  </div>
+                                                              ),
+                                                          )}
                                                 </div>
                                             </div>
                                             <div className="border-t border-gray-200 flex space-x-8 w-full">
@@ -226,14 +306,16 @@ const Module = ({ module }) => {
                                                     0
                                                 </div>
                                                 <div className="space-x-10 flex">
-                                                    {week.map((lec, index) => (
-                                                        <div
-                                                            key={index}
-                                                            className="w-16 text-sm text-center">
-                                                            week
-                                                            {index + 1}
-                                                        </div>
-                                                    ))}
+                                                    {lectureWeekly.map(
+                                                        (lec, index) => (
+                                                            <div
+                                                                key={index}
+                                                                className="w-16 text-sm text-center">
+                                                                week
+                                                                {index + 1}
+                                                            </div>
+                                                        ),
+                                                    )}
                                                 </div>
                                             </div>
                                         </motion.div>
