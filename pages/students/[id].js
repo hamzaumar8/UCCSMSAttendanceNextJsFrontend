@@ -1,18 +1,11 @@
-import Head from "next/head";
+import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
 import axios from "../../src/lib/axios";
 
 const Student = ({ student }) => {
     return (
-        <AppLayout
-            header={
-                <h2 className="font-semibold text-xl text-black-text leading-tight">
-                    student details page
-                </h2>
-            }>
-            <Head>
-                <title>Laravel - Dashboard</title>
-            </Head>
+        <AppLayout header={`${student.full_name} Details`}>
+            <HeadTitle title={`${student.full_name} Details`} />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">

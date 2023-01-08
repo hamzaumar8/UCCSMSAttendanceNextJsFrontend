@@ -1,6 +1,4 @@
-import { EyeIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import Button from "../../components/Button";
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
 import SemesterTag from "../../components/SemesterTag";
@@ -9,7 +7,7 @@ import axios from "../../src/lib/axios";
 const Result = ({ result }) => {
     return (
         <AppLayout header={`${result.module.module.code} Results`}>
-            <HeadTitle title="" />
+            <HeadTitle title={`${result.module.module.code} Results`} />
 
             {/* Main content */}
             <div className="relative space-y-8">

@@ -7,11 +7,9 @@ import { modalState } from "../../src/atoms/modalAtom";
 import { useAuth } from "../../src/hooks/auth";
 
 const StaffDashboard = ({ modules }) => {
-    const { user } = useAuth({ middleware: "auth" });
+    // const { user } = useAuth({ middleware: "auth" });
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
-    const lecturerModules = modules.filter(
-        item => item.lecturer_id == user?.id,
-    );
+
     return (
         <LecturerLayout header="Here's an overview of all attendaces">
             <HeadTitle title="Lecturer Dashboard" />
@@ -84,26 +82,7 @@ const StaffDashboard = ({ modules }) => {
                     <div>Daily</div>
                 </div>
                 <div className="relative px-4 pb-6">
-                    <div className="space-y-4 sm:space-y-0 sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {lecturerModules
-                            .filter((item, index) =>
-                                item.attendance.data[index].filter(item => i),
-                            )
-                            .map(lecturermodule => (
-                                <>
-                                    {lecturermodule.attendance.data.map(
-                                        <div>ha,za</div>,
-                                    )}
-                                    {/* {lecturermodule.attendance.data.map(
-                                    <ModuleCardLecturer
-                                        key={lecturermodule.id}
-                                        lecturermodule={lecturermodule}
-                                        active
-                                    />,
-                                )} */}
-                                </>
-                            ))}
-                    </div>
+                    <div className="space-y-4 sm:space-y-0 sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
                     <div className="fixed bottom-20 right-4">
                         <button
                             onClick={() => {
