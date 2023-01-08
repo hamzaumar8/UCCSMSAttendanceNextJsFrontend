@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import axios from "../lib/axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useRecoilState } from "recoil";

@@ -15,7 +15,7 @@ const Login = () => {
     const router = useRouter();
 
     // Auth Hook
-    const { login, isLoading, user } = useAuth({
+    const { login, loading } = useAuth({
         middleware: "guest",
         redirectIfAuthenticated: "/dashboard",
     });
@@ -23,7 +23,6 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [shouldRemember, setShouldRemember] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState([]);
     const [status, setStatus] = useState(null);
 
@@ -33,12 +32,11 @@ const Login = () => {
         } else {
             setStatus(null);
         }
-    });
+    }, []);
 
     // submit form
     const submitForm = async event => {
         event.preventDefault();
-        setLoading(true);
         login({
             email,
             password,
@@ -46,7 +44,6 @@ const Login = () => {
             setErrors,
             setStatus,
         });
-        setLoading(false);
     };
 
     return (

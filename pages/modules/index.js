@@ -9,10 +9,7 @@ import {
     handleModuleMountState,
     useSSRModuleMountState,
 } from "../../src/atoms/moduleAtom";
-import { useSemester } from "../../src/hooks/semester";
 import axios from "../../src/lib/axios";
-import Card from "../../components/Card";
-import Link from "next/link";
 import SemesterNotFound from "../../components/SemesterNotFound";
 const Modules = ({ semester, modules, modulesBank }) => {
     const modulesActive = modules.filter(itm => itm.status == "active");

@@ -2,7 +2,7 @@ import AppLayout from "../../components/Layouts/AppLayout";
 import axios from "../../src/lib/axios";
 import Card from "../../components/Card";
 import HeadTitle from "../../components/HeadTitle";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SetSemester from "../../components/Settings/SetSemster";
 import EditSetSemester from "../../components/Settings/EditSetSemester";
 import { useSemester } from "../../src/hooks/semester";

@@ -7,6 +7,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const {
         data: user,
@@ -41,15 +42,19 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     };
 
     const login = async ({ setErrors, setStatus, ...props }) => {
+        setLoading(true);
         await csrf();
-
         setErrors([]);
         setStatus(null);
 
         axios
             .post("/login", props)
-            .then(() => mutate())
+            .then(() => {
+                setLoading(false);
+                mutate();
+            })
             .catch(error => {
+                setLoading(false);
                 if (error.response.status !== 422) throw error;
 
                 setErrors(error.response.data.errors);
@@ -126,6 +131,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         resetPassword,
         resendEmailVerification,
         logout,
+        loading,
         isLoading,
     };
 };

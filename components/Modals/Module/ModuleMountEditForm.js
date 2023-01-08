@@ -1,5 +1,5 @@
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "../../Button";
 import Input from "../../Input";
 import Label from "../../Label";

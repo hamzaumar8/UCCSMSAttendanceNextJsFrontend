@@ -1,16 +1,10 @@
-import { ArrowUpTrayIcon, EyeIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { ArrowUpTrayIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 import Button from "../../../components/Button";
 import HeadTitle from "../../../components/HeadTitle";
 import InputError from "../../../components/InputError";
 import AppLayout from "../../../components/Layouts/AppLayout";
 import SemesterTag from "../../../components/SemesterTag";
-import {
-    handleResultState,
-    useSSRResultState,
-} from "../../../src/atoms/resultAtom";
 import { useResult } from "../../../src/hooks/result";
 import axios from "../../../src/lib/axios";
 

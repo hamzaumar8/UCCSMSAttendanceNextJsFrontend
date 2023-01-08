@@ -1,7 +1,6 @@
 import { CalendarDaysIcon } from "@heroicons/react/24/solid";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSemester } from "../../src/hooks/semester";
-import axios from "../../src/lib/axios";
 import Button from "../Button";
 import Card from "../Card";
 import Input from "../Input";
@@ -14,7 +13,6 @@ const SetSemester = () => {
     const [academicYear, setAcademicYear] = useState("");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
-    const [assessmentStatus, setAssessmentStatus] = useState("");
 
     const [errors, setErrors] = useState([]);
     const [status, setStatus] = useState(null);

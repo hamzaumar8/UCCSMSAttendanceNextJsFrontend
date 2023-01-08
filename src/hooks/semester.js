@@ -101,10 +101,6 @@ export const useSemester = () => {
             });
     };
 
-    // useEffect(() => {
-    //     // if (semester) setIsLoading(false);
-    // }, []);
-
     return {
         loading,
         semester,
