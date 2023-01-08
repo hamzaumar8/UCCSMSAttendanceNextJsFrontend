@@ -1,4 +1,4 @@
-import { ArrowLongLeftIcon } from "@heroicons/react/24/outline";
+import { ArrowLongLeftIcon, EyeIcon } from "@heroicons/react/24/outline";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
@@ -285,7 +285,7 @@ const Module = ({ module }) => {
                                         </div>
                                         <div className="flex space-x-5 items-center">
                                             <div className="flex items-center justify-center bg-primary-accent text-primary rounded-full text-xs w-[100px] py-1 font-bold capitalize">
-                                                Cordinator
+                                                Course Rep
                                             </div>
                                             <h3 className="text-gray-text text-xs capitalized">
                                                 {module.course_rep.full_name}
@@ -314,7 +314,8 @@ const Module = ({ module }) => {
                                 whileTap={{ scale: 0.99 }}
                                 onClick={() => {
                                     setModalOpen(true);
-                                    setModalType("addStudent");
+                                    setModalType("addStudentModule");
+                                    setModalEdit(module);
                                 }}
                                 className="inline-flex items-center px-4 py-2 bg-primary text-white border border-transparent rounded-full font-semibold text-xs capitalize tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity:25 transition ease-in-out duration-150">
                                 <PlusIcon className="w-4 h-4 mr-2" />
@@ -372,18 +373,31 @@ const Module = ({ module }) => {
                                         </td>
                                         <td className="capitalize p-3 whitespace-nowrap border-b text-center">
                                             <span>
-                                                <div>40</div>
+                                                <div>
+                                                    {
+                                                        student.attendance_stats
+                                                            .present_percentage
+                                                    }
+                                                </div>
                                             </span>
                                         </td>
                                         <td className="capitalize p-3 whitespace-nowrap border-b text-center">
                                             <span>
-                                                <div>40</div>
+                                                <div>
+                                                    {
+                                                        student.attendance_stats
+                                                            .absent_percentage
+                                                    }
+                                                </div>
                                             </span>
                                         </td>
                                         <td className="capitalize p-3 whitespace-nowrap border-b text-right pr-6">
-                                            <span>
-                                                <div>30</div>
-                                            </span>
+                                            <Link
+                                                href={`/students/${student.id}`}
+                                                className="inline-flex cursor-pointer text-gray-text hover:!text-primary transition duration-500"
+                                                title="Detials">
+                                                <EyeIcon className="h-6 w-6" />
+                                            </Link>
                                         </td>
                                     </tr>
                                 ))}

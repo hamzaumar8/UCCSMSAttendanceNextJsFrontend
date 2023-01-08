@@ -16,6 +16,7 @@ import StudentEditForm from "./Modals/students/StudentEditForm";
 import AddGroup from "./Modals/Groups/AddGroup";
 import LecturerImport from "./Modals/Lecturers/LecturerImport";
 import StudentImport from "./Modals/students/StudentImport";
+import ModuleStudentAddForm from "./Modals/Module/ModuleStudentAddForm";
 
 const dropIn = {
     hidden: {
@@ -91,6 +92,7 @@ const Modal = ({ handleClose, type }) => {
                     </motion.div>
                 </Backdrop>
             )}
+
             {type === "importStudent" && (
                 <Backdrop>
                     <motion.div
@@ -145,6 +147,23 @@ const Modal = ({ handleClose, type }) => {
                         exit="exit"
                         className="rounded-lg flex flex-col justify-center z-0 bg-primary-accent w-full max-w-xl mx-6  after:absolute after:-top-2 after:-left-2 after:w-full after:h-full after:bg-white after:-z-10 after:rounded-lg after:shadow-md">
                         <ModuleEditForm
+                            onClick={handleClose}
+                            module={modalEdit}
+                        />
+                    </motion.div>
+                </Backdrop>
+            )}
+
+            {type === "addStudentModule" && (
+                <Backdrop>
+                    <motion.div
+                        onClick={e => e.stopPropagation()}
+                        variants={dropIn}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        className="rounded-lg flex flex-col justify-center z-0 bg-primary-accent w-full max-w-xl mx-6  after:absolute after:-top-2 after:-left-2 after:w-full after:h-full after:bg-white after:-z-10 after:rounded-lg after:shadow-md">
+                        <ModuleStudentAddForm
                             onClick={handleClose}
                             module={modalEdit}
                         />

@@ -18,10 +18,9 @@ export const lecturerLoadOptions = async (inputText, callback) => {
     const json = await response.json();
     callback(
         json.map(i => ({
-            label:
-                i.other_name != null
-                    ? `${i.title} ${i.first_name} ${i.other_name} ${i.surname} (${i.staff_id})`
-                    : `${i.title} ${i.first_name} ${i.surname} (${i.staff_id})`,
+            label: `${i.title} ${i.first_name} ${
+                i.other_name ? i.other_name + " " : ""
+            } ${i.surname} (${i.staff_id})`,
             value: i.id,
         })),
     );

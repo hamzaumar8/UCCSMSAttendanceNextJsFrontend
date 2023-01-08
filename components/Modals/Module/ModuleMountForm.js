@@ -6,7 +6,6 @@ import Label from "../../Label";
 import AsyncSelect from "react-select/async";
 import makeAnimated from "react-select/animated";
 import { useModule } from "../../../src/hooks/module";
-import Errors from "../../Errors";
 import InputError from "../../InputError";
 import {
     courseRepLoadOptions,

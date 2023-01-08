@@ -238,6 +238,34 @@ export const useModule = () => {
             });
     };
 
+    const addStudentModule = async ({ setErrors, setStatus, ...props }) => {
+        setLoading(true);
+        setErrors([]);
+        setStatus(null);
+
+        await csrf();
+        axios
+            .post(`/api/v1/add/student/${props.id}`, props)
+            .then(res => {
+                if (res.data.status === "success") {
+                    setLoading(false);
+                    setHandleModuleMount(true);
+                    setModalOpen(false);
+                    toast.success("Module Mounted Successfully!", {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                }
+            })
+            .catch(error => {
+                setLoading(false);
+                if (error.response.status === 422) {
+                    setErrors(error.response.data.errors);
+                } else {
+                    console.log(error);
+                }
+            });
+    };
+
     return {
         loading,
         addModule,
@@ -247,5 +275,6 @@ export const useModule = () => {
         deleteModule,
         endModule,
         deleteMountModule,
+        addStudentModule,
     };
 };

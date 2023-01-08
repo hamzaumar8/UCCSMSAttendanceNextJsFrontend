@@ -203,12 +203,24 @@ const Student = ({ students, levels, modules }) => {
                                             </td>
                                             <td className="capitalize p-3 whitespace-nowrap border-b text-center">
                                                 <span>
-                                                    <div>40</div>
+                                                    <div>
+                                                        {
+                                                            student
+                                                                .attendance_stats
+                                                                .present_percentage
+                                                        }
+                                                    </div>
                                                 </span>
                                             </td>
                                             <td className="capitalize p-3 whitespace-nowrap border-b text-center">
                                                 <span>
-                                                    <div>40</div>
+                                                    <div>
+                                                        {
+                                                            student
+                                                                .attendance_stats
+                                                                .absent_percentage
+                                                        }
+                                                    </div>
                                                 </span>
                                             </td>
                                             <td className="capitalize p-3 whitespace-nowrap border-b text-right pr-6">
