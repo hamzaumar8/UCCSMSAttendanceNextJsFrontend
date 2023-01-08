@@ -1,6 +1,6 @@
-import { ArrowLongLeftIcon, EyeIcon } from "@heroicons/react/24/outline";
+import { EyeIcon } from "@heroicons/react/24/outline";
 import { PlusIcon } from "@heroicons/react/24/solid";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -24,7 +24,6 @@ const Module = ({ module }) => {
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
     const [modalEdit, setModalEdit] = useRecoilState(modalEditState);
-    const [attendanceLecStu, setAttendanceLecStu] = useState(true);
 
     const lectureWeekly = Object.values(module.attendance.weekly.lecturer);
     const studentsWeekly = Object.values(module.attendance.weekly.students);
