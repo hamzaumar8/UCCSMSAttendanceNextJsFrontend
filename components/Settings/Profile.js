@@ -10,7 +10,6 @@ import InputError from "../InputError";
 import Label from "../Label";
 
 const Profile = () => {
-    const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
     const { user } = useAuth();
 
     const { editLecturer, loading } = useLecturer();
@@ -80,7 +79,7 @@ const Profile = () => {
                                     src={
                                         previewImage !== null
                                             ? previewImage
-                                            : picture ?? defaultImg
+                                            : picture
                                     }
                                     priority
                                     height={100}

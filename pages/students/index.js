@@ -12,11 +12,10 @@ import {
     modalState,
     modalTypeState,
 } from "../../src/atoms/modalAtom";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowUpTrayIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 
 const Student = ({ students, levels, modules }) => {
-    const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
     const [modalEdit, setModalEdit] = useRecoilState(modalEditState);
@@ -174,10 +173,7 @@ const Student = ({ students, levels, modules }) => {
                                         <tr className="" key={index}>
                                             <td className="capitalize p-3 whitespace-nowrap">
                                                 <Image
-                                                    src={
-                                                        student.picture ??
-                                                        defaultImg
-                                                    }
+                                                    src={student.picture}
                                                     height={100}
                                                     width={100}
                                                     alt={student.index_number}

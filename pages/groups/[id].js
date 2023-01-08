@@ -1,22 +1,22 @@
-import { PencilSquareIcon } from "@heroicons/react/24/outline";
+import { EyeIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import Link from "next/link";
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
 import axios from "../../src/lib/axios";
 
-const Group = ({ level }) => {
-    const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
+const Group = ({ group }) => {
     return (
-        <AppLayout header={`${level.name} Groups`}>
+        <AppLayout header={`${group.name} Groups`}>
             <HeadTitle title="Groups" />
             <div className="space-y-5">
                 <div className="flex items-center justify-between relative">
                     <div className="flex space-x-4 items-center">
                         <h1 className="text-black font-extrabold text-xl">
-                            Total Students
+                            Total Levels
                         </h1>
                         <span className="p-1 h-7 w-7 inline-flex items-center justify-center rounded-full text-xs text-white bg-primary">
-                            {level.students.length}
+                            {group.students.length}
                         </span>
                     </div>
                 </div>
@@ -37,22 +37,22 @@ const Group = ({ level }) => {
                                     Group Number
                                 </th>
                                 <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
-                                    Absents(%)
+                                    Presents(%)
                                 </th>
                                 <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
                                     Absents(%)
                                 </th>
-                                {/* <th className="capitalize font-bold px-2 pr-6 py-3 text-sm text-primary tracking-wider whitespace-nowrap text-right">
+                                <th className="capitalize font-bold px-2 pr-6 py-3 text-sm text-primary tracking-wider whitespace-nowrap text-right">
                                     Action
-                                </th> */}
+                                </th>
                             </tr>
                         </thead>
                         <tbody className="text-gray-text text-sm !border-[#E6EAEF]">
-                            {level.students.map((student, index) => (
+                            {group.students.map((student, index) => (
                                 <tr className="" key={index}>
                                     <td className="capitalize p-3 whitespace-nowrap">
                                         <Image
-                                            src={student.picture ?? defaultImg}
+                                            src={student.picture}
                                             height={100}
                                             width={100}
                                             alt={student.index_number}
@@ -76,13 +76,31 @@ const Group = ({ level }) => {
                                     </td>
                                     <td className="capitalize p-3 whitespace-nowrap border-b text-center">
                                         <span>
-                                            <div>40</div>
+                                            <div>
+                                                {
+                                                    student.attendance_stats
+                                                        .present_percentage
+                                                }
+                                            </div>
                                         </span>
                                     </td>
                                     <td className="capitalize p-3 whitespace-nowrap border-b text-center">
                                         <span>
-                                            <div>40</div>
+                                            <div>
+                                                {
+                                                    student.attendance_stats
+                                                        .absent_percentage
+                                                }
+                                            </div>
                                         </span>
+                                    </td>
+                                    <td className="capitalize p-3 whitespace-nowrap border-b text-right pr-6">
+                                        <Link
+                                            href={`/students/${student.id}`}
+                                            className="inline-flex cursor-pointer text-gray-text hover:!text-primary transition duration-500"
+                                            title="Detials">
+                                            <EyeIcon className="h-6 w-6" />
+                                        </Link>
                                     </td>
                                 </tr>
                             ))}
@@ -99,8 +117,8 @@ export default Group;
 export async function getStaticPaths() {
     const response = await axios.get("/api/v1/levels");
     return {
-        paths: response.data.data.map(level => ({
-            params: { id: level.id.toString() },
+        paths: response.data.data.map(group => ({
+            params: { id: group.id.toString() },
         })),
         fallback: false, // can also be true or 'blocking'
     };
@@ -110,7 +128,7 @@ export async function getStaticProps({ params }) {
     const response = await axios.get(`/api/v1/levels/${params.id}`);
     return {
         props: {
-            level: response.data.data,
+            group: response.data.data,
         },
     };
 }

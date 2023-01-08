@@ -19,7 +19,6 @@ import axios from "../../src/lib/axios";
 
 const Module = ({ module }) => {
     const { endModule, loading } = useModule();
-    const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
 
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
@@ -352,10 +351,7 @@ const Module = ({ module }) => {
                                     <tr className="" key={index}>
                                         <td className="capitalize p-3 whitespace-nowrap">
                                             <Image
-                                                src={
-                                                    student.picture ??
-                                                    defaultImg
-                                                }
+                                                src={student.picture}
                                                 height={100}
                                                 width={100}
                                                 alt={student.index_number}

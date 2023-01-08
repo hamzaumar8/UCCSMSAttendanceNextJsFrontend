@@ -9,8 +9,6 @@ import {
 } from "../../src/atoms/modalAtom";
 
 const LecturerTable = ({ data }) => {
-    const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
-
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
     const [modalEdit, setModalEdit] = useRecoilState(modalEditState);
@@ -42,7 +40,7 @@ const LecturerTable = ({ data }) => {
                             <tr className="" key={index}>
                                 <td className="capitalize text-center p-3 whitespace-nowrap">
                                     <Image
-                                        src={lecturer.picture ?? defaultImg}
+                                        src={lecturer.picture}
                                         className="h-10 w-10 my-0 mx-auto"
                                         width={100}
                                         height={100}

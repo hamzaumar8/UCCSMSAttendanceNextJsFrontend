@@ -14,7 +14,6 @@ import { useModule } from "../../src/hooks/module";
 
 const ModuleCard = ({ module, active = "" }) => {
     const { deleteMountModule, loading } = useModule();
-    const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
     const [modalEdit, setModalEdit] = useRecoilState(modalEditState);
@@ -124,11 +123,7 @@ const ModuleCard = ({ module, active = "" }) => {
                                 : "bg-white border-primary"
                         } border-2  rounded-full overflow-hidden`}>
                         <Image
-                            src={
-                                module?.lecturers[0].picture
-                                    ? module?.lecturers[0].picture
-                                    : defaultImg
-                            }
+                            src={module?.lecturers[0].picture}
                             width={100}
                             height={100}
                             alt={module?.lecturers[0].surname}
@@ -152,11 +147,7 @@ const ModuleCard = ({ module, active = "" }) => {
                             active ? "bg-secondary-accent" : "bg-white"
                         } rounded-full overflow-hidden`}>
                         <Image
-                            src={
-                                module.cordinator.picture
-                                    ? module.cordinator.picture
-                                    : defaultImg
-                            }
+                            src={module.cordinator.picture}
                             width={100}
                             height={100}
                             alt={module.cordinator.surname}

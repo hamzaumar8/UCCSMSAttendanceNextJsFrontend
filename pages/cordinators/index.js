@@ -6,7 +6,6 @@ import AppLayout from "../../components/Layouts/AppLayout";
 import axios from "../../src/lib/axios";
 
 const Cordinators = ({ modules, moduleSummay }) => {
-    const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
     return (
         <AppLayout header="Cordinators">
             {/* Title */}
@@ -52,10 +51,7 @@ const Cordinators = ({ modules, moduleSummay }) => {
                                         <Image
                                             width={100}
                                             height={100}
-                                            src={
-                                                module.cordinator.picture ??
-                                                defaultImg
-                                            }
+                                            src={module.cordinator.picture}
                                             className="h-10 w-10 my-0 mx-auto"
                                             alt={module.cordinator.first_name}
                                         />

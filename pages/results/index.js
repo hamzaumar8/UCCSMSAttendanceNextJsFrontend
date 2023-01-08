@@ -12,8 +12,6 @@ import SemesterTag from "../../components/SemesterTag";
 import axios from "../../src/lib/axios";
 
 const Results = ({ results }) => {
-    const defaultImg = `${process.env.NEXT_PUBLIC_BACKEND_URL}/assets/img/lecturers/default.png`;
-
     const [upInactiveToggle, setUpInactiveToggle] = useState(false);
     const [cordinatingModules, setCordinatingModules] = useState(null);
     const [isLoading, setIsLoading] = useState(false);

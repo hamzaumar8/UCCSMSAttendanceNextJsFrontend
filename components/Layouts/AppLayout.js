@@ -9,6 +9,7 @@ import { useRecoilState } from "recoil";
 import { modalState, modalTypeState } from "../../src/atoms/modalAtom.js";
 import { useRouter } from "next/router";
 import { ToastContainer } from "react-toastify";
+import PageLoader from "../PageLoader";
 
 const AppLayout = ({ header = "", children }) => {
     const router = useRouter();
@@ -18,7 +19,7 @@ const AppLayout = ({ header = "", children }) => {
     const { user, isLoading } = useAuth({ middleware: "auth" });
 
     if (isLoading || !user) {
-        return <>Loading...</>;
+        return <PageLoader loading={isLoading} />;
     }
 
     if (user.role !== "ADM") {
