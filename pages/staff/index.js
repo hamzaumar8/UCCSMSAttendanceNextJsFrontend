@@ -4,9 +4,7 @@ import axios from "../../src/lib/axios";
 import { CalendarDaysIcon } from "@heroicons/react/24/solid";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../src/atoms/modalAtom";
-import { useAuth } from "../../src/hooks/auth";
-
-const StaffDashboard = ({ modules }) => {
+const StaffDashboard = () => {
     // const { user } = useAuth({ middleware: "auth" });
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
 
@@ -100,13 +98,3 @@ const StaffDashboard = ({ modules }) => {
 };
 
 export default StaffDashboard;
-
-export async function getStaticProps() {
-    const response = await axios.get("api/v1/lecture/modules");
-    const modules = response.data.data;
-    return {
-        props: {
-            modules,
-        },
-    };
-}
