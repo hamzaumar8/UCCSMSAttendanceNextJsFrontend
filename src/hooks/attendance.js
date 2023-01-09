@@ -3,13 +3,15 @@ import axios from "../lib/axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "./auth";
+import { modalTypeState } from "../atoms/modalAtom";
+import { useRecoilState } from "recoil";
 
 export const useAttendance = () => {
     const router = useRouter();
-
-    const { user, csrf } = useAuth({ middleware: "auth" });
-
     const [loading, setLoading] = useState(false);
+    const [modalType, setModalType] = useRecoilState(modalTypeState);
+
+    const csrf = () => axios.get("/sanctum/csrf-cookie");
 
     const addAttendance = async ({ setErrors, setStatus, ...props }) => {
         setLoading(true);
@@ -19,27 +21,24 @@ export const useAttendance = () => {
 
         axios
             .post("/api/v1/attendances", props)
-            .then(response => setStatus(response.data.status))
+            .then(res => {
+                if (res.data.status === "success") {
+                    setLoading(false);
+                    setModalType("checkInSuccess");
+                }
+            })
             .catch(error => {
-                if (error.response.status !== 422) throw error;
-                setErrors(error.response.data.errors);
+                setLoading(false);
+                if (error.response.status !== 422) {
+                    console.log(error);
+                } else {
+                    setErrors(error.response.data.errors);
+                }
             });
-        setLoading(false);
     };
-
-    // const {
-    //     data: lecturerAttendance,
-    //     error,
-    //     mutate,
-    // } = useSWR(`api/v1/attandances/${user.lecturer.id}`, () =>
-    //     axios
-    //         .get(`api/v1/attendances/${user.lecturer.id}`)
-    //         .then(response => response.data.data),
-    // );
 
     return {
         loading,
         addAttendance,
-        // lecturerAttendance,
     };
 };

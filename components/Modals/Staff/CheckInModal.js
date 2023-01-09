@@ -8,30 +8,29 @@ import { modalState } from "../../../src/atoms/modalAtom";
 import axios from "../../../src/lib/axios";
 import { useAttendance } from "../../../src/hooks/attendance";
 import Errors from "../../Errors";
+import Button from "../../Button";
+import Label from "../../Label";
 
 const CheckInModal = () => {
     const { user } = useAuth({ middleware: "auth" });
     const { addAttendance, loading } = useAttendance();
-    const [modalOpen, setModalOpen] = useRecoilState(modalState);
 
-    // const {
-    //     data: currentLecturer,
-    //     error,
-    //     mutate,
-    // } = useSWR(`api/v1/lecturers/${user?.lecturer.id}`, () =>
-    //     axios
-    //         .get(`api/v1/lecturers/${user?.lecturer.id}`)
-    //         .then(response => response.data.data),
-    // );
+    const {
+        data: lecturer,
+        error,
+        mutate,
+    } = useSWR(`api/v1/lecturers/${user?.lecturer.id}`, () =>
+        axios
+            .get(`api/v1/lecturers/${user?.lecturer.id}`)
+            .then(response => response.data.data),
+    );
 
     const [errors, setErrors] = useState([]);
     const [status, setStatus] = useState(null);
     const [checkInTime, setCheckInTime] = useState("");
     const [checkOutTime, setCheckOutTime] = useState("");
 
-    const [moduleValue, setModuleValue] = useState(
-        currentLecturer?.modules[0].id,
-    );
+    const [moduleValue, setModuleValue] = useState("");
 
     const now = new Date();
     const checkInNow = event => {
@@ -62,7 +61,7 @@ const CheckInModal = () => {
     const submitForm = event => {
         event.preventDefault();
         addAttendance({
-            lecturer_id: currentLecturer.id,
+            lecturer_id: lecturer.id,
             module_id: moduleValue,
             date: now,
             start_time: checkInTime,
@@ -72,30 +71,8 @@ const CheckInModal = () => {
         });
     };
 
-    if (status === "attendance-checked-in") {
-        return (
-            <div className="space-y-8 text-center py-8 px-4 flex flex-col items-center justify-center">
-                <div className="pb-8">
-                    <h1 className="text-black-text text-xl font-bold">
-                        Attendance Submitted!
-                    </h1>
-                    <p className="text-gray-text">
-                        Congratulations! Tour attendance has been submitted
-                        successfull
-                    </p>
-                </div>
-                <div className="border-[10px] text-secondary border-secondary p-5 rounded-full w-40 h-40">
-                    <CheckIcon />
-                </div>
-                <div className="text-primary font-bold underline pt-14">
-                    <Link href={"/staff"}>Back to Homepage</Link>
-                </div>
-            </div>
-        );
-    }
     return (
         <div>
-            {/* {status === "attendance-checked-in" && setModalOpen(false)} */}
             <div className="flex items-center justify-between p-4 pt-6 border-b ">
                 <h1 className="leading-tight text-black-text font-bold text-2xl">
                     Lecture Check In
@@ -106,8 +83,12 @@ const CheckInModal = () => {
             </div>
             <form className="space-y-4" onSubmit={submitForm}>
                 <Errors className="mb-5" errors={errors} />
-
                 <div className="p-4 space-y-2">
+                    {errors.msg && (
+                        <p className="text-sm text-red-600 bg-red-100 p-1">
+                            {errors.msg}
+                        </p>
+                    )}
                     <h2 className="text-black-text text-xl font-bold">
                         Module
                     </h2>
@@ -120,12 +101,16 @@ const CheckInModal = () => {
                             }
                             required
                             className="w-full text-black-text font-bold capitalize p-4 border-primary-accent">
-                            {currentLecturer?.modules.length > 0 ? (
-                                currentLecturer?.modules.map(module => (
-                                    <option key={module.id} value={module.id}>
-                                        {module.code} - {module.title}
-                                    </option>
-                                ))
+                            <option></option>
+                            {lecturer?.modules.length > 0 ? (
+                                lecturer?.modules
+                                    .filter(item => item.status === "active")
+                                    .map((module, index) => (
+                                        <option key={index} value={module.id}>
+                                            {module.module.code} -{" "}
+                                            {module.module.title}
+                                        </option>
+                                    ))
                             ) : (
                                 <option>No module</option>
                             )}
@@ -136,18 +121,18 @@ const CheckInModal = () => {
                 <div className="space-y-4">
                     <div className="bg-[#CCFFE24D] p-4 py-5 space-y-4 border-y border-[#F3F3F3]">
                         <div className="flex items-center justify-between">
-                            <h2 className="text-black-text font-bold text-xl">
+                            <h2 className="text-black-text font-bold text-lg">
                                 Check In Time
                             </h2>
                             <button
                                 onClick={checkInNow}
-                                className="text-primary px-6 py-2 border border-primary rounded-full font-bold">
+                                className="text-primary px-5 py-2 border border-primary text-sm rounded-full font-bold">
                                 Now
                             </button>
                         </div>
                         <div className="flex items-center space-x-2">
                             <input
-                                className="border-2 border-primary w-full h-16 bg-white text-center text-3xl rounded-md uppercase"
+                                className="border w-full h-16 bg-white text-center text-3xl rounded-md uppercase"
                                 type="time"
                                 id="checkInTime"
                                 value={checkInTime}
@@ -160,18 +145,18 @@ const CheckInModal = () => {
                     </div>
                     <div className="bg-white p-4 space-y-4">
                         <div className="flex items-center justify-between">
-                            <h2 className="text-black-text font-bold text-xl">
+                            <h2 className="text-black-text font-bold text-lg">
                                 Check Out Time
                             </h2>
                             <button
                                 onClick={checkOutNow}
-                                className="text-primary px-6 py-2 border border-primary rounded-full font-bold">
+                                className="text-primary px-5 py-2 border border-primary rounded-full text-sm font-bold">
                                 Now
                             </button>
                         </div>
                         <div className="flex items-center space-x-2">
                             <input
-                                className="border-2 border-primary w-full h-16 bg-white text-center text-3xl rounded-md uppercase"
+                                className="border w-full h-16 bg-white text-center text-3xl rounded-md uppercase"
                                 type="time"
                                 id="checkOutTime"
                                 value={checkOutTime}
@@ -188,11 +173,12 @@ const CheckInModal = () => {
                     <button className="text-primary bg-primary-accent inline-block px-14 py-3 rounded-full capitalize font-bold">
                         save
                     </button>
-                    <button
+                    <Button
+                        loader={loading}
                         type="submit"
-                        className="text-white bg-primary inline-block px-12 py-3 rounded-full capitalize font-bold">
+                        className="text-white bg-primary inline-block px-12 py-3 !rounded-full capitalize font-bold ">
                         {loading ? "loading" : "Submit"}
-                    </button>
+                    </Button>
                 </div>
             </form>
         </div>

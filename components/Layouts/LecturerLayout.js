@@ -1,4 +1,3 @@
-import Navigation from "./Navigation";
 import { useAuth } from "../../src/hooks/auth";
 import { AnimatePresence } from "framer-motion";
 import Modal from "../Modal";
@@ -38,7 +37,8 @@ const LecturerLayout = ({ header = "", children }) => {
                 {modalOpen && (
                     <Modal
                         handleClose={() => setModalOpen(false)}
-                        type="slideUp"
+                        // type="slideUp"
+                        type={modalType}
                     />
                 )}
             </AnimatePresence>

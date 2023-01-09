@@ -3,7 +3,7 @@ import axios from "../lib/axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
+export const useAuth = ({ middleware } = {}) => {
     const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(true);
@@ -18,28 +18,11 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             .get("/api/v1/user")
             .then(res => res.data.data)
             .catch(error => {
-                if (error.response.status !== 409) throw error;
-
-                router.push("/verify-email");
+                console.log(error.response.data.errors);
             }),
     );
 
     const csrf = () => axios.get("/sanctum/csrf-cookie");
-
-    const register = async ({ setErrors, ...props }) => {
-        await csrf();
-
-        setErrors([]);
-
-        axios
-            .post("/register", props)
-            .then(() => mutate())
-            .catch(error => {
-                if (error.response.status !== 422) throw error;
-
-                setErrors(error.response.data.errors);
-            });
-    };
 
     const login = async ({ setErrors, setStatus, ...props }) => {
         setLoading(true);
@@ -112,20 +95,17 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     useEffect(() => {
         if (user) setIsLoading(false);
 
-        if (middleware === "guest" && redirectIfAuthenticated && user)
-            router.push(redirectIfAuthenticated);
+        if (middleware === "guest" && user) {
+            if (user.role === "ADM") router.push("/dashboard");
+            if (user.role === "STF") router.push("/staff");
+            if (user.role === "USR") router.push("/user");
+        }
 
-        if (
-            window.location.pathname === "/verify-email" &&
-            user?.email_verified_at
-        )
-            router.push(redirectIfAuthenticated);
         if (middleware === "auth" && error) logout();
     }, [user, error]);
 
     return {
         user,
-        register,
         login,
         forgotPassword,
         resetPassword,

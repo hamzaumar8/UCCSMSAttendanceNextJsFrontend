@@ -4,7 +4,7 @@ import SideNav from "./SideNav";
 import Head from "next/head";
 import { AnimatePresence } from "framer-motion";
 import Modal from "../Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { modalState, modalTypeState } from "../../src/atoms/modalAtom.js";
 import { useRouter } from "next/router";
@@ -13,19 +13,17 @@ import PageLoader from "../PageLoader";
 
 const AppLayout = ({ header = "", children }) => {
     const router = useRouter();
+    const { user, isLoading } = useAuth({ middleware: "auth" });
 
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
-    const { user, isLoading } = useAuth({ middleware: "auth" });
 
     if (isLoading || !user) {
         return <PageLoader loading={isLoading} />;
     }
+    // if (user.role === "STF") router.push("/staff");
+    // if (user.role === "USR") router.push("/user");
 
-    if (user.role !== "ADM") {
-        if (user.role === "STF") router.push("/staff");
-        if (user.role === "USR" || user.role === "REP") router.push("/user");
-    }
     return (
         <div className="bg-[#E5E5E5">
             {/* Side Navigation */}

@@ -18,7 +18,7 @@ const panelVariants = {
     },
 };
 
-const SlideUp = ({ children, onClick }) => {
+const SlideUp = ({ children, onClick = "" }) => {
     return (
         <div className="checkInModal">
             <motion.div
@@ -28,9 +28,11 @@ const SlideUp = ({ children, onClick }) => {
                 exit="hidden"
                 variants={overlayVariants}
             />
-            <div className="closeBtnM absolute" onClick={onClick}>
-                <XCircleIcon />
-            </div>
+            {onClick && (
+                <div className="closeBtnM absolute" onClick={onClick}>
+                    <XCircleIcon />
+                </div>
+            )}
             <motion.div
                 className="modal-panel"
                 initial="hidden"

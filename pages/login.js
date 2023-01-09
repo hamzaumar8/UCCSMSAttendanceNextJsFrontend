@@ -17,7 +17,6 @@ const Login = () => {
     // Auth Hook
     const { login, loading } = useAuth({
         middleware: "guest",
-        redirectIfAuthenticated: "/dashboard",
     });
 
     const [email, setEmail] = useState("");
@@ -147,7 +146,3 @@ const Login = () => {
 };
 
 export default Login;
-
-// Login.getLayout = function getLayout(page) {
-//     return <GuestLayout>{page}</GuestLayout>;
-// };

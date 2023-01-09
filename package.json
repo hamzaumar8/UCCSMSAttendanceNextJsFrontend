@@ -5,8 +5,8 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
-        "start": "next start",
         "lint": "next lint",
+        "start": "NODE_ENV=production node server.js",
         "format": "prettier --check --ignore-path .gitignore .",
         "format:fix": "prettirt --wire --ignore-path .gitignore ."
     },

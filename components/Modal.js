@@ -17,6 +17,7 @@ import AddGroup from "./Modals/Groups/AddGroup";
 import LecturerImport from "./Modals/Lecturers/LecturerImport";
 import StudentImport from "./Modals/students/StudentImport";
 import ModuleStudentAddForm from "./Modals/Module/ModuleStudentAddForm";
+import CheckInSuccess from "./Modals/Staff/CheckInSuccess";
 
 const dropIn = {
     hidden: {
@@ -272,6 +273,11 @@ const Modal = ({ handleClose, type }) => {
             {type === "slideUp" && (
                 <SlideUp onClick={handleClose}>
                     <CheckInModal />
+                </SlideUp>
+            )}
+            {type === "checkInSuccess" && (
+                <SlideUp>
+                    <CheckInSuccess />
                 </SlideUp>
             )}
         </>
