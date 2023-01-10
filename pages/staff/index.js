@@ -5,11 +5,25 @@ import { CalendarDaysIcon } from "@heroicons/react/24/solid";
 import { useRecoilState } from "recoil";
 import { modalState, modalTypeState } from "../../src/atoms/modalAtom";
 import { useAuth } from "../../src/hooks/auth";
+import ModuleCardLecturer from "../../components/Cards/ModuleCardLecturer";
+import useSWR from "swr";
 const StaffDashboard = () => {
     const { user } = useAuth({ middleware: "auth" });
+
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
 
+    const {
+        data: lecturer,
+        error,
+        mutate,
+    } = useSWR(`/api/v1/attendance/lecturer`, () =>
+        axios
+            .get(`/api/v1/attendance/lecturer`)
+            .then(response => response.data.data),
+    );
+
+    console.log(lecturer);
     return (
         <LecturerLayout header="Here's an overview of all attendaces">
             <HeadTitle title="Lecturer Dashboard" />
@@ -83,7 +97,12 @@ const StaffDashboard = () => {
                 </div>
                 <div className="relative px-4 pb-6">
                     <div className="space-y-4 sm:space-y-0 sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        lorem
+                        {lecturer?.map((attendance, index) => (
+                            <ModuleCardLecturer
+                                key={index}
+                                attendance={attendance}
+                            />
+                        ))}
                     </div>
                     <div className="fixed bottom-20 right-4">
                         <button
