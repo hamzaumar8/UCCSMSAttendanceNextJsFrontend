@@ -4,10 +4,11 @@ import Modal from "../Modal";
 import { useRecoilState } from "recoil";
 import { modalState, modalTypeState } from "../../src/atoms/modalAtom.js";
 import { useRouter } from "next/router";
-import LecturerNavigation from "./Navigation/LecturerNavigation";
 import LecturerSideNav from "./SideNav/LecturerSideNav";
+import LecturerNavigation from "./Lecturer/LecturerNavigation";
+import LecturerBackNavigation from "./Lecturer/LecturerBackNavigation";
 
-const LecturerLayout = ({ header = "", children }) => {
+const LecturerLayout = ({ header = "", backNav = "", children }) => {
     const router = useRouter();
 
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
@@ -23,11 +24,15 @@ const LecturerLayout = ({ header = "", children }) => {
         if (user.role === "USR" || user.role === "REP") router.push("/user");
     }
     return (
-        <div className="bg-[#E5E5E5]">
+        <div className="bg-white]">
             {/* Side Navigation */}
             <LecturerSideNav />
             <main className="ease-in-out xl:ml-[18rem] relative min-h-screen rounded-xl transition-all duration-200">
-                <LecturerNavigation user={user} header={header} />
+                {backNav ? (
+                    <LecturerBackNavigation backNav={backNav} />
+                ) : (
+                    <LecturerNavigation user={user} header={header} />
+                )}
                 {/* Page Content */}
                 <section className="w-full sm:px-6 sm:pb-10">
                     {children}
@@ -37,7 +42,6 @@ const LecturerLayout = ({ header = "", children }) => {
                 {modalOpen && (
                     <Modal
                         handleClose={() => setModalOpen(false)}
-                        // type="slideUp"
                         type={modalType}
                     />
                 )}

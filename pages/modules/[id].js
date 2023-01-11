@@ -3,7 +3,6 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { useRecoilState } from "recoil";
 import Button from "../../components/Button";
 import Card from "../../components/Card";
@@ -19,6 +18,7 @@ import { useModule } from "../../src/hooks/module";
 import axios from "../../src/lib/axios";
 
 const Module = ({ module }) => {
+    console.log(module);
     const { endModule, loading } = useModule();
 
     const [modalOpen, setModalOpen] = useRecoilState(modalState);

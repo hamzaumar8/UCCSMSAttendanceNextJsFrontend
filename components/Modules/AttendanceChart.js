@@ -37,7 +37,7 @@ const AttendanceChart = ({ lectureWeekly, studentsWeekly }) => {
                         </button>
                     </div>
 
-                    <AnimatePresence mode="wait">
+                    <AnimatePresence mode="wait" initial={false}>
                         <motion.div
                             key={attendanceLecStu ? "Lecturer" : "Student"}
                             initial={{ y: 10, opacity: 0 }}
@@ -185,18 +185,18 @@ const AttendanceChart = ({ lectureWeekly, studentsWeekly }) => {
                                 </div>
                             </div>
                         </motion.div>
-
-                        <div className="border-t flex items-center space-x-8 justify-center text-black-text font-bold py-3">
-                            <div className="flex items-center space-x-2">
-                                <span className="w-8 h-[0.4rem] bg-secondary block rounded-full"></span>
-                                <span>Present</span>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <span className="w-8 h-[0.4rem] bg-danger block rounded-full"></span>
-                                <span>Absent</span>
-                            </div>
-                        </div>
                     </AnimatePresence>
+
+                    <div className="border-t flex items-center space-x-8 justify-center text-black-text font-bold py-3">
+                        <div className="flex items-center space-x-2">
+                            <span className="w-8 h-[0.4rem] bg-secondary block rounded-full"></span>
+                            <span>Present</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                            <span className="w-8 h-[0.4rem] bg-danger block rounded-full"></span>
+                            <span>Absent</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

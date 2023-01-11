@@ -10,6 +10,15 @@ import { useAttendance } from "../../../src/hooks/attendance";
 import Errors from "../../Errors";
 import Button from "../../Button";
 import Label from "../../Label";
+import {
+    eachDayOfInterval,
+    addDays,
+    addWeeks,
+    format,
+    getTime,
+    startOfWeek,
+    endOfWeek,
+} from "date-fns";
 
 const CheckInModal = () => {
     const { user } = useAuth({ middleware: "auth" });
@@ -29,7 +38,6 @@ const CheckInModal = () => {
     const [status, setStatus] = useState(null);
     const [checkInTime, setCheckInTime] = useState("");
     const [checkOutTime, setCheckOutTime] = useState("");
-
     const [moduleValue, setModuleValue] = useState("");
 
     const now = new Date();
@@ -48,13 +56,6 @@ const CheckInModal = () => {
         if (nowHour < 10) nowHour = `0${nowHour}`;
         if (nowMin < 10) nowMin = `0${nowMin}`;
         setCheckOutTime(`${nowHour}:${nowMin}`);
-    };
-    const getDate = () => {
-        return `${now.toLocaleString("en-US", {
-            day: "2-digit",
-        })} ${now.toLocaleString("en-US", {
-            month: "long",
-        })}, ${now.toLocaleString("en-US", { year: "numeric" })}`;
     };
 
     // Add attendance
@@ -78,7 +79,7 @@ const CheckInModal = () => {
                     Lecture Check In
                 </h1>
                 <div className="bg-primary-accent text-xs uppercase py-1 px-3 rounded-full">
-                    {getDate()}
+                    {format(now, "do MMMM, yyyy")}
                 </div>
             </div>
             <form className="space-y-4" onSubmit={submitForm}>
