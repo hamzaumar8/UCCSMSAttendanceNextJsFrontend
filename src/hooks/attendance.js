@@ -37,8 +37,33 @@ export const useAttendance = () => {
             });
     };
 
+    const acceptAttendance = async ({ setErrors, setStatus, ...props }) => {
+        setLoading(true);
+        await csrf();
+        setErrors([]);
+        setStatus(null);
+
+        axios
+            .put(`/api/v1/accept/attendance/${props.id}`, props)
+            .then(res => {
+                if (res.data.status === "success") {
+                    setLoading(false);
+                    console.log(res.data);
+                }
+            })
+            .catch(error => {
+                setLoading(false);
+                if (error.response.status !== 422) {
+                    console.log(error);
+                } else {
+                    setErrors(error.response.data.errors);
+                }
+            });
+    };
+
     return {
         loading,
         addAttendance,
+        acceptAttendance,
     };
 };

@@ -11,10 +11,6 @@
     }
 }
 
-.phone-card {
-    min-height: calc(100vh - 200px);
-}
-
 .checkInModal .overlay {
     background: rgba(4, 15, 39, 0.8);
     width: 100%;

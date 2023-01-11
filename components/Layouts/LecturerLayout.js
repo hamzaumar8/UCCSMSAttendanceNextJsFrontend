@@ -24,7 +24,7 @@ const LecturerLayout = ({ header = "", backNav = "", children }) => {
         if (user.role === "USR" || user.role === "REP") router.push("/user");
     }
     return (
-        <div className="bg-white]">
+        <div className="bg-white sm:bg-[#E5E5E5]">
             {/* Side Navigation */}
             <LecturerSideNav />
             <main className="ease-in-out xl:ml-[18rem] relative min-h-screen rounded-xl transition-all duration-200">

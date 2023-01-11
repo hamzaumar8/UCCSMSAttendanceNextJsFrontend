@@ -47,7 +47,7 @@ const StaffDashboard = () => {
         <LecturerLayout header="Here's an overview of all attendaces">
             <HeadTitle title="Lecturer Dashboard" />
 
-            <div className="flex items-center justify-around py-4">
+            <div className="bg-[#E5E5E5] relative flex items-center justify-around py-4 before:absolute before:w-full before:h-4 before:bg-white before:bottom-0 before:rounded-t-3xl pb-8">
                 {calendarWeekInterval.map((day, index) => {
                     return (
                         <button
@@ -81,9 +81,9 @@ const StaffDashboard = () => {
             </div>
 
             {/* Main Content  */}
-            <div className="relative rounded-t-xl sm:rounded-b-xl bg-white phone-card pb-20 sm:min-h-0">
-                <div className="flex justify-between items-center py-6 px-4">
-                    <h2 className="text-black-text font-extrabold text-xl">
+            <div className="relative rounded-t-xl sm:rounded-b-xl bg-white  pb-20 sm:min-h-0">
+                <div className="flex justify-between items-center py-6 px-4 pt-1">
+                    <h2 className="text-black-text font-extrabold text-2xl">
                         Modules
                     </h2>
                     <div className="px-6 border border-primary rounded-full py-2 space-x-1 flex items-center justify-center text-primary font-bold text-sm">

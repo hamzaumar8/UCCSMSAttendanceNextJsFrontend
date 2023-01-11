@@ -25,7 +25,7 @@ const AppLayout = ({ header = "", children }) => {
     // if (user.role === "USR") router.push("/user");
 
     return (
-        <div className="bg-[#E5E5E5">
+        <div className="bg-[#E5E5E5]">
             {/* Side Navigation */}
             <SideNav />
             <main className="bg-gray-100 ease-soft-in-out xl:ml-[18rem] relative min-h-screen rounded-xl transition-all duration-200">

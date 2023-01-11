@@ -1,24 +1,11 @@
 import { useState } from "react";
-import { useRecoilState } from "recoil";
-import { CheckIcon } from "@heroicons/react/24/solid";
 import useSWR from "swr";
-import Link from "next/link";
 import { useAuth } from "../../../src/hooks/auth";
-import { modalState } from "../../../src/atoms/modalAtom";
 import axios from "../../../src/lib/axios";
 import { useAttendance } from "../../../src/hooks/attendance";
 import Errors from "../../Errors";
 import Button from "../../Button";
-import Label from "../../Label";
-import {
-    eachDayOfInterval,
-    addDays,
-    addWeeks,
-    format,
-    getTime,
-    startOfWeek,
-    endOfWeek,
-} from "date-fns";
+import { format } from "date-fns";
 
 const CheckInModal = () => {
     const { user } = useAuth({ middleware: "auth" });

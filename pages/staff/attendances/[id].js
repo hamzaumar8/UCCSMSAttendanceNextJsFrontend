@@ -45,7 +45,7 @@ const Attendance = ({ attendance }) => {
                 <div className="bg-white relative overflow-hidden shadow-md sm:rounded-lg transition duration-200 ease-in-out p-4 border-t">
                     <div
                         onClick={() => setClassListToggler(!classListToggler)}
-                        className="flex items-center justify-between">
+                        className="cursor-pointer flex items-center justify-between">
                         <div className="flex items-center space-x-2">
                             <span className="font-bold text-black-text">
                                 Class List
@@ -113,7 +113,7 @@ const Attendance = ({ attendance }) => {
                         onClick={() =>
                             setTruancyListToggler(!truancyListToggler)
                         }
-                        className="flex items-center justify-between">
+                        className="cursor-pointer flex items-center justify-between">
                         <div className="flex items-center space-x-2">
                             <span className="font-bold text-black-text">
                                 Truancy List
