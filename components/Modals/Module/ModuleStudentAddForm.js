@@ -8,7 +8,6 @@ import makeAnimated from "react-select/animated";
 import { useModule } from "../../../src/hooks/module";
 const animatedCompnent = makeAnimated();
 const ModuleStudentAddForm = ({ module, onClick }) => {
-    console.log(module.id);
     const { addStudentModule, loading } = useModule();
     const [student, setStudent] = useState([]);
     const [errors, setErrors] = useState([]);

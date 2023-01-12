@@ -28,7 +28,6 @@ const Student = ({ students, levels, modules }) => {
         modules[0].module.code,
     );
 
-    console.log(students);
     return (
         <AppLayout header="Students">
             {/* Title */}
@@ -56,15 +55,15 @@ const Student = ({ students, levels, modules }) => {
                                 } rounded-full inline-block px-8 py-2 text-xs font-bold transition duration-500 ease-in-out`}>
                                 levels
                             </button>
-                            <button
+                            {/* <button
                                 onClick={() => setModelLevelToggler(false)}
                                 className={`${
                                     !modelLevelToggler
                                         ? "bg-primary text-white"
                                         : "text-primary"
                                 } rounded-full inline-block px-8 py-2 text-xs font-bold transition duration-500 ease-in-out`}>
-                                Modules
-                            </button>
+                                All
+                            </button> */}
                         </div>
                         <div>
                             <Dropdown
@@ -103,10 +102,10 @@ const Student = ({ students, levels, modules }) => {
                                               key={module.id}
                                               onClick={() =>
                                                   setModuleSelectedValue(
-                                                      module.code,
+                                                      module.module.code,
                                                   )
                                               }>
-                                              {module.code}
+                                              {module.module.code}
                                           </DropdownButton>
                                       ))}
                             </Dropdown>
@@ -163,94 +162,102 @@ const Student = ({ students, levels, modules }) => {
                             </tr>
                         </thead>
                         <tbody className="text-gray-text text-sm !border-[#E6EAEF]">
-                            {modelLevelToggler ? (
-                                students
-                                    .filter(
-                                        itm =>
-                                            itm.level?.name ==
-                                            levelSelectedValue,
-                                    )
-                                    .map((student, index) => (
-                                        <tr className="" key={index}>
-                                            <td className="capitalize p-3 whitespace-nowrap">
-                                                <Image
-                                                    src={student.picture}
-                                                    height={100}
-                                                    width={100}
-                                                    alt={student.index_number}
-                                                    className="w-14 h-12 my-0 mx-auto"
-                                                />
-                                            </td>
-                                            <td className="uppercase p-3 whitespace-nowrap border-b">
-                                                <span>
-                                                    <div>
-                                                        {student.index_number}
-                                                    </div>
-                                                </span>
-                                            </td>
-                                            <td className="capitalize p-3 whitespace-nowrap border-b">
-                                                <span>
-                                                    <div>
-                                                        {student.full_name}
-                                                    </div>
-                                                </span>
-                                            </td>
-                                            <td className="capitalize p-3 whitespace-nowrap border-b text-center">
-                                                <span>
-                                                    <div>
-                                                        {student.group_no}
-                                                    </div>
-                                                </span>
-                                            </td>
-                                            <td className="capitalize p-3 whitespace-nowrap border-b text-center">
-                                                <span>
-                                                    <div>
-                                                        {
-                                                            student
-                                                                .attendance_stats
-                                                                .present_percentage
-                                                        }
-                                                    </div>
-                                                </span>
-                                            </td>
-                                            <td className="capitalize p-3 whitespace-nowrap border-b text-center">
-                                                <span>
-                                                    <div>
-                                                        {
-                                                            student
-                                                                .attendance_stats
-                                                                .absent_percentage
-                                                        }
-                                                    </div>
-                                                </span>
-                                            </td>
-                                            <td className="capitalize p-3 whitespace-nowrap border-b text-right pr-6">
-                                                <span>
-                                                    <div>
-                                                        <button
-                                                            className="inline-flex cursor-pointer text-gray-text hover:!text-primary transition duration-500"
-                                                            title="Edit"
-                                                            onClick={() => {
-                                                                setModalOpen(
-                                                                    true,
-                                                                );
-                                                                setModalType(
-                                                                    "editStudent",
-                                                                );
-                                                                setModalEdit(
-                                                                    student,
-                                                                );
-                                                            }}>
-                                                            <PencilSquareIcon className="h-6 w-6 " />
-                                                        </button>
-                                                    </div>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    ))
-                            ) : (
-                                <tr></tr>
-                            )}
+                            {modelLevelToggler
+                                ? students
+                                      .filter(
+                                          itm =>
+                                              itm.level?.name ==
+                                              levelSelectedValue,
+                                      )
+                                      .map((student, index) => (
+                                          <tr className="" key={index}>
+                                              <td className="capitalize p-3 whitespace-nowrap">
+                                                  <Image
+                                                      src={student.picture}
+                                                      height={100}
+                                                      width={100}
+                                                      alt={student.index_number}
+                                                      className="w-14 h-12 my-0 mx-auto"
+                                                  />
+                                              </td>
+                                              <td className="uppercase p-3 whitespace-nowrap border-b">
+                                                  <span>
+                                                      <div>
+                                                          {student.index_number}
+                                                      </div>
+                                                  </span>
+                                              </td>
+                                              <td className="capitalize p-3 whitespace-nowrap border-b">
+                                                  <span>
+                                                      <div>
+                                                          {student.full_name}
+                                                      </div>
+                                                  </span>
+                                              </td>
+                                              <td className="capitalize p-3 whitespace-nowrap border-b text-center">
+                                                  <span>
+                                                      <div>
+                                                          {student.group_no}
+                                                      </div>
+                                                  </span>
+                                              </td>
+                                              <td className="capitalize p-3 whitespace-nowrap border-b text-center">
+                                                  <span>
+                                                      <div>
+                                                          {
+                                                              student
+                                                                  .attendance_stats
+                                                                  .present_percentage
+                                                          }
+                                                      </div>
+                                                  </span>
+                                              </td>
+                                              <td className="capitalize p-3 whitespace-nowrap border-b text-center">
+                                                  <span>
+                                                      <div>
+                                                          {
+                                                              student
+                                                                  .attendance_stats
+                                                                  .absent_percentage
+                                                          }
+                                                      </div>
+                                                  </span>
+                                              </td>
+                                              <td className="capitalize p-3 whitespace-nowrap border-b text-right pr-6">
+                                                  <span>
+                                                      <div>
+                                                          <button
+                                                              className="inline-flex cursor-pointer text-gray-text hover:!text-primary transition duration-500"
+                                                              title="Edit"
+                                                              onClick={() => {
+                                                                  setModalOpen(
+                                                                      true,
+                                                                  );
+                                                                  setModalType(
+                                                                      "editStudent",
+                                                                  );
+                                                                  setModalEdit(
+                                                                      student,
+                                                                  );
+                                                              }}>
+                                                              <PencilSquareIcon className="h-6 w-6 " />
+                                                          </button>
+                                                      </div>
+                                                  </span>
+                                              </td>
+                                          </tr>
+                                      ))
+                                : modules
+                                      .filter(
+                                          itm =>
+                                              itm.module?.code ==
+                                              moduleSelectedValue,
+                                      )
+                                      .map((module, index) => (
+                                          <>
+                                              <tr>{module.id}</tr>
+                                          </>
+                                      ))}
                         </tbody>
                     </table>
                 </div>

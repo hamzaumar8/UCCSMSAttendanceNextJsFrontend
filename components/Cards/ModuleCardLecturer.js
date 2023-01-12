@@ -26,7 +26,6 @@ const ModuleCardLecturer = ({ attendance }) => {
         });
     };
 
-    console.log(attendance);
     return (
         <>
             <Link

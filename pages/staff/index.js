@@ -43,8 +43,6 @@ const StaffDashboard = () => {
             .then(response => response.data.data),
     );
 
-    console.log(attendances);
-
     return (
         <LecturerLayout header="Here's an overview of all attendaces">
             <HeadTitle title="Lecturer Dashboard" />
@@ -109,7 +107,6 @@ const StaffDashboard = () => {
                                             format(currentDate, "yyyy-MM-dd"),
                                     )
                                     .map((attendance, index) => {
-                                        console.log(attendance);
                                         return (
                                             <AttendanceCard
                                                 key={index}

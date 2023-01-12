@@ -5,7 +5,6 @@ import AppLayout from "../../components/Layouts/AppLayout";
 import axios from "../../src/lib/axios";
 
 const Lecturer = ({ lecturer, cordinatingModule }) => {
-    console.log(lecturer);
     return (
         <AppLayout
             header={`${lecturer.title} ${lecturer.surname} Details`}

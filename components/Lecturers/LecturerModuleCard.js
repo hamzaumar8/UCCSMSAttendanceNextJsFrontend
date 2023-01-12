@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 const LecturerModuleCard = ({ module, active = "" }) => {
-    console.log("red");
     return (
         <div
             className={`${

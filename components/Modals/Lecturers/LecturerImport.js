@@ -19,6 +19,22 @@ const LecturerImport = ({ onClick }) => {
         }
     };
 
+    const handleSampleDownload = event => {
+        event.preventDefault();
+        // using Java Script method to get PDF file
+        fetch("LecturerSample.csv").then(response => {
+            response.blob().then(blob => {
+                // Creating new object of PDF file
+                const fileURL = window.URL.createObjectURL(blob);
+                // Setting various property values
+                let alink = document.createElement("a");
+                alink.href = fileURL;
+                alink.download = "LecturerSample.csv";
+                alink.click();
+            });
+        });
+    };
+
     const submitForm = event => {
         event.preventDefault();
         const formData = new FormData();
@@ -60,7 +76,10 @@ const LecturerImport = ({ onClick }) => {
                 <div className="py-4 px-8 pr-10 space-y-5">
                     <div className="flex items-center justify-between">
                         <p>Sample CSV file </p>
-                        <button className="bg-primary-accent text-primary py-2 px-6 text-sm rounded-md">
+                        <button
+                            type="button"
+                            onClick={handleSampleDownload}
+                            className="bg-primary-accent text-primary py-2 px-6 text-sm rounded-md">
                             Download
                         </button>
                     </div>

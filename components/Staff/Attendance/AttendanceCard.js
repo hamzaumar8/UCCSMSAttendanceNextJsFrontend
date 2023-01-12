@@ -12,8 +12,6 @@ const AttendanceCard = ({ attendance }) => {
     const endTime = new Date(
         Date.parse(attendance.date + "T" + attendance.end_time),
     );
-
-    console.log(attendance);
     return (
         <Link
             href={`/staff/attendances/${attendance.id}`}

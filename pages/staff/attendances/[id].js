@@ -7,8 +7,6 @@ import AttendanceChart from "../../../components/Modals/Staff/AttendanceChart";
 import axios from "../../../src/lib/axios";
 
 const Attendance = ({ attendance }) => {
-    console.log(attendance);
-
     const lectureWeekly = Object.values(attendance.weekly.lecturer);
     const studentsWeekly = Object.values(attendance.weekly.students);
 
