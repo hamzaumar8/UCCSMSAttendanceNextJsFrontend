@@ -4,7 +4,10 @@ import Card from "../../components/Card";
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
 import AttendanceChart from "../../components/Modules/AttendanceChart";
+import InCharge from "../../components/Modules/InCharge";
 import LecturerAttendance from "../../components/Modules/LecturerAttendance";
+import LecturerAttendanceTotal from "../../components/Modules/LecturerAttendanceTotal";
+import StudentAttendanceTotal from "../../components/Modules/StudentAttendanceTotal";
 import StudentList from "../../components/Modules/StudentList";
 import {
     modalEditState,
@@ -34,6 +37,7 @@ const Module = ({ module }) => {
             id: module.id,
         });
     };
+
     return (
         <AppLayout header={module.module.code}>
             <HeadTitle title="Lecturers" />
@@ -97,46 +101,18 @@ const Module = ({ module }) => {
                             />
                             {/* In charg */}
                             <div className="col-span-5 md:col-span-2">
-                                <Card
-                                    className="border border-primary-accent"
-                                    header={
-                                        <h1 className="text-black-text font-extrabold capitalize">
-                                            In Charge
-                                        </h1>
-                                    }>
-                                    <div className="space-y-4">
-                                        {module.lecturers.map(
-                                            (lecturer, index) => (
-                                                <div
-                                                    className="flex space-x-5 items-center"
-                                                    key={index}>
-                                                    <div className="flex items-center justify-center bg-primary-accent text-primary rounded-full text-xs w-[100px] py-1 font-bold capitalize">
-                                                        lecturer
-                                                    </div>
-                                                    <h3 className="text-gray-text text-xs capitalized">
-                                                        {lecturer.full_name}
-                                                    </h3>
-                                                </div>
-                                            ),
-                                        )}
-                                        <div className="flex space-x-5 items-center">
-                                            <div className="flex items-center justify-center bg-primary-accent text-primary rounded-full text-xs w-[100px] py-1 font-bold capitalize">
-                                                Cordinator
-                                            </div>
-                                            <h3 className="text-gray-text text-xs capitalized">
-                                                {module.cordinator.full_name}
-                                            </h3>
-                                        </div>
-                                        <div className="flex space-x-5 items-center">
-                                            <div className="flex items-center justify-center bg-primary-accent text-primary rounded-full text-xs w-[100px] py-1 font-bold capitalize">
-                                                Course Rep
-                                            </div>
-                                            <h3 className="text-gray-text text-xs capitalized">
-                                                {module.course_rep.full_name}
-                                            </h3>
-                                        </div>
-                                    </div>
-                                </Card>
+                                <div className="grid grid-cols-1 gap-10">
+                                    <InCharge module={module} />
+                                    {attendanceLecStu ? (
+                                        <LecturerAttendanceTotal
+                                            attendance={module.attendance}
+                                        />
+                                    ) : (
+                                        <StudentAttendanceTotal
+                                            attendance={module.attendance}
+                                        />
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>

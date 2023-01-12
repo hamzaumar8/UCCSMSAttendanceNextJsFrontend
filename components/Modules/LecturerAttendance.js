@@ -35,6 +35,9 @@ const LecturerAttendance = ({ module }) => {
                             <th className="capitalize font-bold px-2 pr-6 py-3 text-sm text-primary tracking-wider whitespace-nowrap text-center">
                                 End Time
                             </th>
+                            <th className="capitalize font-bold px-2 pr-6 py-3 text-sm text-primary tracking-wider whitespace-nowrap text-center">
+                                Check in At
+                            </th>
                         </tr>
                     </thead>
                     <tbody className="text-gray-text text-sm !border-[#E6EAEF]">
@@ -68,7 +71,12 @@ const LecturerAttendance = ({ module }) => {
                                     </td>
                                     <td className="capitalize p-3 whitespace-nowrap border-b">
                                         <span>
-                                            <div>{attendance.date}</div>
+                                            <div>
+                                                {format(
+                                                    new Date(attendance.date),
+                                                    "dd/MM/yyyy",
+                                                )}
+                                            </div>
                                         </span>
                                     </td>
                                     <td className="capitalize p-3 whitespace-nowrap border-b text-center">
@@ -87,6 +95,18 @@ const LecturerAttendance = ({ module }) => {
                                         <span>
                                             <div>
                                                 {format(endTime, "HH:mm aa")}
+                                            </div>
+                                        </span>
+                                    </td>
+                                    <td className="capitalize p-3 whitespace-nowrap border-b text-center">
+                                        <span>
+                                            <div>
+                                                {format(
+                                                    new Date(
+                                                        attendance.created_at,
+                                                    ),
+                                                    "dd/MM/yyyy HH:mm aa",
+                                                )}
                                             </div>
                                         </span>
                                     </td>
