@@ -5,7 +5,6 @@ import { CalendarDaysIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import { useRecoilState } from "recoil";
 import { modalState, modalTypeState } from "../../src/atoms/modalAtom";
 import { useAuth } from "../../src/hooks/auth";
-import ModuleCardLecturer from "../../components/Cards/ModuleCardLecturer";
 import useSWR from "swr";
 import { useEffect, useState } from "react";
 import {
@@ -18,6 +17,7 @@ import {
     endOfWeek,
 } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
+import AttendanceCard from "../../components/Staff/Attendance/AttendanceCard";
 
 const StaffDashboard = () => {
     const { user } = useAuth({ middleware: "auth" });
@@ -42,6 +42,8 @@ const StaffDashboard = () => {
             .get(`/api/v1/attendance/lecturer`)
             .then(response => response.data.data),
     );
+
+    console.log(attendances);
 
     return (
         <LecturerLayout header="Here's an overview of all attendaces">
@@ -84,11 +86,11 @@ const StaffDashboard = () => {
             <div className="relative rounded-t-xl sm:rounded-b-xl bg-white  pb-20 sm:min-h-0">
                 <div className="flex justify-between items-center py-6 px-4 pt-1">
                     <h2 className="text-black-text font-extrabold text-2xl">
-                        Modules
+                        Attendance
                     </h2>
                     <div className="px-6 border border-primary rounded-full py-2 space-x-1 flex items-center justify-center text-primary font-bold text-sm">
                         <span>Daily</span>
-                        <ChevronDownIcon className="w-4 h-5" />
+                        {/* <ChevronDownIcon className="w-4 h-5" /> */}
                     </div>
                 </div>
                 <div className="relative px-4 pb-6">
@@ -106,12 +108,15 @@ const StaffDashboard = () => {
                                             item.date ===
                                             format(currentDate, "yyyy-MM-dd"),
                                     )
-                                    .map((attendance, index) => (
-                                        <ModuleCardLecturer
-                                            key={index}
-                                            attendance={attendance}
-                                        />
-                                    ))}
+                                    .map((attendance, index) => {
+                                        console.log(attendance);
+                                        return (
+                                            <AttendanceCard
+                                                key={index}
+                                                attendance={attendance}
+                                            />
+                                        );
+                                    })}
                             </div>
                         </motion.div>
                     </AnimatePresence>

@@ -20,7 +20,7 @@ export const useAttendance = () => {
         setStatus(null);
 
         axios
-            .post("/api/v1/attendances", props)
+            .post("/api/v1/attendance_lecturer", props)
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);

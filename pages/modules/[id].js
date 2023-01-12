@@ -181,7 +181,7 @@ const Module = ({ module }) => {
                                         Name
                                     </th>
                                     <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
-                                        Absents(%)
+                                        Present(%)
                                     </th>
                                     <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
                                         Absents(%)

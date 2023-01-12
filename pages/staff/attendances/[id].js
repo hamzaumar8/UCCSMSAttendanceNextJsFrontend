@@ -178,7 +178,7 @@ const Attendance = ({ attendance }) => {
 export default Attendance;
 
 export async function getStaticPaths() {
-    const response = await axios.get("/api/v1/attendances");
+    const response = await axios.get("/api/v1/attendance_lecturer");
     return {
         paths: response.data.data.map(attendance => ({
             params: { id: attendance.id.toString() },
@@ -188,7 +188,9 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-    const response = await axios.get(`/api/v1/attendances/${params.id}`);
+    const response = await axios.get(
+        `/api/v1/attendance_lecturer/${params.id}`,
+    );
     return {
         props: {
             attendance: response.data.data,
