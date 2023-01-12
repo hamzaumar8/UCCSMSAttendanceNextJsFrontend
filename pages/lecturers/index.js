@@ -21,8 +21,10 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
         useRecoilState(handleLecturerState);
     const [page, setPage] = useState(router.query?.page || 1);
     const [searchToggle, setSearchToggle] = useState(false);
+    const [searching, setSearching] = useState(false);
     const [loading, setLoading] = useState(false);
     const [lecturerData, setLecturerData] = useState(null);
+    const [searchData, setSearchData] = useState(null);
     const [query, setQuery] = useState("");
 
     useEffect(() => {
@@ -31,17 +33,24 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
             const response = await axios.get(`api/v1/lecturers?page=${page}`);
             response.status === 200 && setLecturerData(response.data);
         };
+        const searchLecturer = async () => {
+            const response = await axios.get("/api/v1/all/lecturers");
+            return response.status === 200 && setSearchData(response.data);
+        };
         setLoading(true);
         fetchLecturers();
+        searchLecturer();
         setLoading(false);
     }, [page, handleLecturer]);
 
     const searchKeys = ["full_name", "staff_id"];
+
     const search = data => {
         return data?.filter(item =>
             searchKeys.some(key => item[key].toLowerCase().includes(query)),
         );
     };
+
     return (
         <AppLayout header="Lecturers">
             {/* Title */}
@@ -70,7 +79,12 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
                                     type="text"
                                     placeholder="Search..."
                                     className="bg-white border-primary text-sm text-gray-text outline-none min-w-max px-8 py-2 rounded-sm shadow-sm"
-                                    onChange={e => setQuery(e.target.value)}
+                                    onChange={e => {
+                                        setSearching(true);
+                                        setQuery(e.target.value);
+                                        if (e.target.value === "")
+                                            setSearching(false);
+                                    }}
                                 />
                             ) : (
                                 <button
@@ -106,9 +120,15 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
                     </div>
                 </div>
                 <div className="my-3 overflow-x-auto bg-white shadow-lg rounded-lg overflow-y-auto relative">
-                    <LecturerTable data={search(lecturerData?.data)} />
+                    <LecturerTable
+                        data={
+                            searching
+                                ? search(searchData?.data)
+                                : lecturerData?.data
+                        }
+                    />
                     {/* pagination */}
-                    {lecturerData !== null && (
+                    {!searching && lecturerData !== null && (
                         <>
                             {lecturerData.meta.total >
                                 lecturerData.meta.per_page && (

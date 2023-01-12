@@ -28,6 +28,7 @@ const Student = ({ students, levels, modules }) => {
         modules[0].module.code,
     );
 
+    console.log(students);
     return (
         <AppLayout header="Students">
             {/* Title */}
@@ -151,7 +152,7 @@ const Student = ({ students, levels, modules }) => {
                                     Group Number
                                 </th>
                                 <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
-                                    Absents(%)
+                                    Present(%)
                                 </th>
                                 <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
                                     Absents(%)
