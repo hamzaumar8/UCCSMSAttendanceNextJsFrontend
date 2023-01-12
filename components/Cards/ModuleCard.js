@@ -12,8 +12,9 @@ import {
 } from "../../src/atoms/modalAtom";
 import { useModule } from "../../src/hooks/module";
 
-const ModuleCard = ({ module, active = "" }) => {
+const ModuleCard = ({ module }) => {
     const { deleteMountModule, loading } = useModule();
+    const active = module.status === "active";
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
     const [modalEdit, setModalEdit] = useRecoilState(modalEditState);

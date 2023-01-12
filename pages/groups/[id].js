@@ -7,7 +7,15 @@ import axios from "../../src/lib/axios";
 
 const Group = ({ group }) => {
     return (
-        <AppLayout header={`${group.name} Groups`}>
+        <AppLayout
+            header={`${group.name} Groups`}
+            breadcrumbs={
+                <div className="space-x-1 text-primary font-bold text-sm capitalize">
+                    <Link href={"/dashboard"}>Dasbord /</Link>
+                    <Link href={"/groups"}>Groups /</Link>
+                    <span className="text-gray-text">{group.name}</span>
+                </div>
+            }>
             <HeadTitle title="Groups" />
             <div className="space-y-5">
                 <div className="flex items-center justify-between relative">

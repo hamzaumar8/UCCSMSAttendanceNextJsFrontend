@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { ToastContainer } from "react-toastify";
 import PageLoader from "../PageLoader";
 
-const AppLayout = ({ header = "", children }) => {
+const AppLayout = ({ header = "", breadcrumbs = "", children }) => {
     const router = useRouter();
     const { user, isLoading } = useAuth({ middleware: "auth" });
 
@@ -28,7 +28,11 @@ const AppLayout = ({ header = "", children }) => {
             {/* Side Navigation */}
             <SideNav />
             <main className="bg-gray-100 ease-soft-in-out xl:ml-[18rem] relative min-h-screen rounded-xl transition-all duration-200">
-                <Navigation user={user} header={header} />
+                <Navigation
+                    user={user}
+                    header={header}
+                    breadcrumbs={breadcrumbs}
+                />
 
                 {/* Page Content */}
                 <section className="w-full px-6 sm:px-8 lg:px-12 py-6  sm:py-8 mx-auto">

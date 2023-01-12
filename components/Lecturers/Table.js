@@ -54,13 +54,7 @@ const LecturerTable = ({ data }) => {
                                 </td>
                                 <td className="capitalize p-3 whitespace-nowrap border-b">
                                     <span>
-                                        <div>
-                                            {lecturer.title}{" "}
-                                            {lecturer.first_name}{" "}
-                                            {lecturer.other_name &&
-                                                lecturer.other_name + " "}
-                                            {lecturer.surname}
-                                        </div>
+                                        <div>{lecturer.full_name}</div>
                                     </span>
                                 </td>
                                 <td className="capitalize py-3  border-b text-center">
@@ -77,9 +71,11 @@ const LecturerTable = ({ data }) => {
                                                   ))
                                             : "---"}
                                         {lecturer.modules.length > 3 && (
-                                            <span className="underline text-primary">
+                                            <Link
+                                                href={`/lecturers/${lecturer.id}`}
+                                                className="underline text-primary">
                                                 all
-                                            </span>
+                                            </Link>
                                         )}
                                     </div>
                                 </td>

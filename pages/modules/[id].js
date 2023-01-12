@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRecoilState } from "recoil";
 import Button from "../../components/Button";
 import Card from "../../components/Card";
@@ -39,7 +40,15 @@ const Module = ({ module }) => {
     };
 
     return (
-        <AppLayout header={module.module.code}>
+        <AppLayout
+            header={module.module.code}
+            breadcrumbs={
+                <div className="space-x-1 text-primary font-bold text-sm capitalize">
+                    <Link href={"/dashboard"}>Dasbord /</Link>
+                    <Link href={"/modules"}>Modules /</Link>
+                    <span className="text-gray-text">{module.module.code}</span>
+                </div>
+            }>
             <HeadTitle title="Lecturers" />
             {/* Main content */}
             <div className="relative space-y-8">

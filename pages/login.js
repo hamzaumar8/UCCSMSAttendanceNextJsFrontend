@@ -124,20 +124,20 @@ const Login = () => {
                         </label>
                     </div>
 
-                    <div className="flex items-center justify-end my-5">
-                        <Link
-                            href="/forgot-password"
-                            className="underline text-sm text-primary font-bold hover:text-blue-800">
-                            Forgot your password?
-                        </Link>
-                    </div>
-                    <div className="flex items-center justify-end mt-4">
+                    <div className="flex items-center justify-end mt-4 pt-10">
                         <Button
                             type="submit"
                             className="w-full"
                             loader={loading}>
                             Login
                         </Button>
+                    </div>
+                    <div className="text-center my-5">
+                        <Link
+                            href="/forgot-password"
+                            className="underline text-sm text-primary font-bold hover:text-blue-800">
+                            Forgot your password?
+                        </Link>
                     </div>
                 </form>
             </AuthCard>

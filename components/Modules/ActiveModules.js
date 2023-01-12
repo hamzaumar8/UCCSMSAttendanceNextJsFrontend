@@ -82,7 +82,6 @@ const ActiveModules = ({ modules }) => {
                                     <ModuleCard
                                         key={module.id}
                                         module={module}
-                                        active={true}
                                     />
                                 ))}
                             </>
@@ -102,7 +101,6 @@ const ActiveModules = ({ modules }) => {
                                         <ModuleCard
                                             key={module.id}
                                             module={module}
-                                            active={true}
                                         />
                                     ))}
                             </>

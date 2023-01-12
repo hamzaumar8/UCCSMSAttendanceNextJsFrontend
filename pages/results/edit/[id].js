@@ -43,7 +43,17 @@ const EditResult = ({ result }) => {
     };
 
     return (
-        <AppLayout header={`${result.module.module.code} Results`}>
+        <AppLayout
+            header={`${result.module.module.code} Results`}
+            breadcrumbs={
+                <div className="space-x-1 text-primary font-bold text-sm capitalize">
+                    <Link href={"/dashboard"}>Dasbord /</Link>
+                    <Link href={"/results"}>Results /</Link>
+                    <span className="text-gray-text">
+                        {result.module.module.code}
+                    </span>
+                </div>
+            }>
             <HeadTitle title={`${result.module.module.code} Results`} />
 
             {/* Main content */}
