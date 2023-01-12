@@ -13,7 +13,8 @@ const LecturerNavigation = ({ user, header }) => {
 
     const { logout } = useAuth();
 
-    let today = new Date();
+    const [open, setOpen] = useState(false);
+
     const getGreetingTime = () => {
         const currentTime = new Date();
         const splitAfternoon = 12; // 24hr time to split the afternoon
@@ -49,13 +50,13 @@ const LecturerNavigation = ({ user, header }) => {
                 </div>
 
                 {/* Settings Dropdown */}
-                <div className="flex items-center ml-6">
+                <div className="hidden sm:flex sm:items-center sm:ml-6">
                     <Dropdown
                         align="right"
                         width="48"
                         trigger={
                             <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition duration-150 ease-in-out space-x-2">
-                                <div className="h-10 w-10 rounded-full inlie-block border-2 border-primary">
+                                <div className="h-10 w-10 rounded-full inline-block border-2 border-primary">
                                     <Image
                                         src="http://localhost:8000/assets/img/lecturers/default.png"
                                         width={100}
@@ -69,7 +70,83 @@ const LecturerNavigation = ({ user, header }) => {
                         <DropdownButton onClick={logout}>Logout</DropdownButton>
                     </Dropdown>
                 </div>
+
+                {/* Hamburger  */}
+                <div className="-mr-2 flex items-center sm:hidden">
+                    <button
+                        onClick={() => setOpen(open => !open)}
+                        className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                        <svg
+                            className="h-6 w-6"
+                            stroke="currentColor"
+                            fill="none"
+                            viewBox="0 0 24 24">
+                            {open ? (
+                                <path
+                                    className="inline-flex"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            ) : (
+                                <path
+                                    className="inline-flex"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M4 6h16M4 12h16M4 18h16"
+                                />
+                            )}
+                        </svg>
+                    </button>
+                </div>
             </div>
+
+            {/* Responsive Navigation Menu */}
+            {open && (
+                <div className="block sm:hidden">
+                    <div className="pt-2 pb-3 space-y-1">
+                        <ResponsiveNavLink
+                            href="/staff"
+                            active={router.pathname === "/staff"}>
+                            Attendance
+                        </ResponsiveNavLink>
+                    </div>
+
+                    {/* Responsive Settings Options */}
+                    <div className="pt-4 pb-1 border-t border-gray-200">
+                        <div className="flex items-center px-4">
+                            <div className="flex-shrink-0">
+                                <div className="h-10 w-10 rounded-full inline-block border-2 border-primary">
+                                    <Image
+                                        src="http://localhost:8000/assets/img/lecturers/default.png"
+                                        width={100}
+                                        height={100}
+                                        alt={user?.name}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="ml-3">
+                                <div className="font-medium text-base text-black-text">
+                                    {user?.name}
+                                </div>
+                                <div className="font-medium text-sm text-gray-500">
+                                    {user?.email}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="mt-3 space-y-1">
+                            {/* Authentication */}
+                            <ResponsiveNavButton onClick={logout}>
+                                Logout
+                            </ResponsiveNavButton>
+                        </div>
+                    </div>
+                </div>
+            )}
         </nav>
     );
 };

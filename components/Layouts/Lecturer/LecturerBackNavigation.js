@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const LecturerBackNavigation = ({ backNav }) => {
     return (
-        <nav className="bg-primary relative before:absolute before:w-full before:h-4 before:bg-primary-accent before:bottom-0 before:rounded-t-3xl">
+        <nav className="bg-primary relative before:absolute before:w-full before:h-4 before:bg-primary-accent sm:before:h-0 before:bottom-0 before:rounded-t-3xl sm:mb-6">
             {/* Primary Navigation Menu */}
             <div className="px-4 pb-10 py-8 flex justify-between ">
                 {/* Page Heading */}

@@ -18,11 +18,12 @@ const AppLayout = ({ header = "", children }) => {
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
 
+    if (user?.role === "STF") router.push("/staff");
+    if (user?.role === "USR") router.push("/user");
+
     if (isLoading || !user) {
         return <PageLoader loading={isLoading} />;
     }
-    // if (user.role === "STF") router.push("/staff");
-    // if (user.role === "USR") router.push("/user");
 
     return (
         <div className="bg-[#E5E5E5]">
