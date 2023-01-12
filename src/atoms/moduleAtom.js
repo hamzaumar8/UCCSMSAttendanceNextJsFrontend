@@ -29,3 +29,8 @@ export const getModuleMountState = atom({
     key: "getModuleMountState",
     default: {},
 });
+
+export const attendanceLecStuState = atom({
+    key: "attendanceLecStuState",
+    default: true,
+});

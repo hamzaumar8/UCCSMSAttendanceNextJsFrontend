@@ -1,8 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { attendanceLecStuState } from "../../src/atoms/moduleAtom";
 
 const AttendanceChart = ({ lectureWeekly, studentsWeekly }) => {
-    const [attendanceLecStu, setAttendanceLecStu] = useState(true);
+    const [attendanceLecStu, setAttendanceLecStu] = useRecoilState(
+        attendanceLecStuState,
+    );
     return (
         <>
             <div className="col-span-5 md:col-span-3 bg-white relative overflow-hidden shadow-sm sm:rounded-lg transition duration-200 ease-in-out border border-primary-accent">

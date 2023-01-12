@@ -5,15 +5,29 @@ import AsyncSelect from "react-select/async";
 import Errors from "../../Errors";
 import InputError from "../../InputError";
 import makeAnimated from "react-select/animated";
-import { courseRepLoadOptions } from "../../../src/lib/selectoptions";
 import { useModule } from "../../../src/hooks/module";
-
 const animatedCompnent = makeAnimated();
 const ModuleStudentAddForm = ({ module, onClick }) => {
+    console.log(module.id);
     const { addStudentModule, loading } = useModule();
     const [student, setStudent] = useState([]);
     const [errors, setErrors] = useState([]);
     const [status, setStatus] = useState(null);
+
+    const studentLoadOptions = async (inputText, callback) => {
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/stud_module/${module.id}/backend?s=${inputText}`,
+        );
+        const json = await response.json();
+        callback(
+            json.map(i => ({
+                label: `${i.first_name} ${i.surname} ${
+                    i.other_name ? i.other_name + " " : ""
+                } (${i.index_number})`,
+                value: i.id,
+            })),
+        );
+    };
 
     const submitForm = event => {
         event.preventDefault();
@@ -62,7 +76,7 @@ const ModuleStudentAddForm = ({ module, onClick }) => {
                             isMulti
                             components={animatedCompnent}
                             cacheOptions
-                            loadOptions={courseRepLoadOptions}
+                            loadOptions={studentLoadOptions}
                             defaultOptions
                             className="block mt-1 w-full"
                             onChange={event => setStudent(event)}

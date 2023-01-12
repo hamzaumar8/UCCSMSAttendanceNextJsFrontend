@@ -1,10 +1,8 @@
 import Navigation from "./Navigation";
 import { useAuth } from "../../src/hooks/auth";
 import SideNav from "./SideNav";
-import Head from "next/head";
 import { AnimatePresence } from "framer-motion";
 import Modal from "../Modal";
-import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { modalState, modalTypeState } from "../../src/atoms/modalAtom.js";
 import { useRouter } from "next/router";
