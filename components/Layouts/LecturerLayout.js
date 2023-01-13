@@ -7,21 +7,21 @@ import { useRouter } from "next/router";
 import LecturerNavigation from "./Lecturer/LecturerNavigation";
 import LecturerBackNavigation from "./Lecturer/LecturerBackNavigation";
 import LecturerSideNav from "./Lecturer/LecturerSideNav";
+import PageLoader from "../PageLoader";
 
 const LecturerLayout = ({ header = "", backNav = "", children }) => {
     const router = useRouter();
+    const { user, isLoading } = useAuth({ middleware: "auth" });
 
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
-    const { user, isLoading } = useAuth({ middleware: "auth" });
 
     if (user?.role === "ADM") router.push("/dashboard");
     if (user?.role === "USR" || user?.role === "REP") router.push("/user");
 
     if (isLoading || !user) {
-        return <>Loading...</>;
+        return <PageLoader loading={isLoading} />;
     }
-
     return (
         <div className="bg-white sm:bg-[#E5E5E5]">
             {/* Side Navigation */}

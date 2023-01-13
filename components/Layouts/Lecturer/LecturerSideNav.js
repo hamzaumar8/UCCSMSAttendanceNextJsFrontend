@@ -1,6 +1,7 @@
 import {
     ArrowLeftOnRectangleIcon,
     ChartBarIcon,
+    CloudArrowDownIcon,
     PencilSquareIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
@@ -40,6 +41,12 @@ const LecturerSideNav = () => {
                         active={router.pathname === "/staff/modules"}>
                         <PencilSquareIcon className="w-6 h-6" />
                         <span>My Modules</span>
+                    </NavLink>
+                    <NavLink
+                        href="/staff/results"
+                        active={router.pathname === "/staff/results"}>
+                        <CloudArrowDownIcon className="w-6 h-6" />
+                        <span>Results</span>
                     </NavLink>
                 </div>
             </div>
