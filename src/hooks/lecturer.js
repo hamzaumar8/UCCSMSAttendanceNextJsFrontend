@@ -15,6 +15,10 @@ export const useLecturer = () => {
     const [handleLecturer, setHandleLecturer] =
         useRecoilState(handleLecturerState);
 
+    const refreshData = () => {
+        router.replace(router.asPath);
+    };
+
     // CSRF
     const csrf = () => axios.get("/sanctum/csrf-cookie");
 
@@ -30,7 +34,7 @@ export const useLecturer = () => {
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
-                    setHandleLecturer(true);
+                    refreshData();
                     setModalOpen(false);
                     toast.success("Lecturer was added successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
@@ -67,7 +71,7 @@ export const useLecturer = () => {
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
-                    setHandleLecturer(true);
+                    refreshData();
                     setModalOpen(false);
                     toast.success("Lecturer was editted successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
@@ -95,7 +99,7 @@ export const useLecturer = () => {
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
-                    setHandleLecturer(true);
+                    refreshData();
                     setModalOpen(false);
                     toast.success("Lecturer was editted successfully!", {
                         position: toast.POSITION.TOP_RIGHT,

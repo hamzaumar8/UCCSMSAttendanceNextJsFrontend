@@ -1,7 +1,17 @@
 import { EyeIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { useResult } from "../../src/hooks/result";
+import Button from "../Button";
+import Loader from "../Loader";
 
 const AllResults = ({ results }) => {
+    const { updateResultStatus, loading } = useResult();
+    const handleStatusChange = (e, id) => {
+        e.preventDefault();
+        updateResultStatus({
+            id,
+        });
+    };
     return (
         <div className="my-3 overflow-x-auto rounded-t-2xl bg-white overflow-y-auto relative">
             <table className="table  min-w-full">
@@ -62,8 +72,8 @@ const AllResults = ({ results }) => {
                                 </div>
                             </td>
 
-                            <td className="capitalize py-3 whitespace-nowrap border-b !text-right pr-6">
-                                <div className="space-x-3">
+                            <td className="capitalize py-3 whitespace-nowrap border-b !text-right pr-5">
+                                <div className="space-x-3 inline-flex">
                                     <Link
                                         href={`/results/${result.id}`}
                                         legacyBehavior>
@@ -73,6 +83,19 @@ const AllResults = ({ results }) => {
                                             <EyeIcon className="h-6 w-6 " />
                                         </a>
                                     </Link>
+                                    <div>
+                                        <button
+                                            disabled={loading}
+                                            onClick={e =>
+                                                handleStatusChange(e, result.id)
+                                            }
+                                            className="bg-primary-accent  py-1 px-3 rounded-md text-xs font-bold  text-primary outline-none inline-flex space-x-2">
+                                            {result.status === "save"
+                                                ? "submitted"
+                                                : "save"}
+                                            {loading && <Loader />}
+                                        </button>
+                                    </div>
                                 </div>
                             </td>
                         </tr>

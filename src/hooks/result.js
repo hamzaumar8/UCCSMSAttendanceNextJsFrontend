@@ -1,12 +1,15 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useRecoilState } from "recoil";
-import { handleResultState } from "../atoms/resultAtom";
 import axios from "../lib/axios";
 
 export const useResult = () => {
+    const router = useRouter();
     const [loading, setLoading] = useState(false);
-    const [handleResult, setHandleResult] = useRecoilState(handleResultState);
+
+    const refreshData = () => {
+        router.replace(router.asPath);
+    };
 
     const csrf = () => axios.get("/sanctum/csrf-cookie");
 
@@ -15,15 +18,13 @@ export const useResult = () => {
         setErrors([]);
         setStatus(null);
 
-        console.log(result);
         await csrf();
-        // console.log("save", result);
         axios
             .put(`/api/v1/results/${result.id}`, result)
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
-                    setHandleResult(!handleResult);
+                    refreshData();
                     toast.success("Result updated!", {
                         position: toast.POSITION.TOP_RIGHT,
                     });
@@ -39,8 +40,30 @@ export const useResult = () => {
             });
     };
 
+    const updateResultStatus = async ({ id }) => {
+        setLoading(true);
+        await csrf();
+
+        axios
+            .get(`/api/v1/update_status/result/${id}`)
+            .then(res => {
+                if (res.data.status === "success") {
+                    setLoading(false);
+                    refreshData();
+                    toast.success("Result status updated!", {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                }
+            })
+            .catch(error => {
+                setLoading(false);
+                console.log(error);
+            });
+    };
+
     return {
         loading,
         editResult,
+        updateResultStatus,
     };
 };

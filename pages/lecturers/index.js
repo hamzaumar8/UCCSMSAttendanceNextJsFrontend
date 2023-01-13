@@ -17,8 +17,6 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
     const router = useRouter();
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
-    const [handleLecturer, setHandleLecturer] =
-        useRecoilState(handleLecturerState);
     const [page, setPage] = useState(router.query?.page || 1);
     const [searchToggle, setSearchToggle] = useState(false);
     const [searching, setSearching] = useState(false);
@@ -41,7 +39,7 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
         fetchLecturers();
         searchLecturer();
         setLoading(false);
-    }, [page, handleLecturer]);
+    }, [page]);
 
     const searchKeys = ["full_name", "staff_id"];
 

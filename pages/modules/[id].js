@@ -59,7 +59,7 @@ const Module = ({ module }) => {
                             <span className="text-sm font-bold py-1 px-5  rounded-full bg-primary-accent text-primary">
                                 {module.module.code}
                             </span>
-                            <h5 className="text-lg text-gray-text font-bold">
+                            <h5 className="text-lg capitalize text-gray-text font-bold">
                                 {module.module.title}
                             </h5>
                         </div>
