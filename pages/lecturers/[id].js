@@ -185,17 +185,7 @@ const Lecturer = ({ lecturer, cordinatingModule }) => {
 
 export default Lecturer;
 
-export async function getStaticPaths() {
-    const response = await axios.get("/api/v1/lecturers");
-    return {
-        paths: response.data.data.map(lecturer => ({
-            params: { id: lecturer.id.toString() },
-        })),
-        fallback: false, // can also be true or 'blocking'
-    };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
     const response = await axios.get(`/api/v1/lecturers/${params.id}`);
     const cordinatinResponse = await axios.get(
         `/api/v1/cordinating/modules/${params.id}`,

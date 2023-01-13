@@ -122,17 +122,17 @@ const Group = ({ group }) => {
 
 export default Group;
 
-export async function getStaticPaths() {
-    const response = await axios.get("/api/v1/levels");
-    return {
-        paths: response.data.data.map(group => ({
-            params: { id: group.id.toString() },
-        })),
-        fallback: false, // can also be true or 'blocking'
-    };
-}
+// export async function getStaticPaths() {
+//     const response = await axios.get("/api/v1/levels");
+//     return {
+//         paths: response.data.data.map(group => ({
+//             params: { id: group.id.toString() },
+//         })),
+//         fallback: false, // can also be true or 'blocking'
+//     };
+// }
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
     const response = await axios.get(`/api/v1/levels/${params.id}`);
     return {
         props: {
