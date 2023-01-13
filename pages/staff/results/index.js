@@ -38,7 +38,7 @@ const StaffResults = () => {
             <HeadTitle title="Results" />
 
             {/* Main Sction */}
-            <div className="space-y-5 sm:mt-10">
+            <div className="space-y-8 sm:mt-10">
                 <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg transition duration-500 ease-in-out">
                     {/* Header */}
                     <div className="px-5 block sm:flex  items-center justify-between relative border-b ">

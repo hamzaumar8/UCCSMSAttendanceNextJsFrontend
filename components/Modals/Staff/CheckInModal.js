@@ -7,7 +7,7 @@ import Errors from "../../Errors";
 import Button from "../../Button";
 import { format } from "date-fns";
 
-const CheckInModal = () => {
+const CheckInModal = ({ onClick = "" }) => {
     const { user } = useAuth({ middleware: "auth" });
     const { addAttendance, loading } = useAttendance();
 
@@ -60,7 +60,7 @@ const CheckInModal = () => {
     };
 
     return (
-        <div>
+        <div className="sm:pr-2 sm:-ml-2">
             <div className="flex items-center justify-between p-4 pt-6 border-b ">
                 <h1 className="leading-tight text-black-text font-bold text-2xl">
                     Lecture Check In
@@ -157,10 +157,13 @@ const CheckInModal = () => {
                     </div>
                 </div>
 
-                <div className="flex py-6 px-4 items-center justify-end">
-                    {/* <button className="text-primary bg-primary-accent inline-block px-14 py-3 rounded-full capitalize font-bold">
-                        save
-                    </button> */}
+                <div className="flex py-6 px-4 items-center justify-end sm:justify-between">
+                    <Button
+                        onClick={onClick}
+                        className="!capitalize !rounded-full !px-8"
+                        danger>
+                        Cancel
+                    </Button>
                     <Button
                         loader={loading}
                         type="submit"

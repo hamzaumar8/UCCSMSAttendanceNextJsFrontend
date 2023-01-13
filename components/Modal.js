@@ -271,9 +271,23 @@ const Modal = ({ handleClose, type }) => {
             )}
 
             {type === "slideUp" && (
-                <SlideUp onClick={handleClose}>
+                <SlideUp onClick={handleClose} className="block sm:hidden">
                     <CheckInModal />
                 </SlideUp>
+            )}
+
+            {type === "checkInMd" && (
+                <Backdrop className="hidden sm:flex">
+                    <motion.div
+                        onClick={e => e.stopPropagation()}
+                        variants={dropIn}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        className="rounded-lg flex flex-col justify-center z-0 bg-primary-accent w-full max-w-xl mx-6  after:absolute after:-top-2 after:-left-2 after:w-full after:h-full after:bg-white after:-z-10 after:rounded-lg after:shadow-md">
+                        <CheckInModal onClick={handleClose} />
+                    </motion.div>
+                </Backdrop>
             )}
             {type === "checkInSuccess" && (
                 <SlideUp>

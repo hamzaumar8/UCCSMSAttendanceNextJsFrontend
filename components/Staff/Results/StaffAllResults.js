@@ -64,7 +64,7 @@ const StaffAllResults = ({ results }) => {
                             <td className="capitalize py-3 whitespace-nowrap border-b !text-right pr-5">
                                 <div className="space-x-3 inline-flex">
                                     <Link
-                                        href={`/results/${result.id}`}
+                                        href={`/staff/results/${result.id}`}
                                         legacyBehavior>
                                         <a
                                             className="inline-flex cursor-pointer text-gray-text hover:!text-secondary transition duration-500"

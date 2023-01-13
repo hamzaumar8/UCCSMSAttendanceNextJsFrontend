@@ -9,7 +9,12 @@ import LecturerBackNavigation from "./Lecturer/LecturerBackNavigation";
 import LecturerSideNav from "./Lecturer/LecturerSideNav";
 import PageLoader from "../PageLoader";
 
-const LecturerLayout = ({ header = "", backNav = "", children }) => {
+const LecturerLayout = ({
+    header = "",
+    backNav = "",
+    breadcrumbs = "",
+    children,
+}) => {
     const router = useRouter();
     const { user, isLoading } = useAuth({ middleware: "auth" });
 
@@ -28,9 +33,16 @@ const LecturerLayout = ({ header = "", backNav = "", children }) => {
             <LecturerSideNav />
             <main className="ease-in-out xl:ml-[18rem] relative min-h-screen rounded-xl transition-all duration-200">
                 {backNav ? (
-                    <LecturerBackNavigation backNav={backNav} />
+                    <LecturerBackNavigation
+                        backNav={backNav}
+                        breadcrumbs={breadcrumbs}
+                    />
                 ) : (
-                    <LecturerNavigation user={user} header={header} />
+                    <LecturerNavigation
+                        user={user}
+                        header={header}
+                        breadcrumbs={breadcrumbs}
+                    />
                 )}
                 {/* Page Content */}
                 <section className="w-full sm:px-6 sm:pb-10">

@@ -90,9 +90,31 @@ const StaffDashboard = () => {
                     <h2 className="text-black-text font-extrabold text-2xl">
                         Attendance
                     </h2>
-                    <div className="px-6 border border-primary rounded-full py-2 space-x-1 flex items-center justify-center text-primary font-bold text-sm">
-                        <span>Daily</span>
-                        {/* <ChevronDownIcon className="w-4 h-5" /> */}
+                    <div className="flex">
+                        <div className="sm:hidden px-6 border border-primary rounded-full py-2 space-x-1 flex items-center justify-center text-primary font-bold text-sm">
+                            <span>Daily</span>
+                            {/* <ChevronDownIcon className="w-4 h-5" /> */}
+                        </div>
+                        <button
+                            onClick={() => {
+                                setModalOpen(true);
+                                setModalType("checkInMd");
+                            }}
+                            className="hidden sm:inline-flex items-center px-6 py-3 bg-primary text-white border border-transparent rounded-full font-semibold text-xs capitalize tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity:25 transition ease-in-out duration-150 space-x-2">
+                            <CalendarDaysIcon className="h-5 w-5" />
+                            <span className="text-xs ">Check In</span>
+                        </button>
+                        <div className="fixed sm:hidden sm:relative bottom-20 right-4 ">
+                            <button
+                                onClick={() => {
+                                    setModalOpen(true);
+                                    setModalType("slideUp");
+                                }}
+                                className="inline-flex items-center px-6 py-3 bg-primary text-white border border-transparent rounded-full font-semibold text-xs capitalize tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity:25 transition ease-in-out duration-150 space-x-2">
+                                <CalendarDaysIcon className="h-5 w-5" />
+                                <span className="text-xs ">Check In</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div className="relative px-4 pb-6">
@@ -129,17 +151,6 @@ const StaffDashboard = () => {
                             )}
                         </motion.div>
                     </AnimatePresence>
-                    <div className="fixed bottom-20 right-4">
-                        <button
-                            onClick={() => {
-                                setModalOpen(true);
-                                setModalType("slideUp");
-                            }}
-                            className="inline-flex items-center px-6 py-3 bg-primary text-white border border-transparent rounded-full font-semibold text-xs capitalize tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity:25 transition ease-in-out duration-150 space-x-2">
-                            <CalendarDaysIcon className="h-5 w-5" />
-                            <span className="text-xs ">Check In</span>
-                        </button>
-                    </div>
                 </div>
             </div>
         </LecturerLayout>

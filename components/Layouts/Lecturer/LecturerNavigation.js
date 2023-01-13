@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import Image from "next/image";
 
-const LecturerNavigation = ({ user, header }) => {
+const LecturerNavigation = ({ user, header, breadcrumbs }) => {
     const router = useRouter();
 
     const { logout } = useAuth();
@@ -150,6 +150,12 @@ const LecturerNavigation = ({ user, header }) => {
                             </ResponsiveNavButton>
                         </div>
                     </div>
+                </div>
+            )}
+
+            {breadcrumbs && (
+                <div className="bg-primary-accent px-6 py-4 sm:px-8 lg:px-12">
+                    {breadcrumbs}
                 </div>
             )}
         </nav>
