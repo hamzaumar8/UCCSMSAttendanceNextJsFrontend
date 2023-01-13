@@ -106,7 +106,7 @@ const Cordinators = ({ modules, moduleSummay }) => {
 
 export default Cordinators;
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const response = await axios.get("api/v1/modules");
     const modules = response.data.data;
     const moduleSummay = response.data.summary;

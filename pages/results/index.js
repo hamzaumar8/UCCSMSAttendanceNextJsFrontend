@@ -97,7 +97,7 @@ const Results = ({ results }) => {
 
 export default Results;
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const response = await axios.get("api/v1/results");
     const results = response.data.data;
 

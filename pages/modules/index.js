@@ -79,7 +79,7 @@ const Modules = ({ semester, modules, modulesBank }) => {
 
 export default Modules;
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const response = await axios.get("api/v1/modules");
     const modules = response.data.data;
 

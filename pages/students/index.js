@@ -268,7 +268,7 @@ const Student = ({ students, levels, modules }) => {
 
 export default Student;
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const responseModule = await axios.get("api/v1/modules");
     const modules = responseModule.data.data;
 

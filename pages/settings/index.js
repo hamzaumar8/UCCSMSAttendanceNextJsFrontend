@@ -83,7 +83,7 @@ const Settings = ({ promotion }) => {
 
 export default Settings;
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const promotionResponse = await axios.get("api/v1/promotion/check");
     const promotion = promotionResponse.data;
     return {

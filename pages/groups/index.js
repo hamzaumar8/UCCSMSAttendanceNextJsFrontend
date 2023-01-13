@@ -111,7 +111,7 @@ const Groups = ({ levels }) => {
 
 export default Groups;
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const response = await axios.get("api/v1/levels");
     const levels = response.data.data;
     return {

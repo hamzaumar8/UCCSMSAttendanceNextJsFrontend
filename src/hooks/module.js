@@ -12,6 +12,12 @@ import {
 
 export const useModule = () => {
     const router = useRouter();
+    // Call this function whenever you want to
+    // refresh props!
+    const refreshData = () => {
+        router.replace(router.asPath);
+    };
+
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [handleModuleBank, setHandleModuleBank] = useRecoilState(
         handleModuleBankState,
@@ -44,8 +50,10 @@ export const useModule = () => {
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
-                    setHandleModuleBank(true);
+                    // setHandleModuleBank(true);
                     setModalOpen(false);
+
+                    refreshData();
                     toast.success("Module has been added successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
                     });

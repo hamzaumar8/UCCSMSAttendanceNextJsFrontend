@@ -160,7 +160,7 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
 
 export default Lecturer;
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const response = await axios.get("api/v1/lecturers");
     const lecturers = response.data.data;
     const lecturersSummary = response.data.summary;

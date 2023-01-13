@@ -332,7 +332,7 @@ const Dashboard = ({ semester, modules, lecturers, cordinators, students }) => {
 
 export default Dashboard;
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const studentsResponse = await axios.get("api/v1/students");
     const students = studentsResponse.data.data;
 
