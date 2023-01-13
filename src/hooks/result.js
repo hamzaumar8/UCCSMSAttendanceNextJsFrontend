@@ -17,14 +17,20 @@ export const useResult = () => {
         setLoading(true);
         setErrors([]);
         setStatus(null);
-
         await csrf();
+        const status = result.status;
+
         axios
             .put(`/api/v1/results/${result.id}`, result)
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
-                    refreshData();
+                    if (status === "submit") {
+                        router.push("/results/" + result.id);
+                    } else {
+                        window.location.pathname = router.asPath;
+                        // refreshData();
+                    }
                     toast.success("Result updated!", {
                         position: toast.POSITION.TOP_RIGHT,
                     });

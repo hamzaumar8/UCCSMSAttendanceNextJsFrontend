@@ -5,6 +5,7 @@ import Button from "../../../components/Button";
 import HeadTitle from "../../../components/HeadTitle";
 import InputError from "../../../components/InputError";
 import AppLayout from "../../../components/Layouts/AppLayout";
+import Loader from "../../../components/Loader";
 import SemesterTag from "../../../components/SemesterTag";
 import { useResult } from "../../../src/hooks/result";
 import axios from "../../../src/lib/axios";
@@ -12,6 +13,7 @@ import axios from "../../../src/lib/axios";
 const EditResult = ({ result }) => {
     const { editResult, loading } = useResult();
     const [scores, setScores] = useState(result.assessments);
+    const [isLoading, setIsLoading] = useState("");
 
     const handleChange = (e, index) => {
         const { name, value } = e.target;
@@ -25,22 +27,26 @@ const EditResult = ({ result }) => {
 
     const submitForm = event => {
         event.preventDefault();
+        setIsLoading("publish");
         result.status = "submit";
         editResult({
             result,
             setErrors,
             setStatus,
         });
+        setIsLoading("");
     };
 
     const saveForm = event => {
         event.preventDefault();
+        setIsLoading("save");
         result.status = "save";
         editResult({
             result,
             setErrors,
             setStatus,
         });
+        setIsLoading("");
     };
 
     return (
@@ -69,20 +75,29 @@ const EditResult = ({ result }) => {
                                 </h1>
                                 <SemesterTag />
                             </div>
-                            <div>
+                            {/* <div>
                                 <button className="inline-flex items-center px-6 py-2 bg-white text-primary rounded-full font-bold text-xs capitalize border border-primary tracking-widest transition ease-in-out duration-150">
                                     <ArrowUpTrayIcon className="w-4 h-4 mr-1" />
                                     Improt CSV
                                 </button>
-                            </div>
+                            </div> */}
                             <div className="space-x-2">
                                 <button
+                                    disabled={
+                                        isLoading === "save" ? loading : false
+                                    }
                                     type="submit"
-                                    className="inline-flex items-center px-6 !py-2 bg-secondary text-white rounded-full font-bold text-xs capitalize border border-transparent tracking-widest transition ease-in-out duration-150">
+                                    className="inline-flex items-center px-6 !py-2 bg-secondary text-white rounded-full font-bold text-xs capitalize border border-transparent tracking-widest transition ease-in-out duration-150 space-x-2">
                                     Save Results
+                                    {loading && <Loader />}
                                 </button>
+
                                 <Button
-                                    loader={loading}
+                                    loader={
+                                        isLoading === "publish"
+                                            ? loading
+                                            : false
+                                    }
                                     onClick={submitForm}
                                     className="!rounded-full !capitalize px-6 !py-2">
                                     Publish Results
@@ -191,7 +206,7 @@ const EditResult = ({ result }) => {
                                                         )}
                                                         {assessment.remarks ===
                                                             "ic" && (
-                                                            <span className="bg-red-300 text-white font-bold block text-center w-[130px] px-6 py-2 rounded-full text-xs">
+                                                            <span className="bg-white text-red-600 font-bold block text-center w-[130px] px-6 py-2 rounded-full text-xs">
                                                                 Incomplete
                                                             </span>
                                                         )}
