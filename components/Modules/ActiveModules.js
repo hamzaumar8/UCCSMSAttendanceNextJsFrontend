@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import { modalState, modalTypeState } from "../../src/atoms/modalAtom";
 import Button from "../Button";
 import ModuleCard from "../Cards/ModuleCard";
+import ElementNotFound from "../ElementNorFound";
 import Input from "../Input";
 
 const ActiveModules = ({ modules }) => {
@@ -74,9 +75,9 @@ const ActiveModules = ({ modules }) => {
                 </div>
             </div>
             <div className="py-4 px-5 pb-6 bg-white space-y-3">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {modules.length > 0 ? (
-                        !viewAll ? (
+                {modules.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {!viewAll ? (
                             <>
                                 {modules.slice(0, 3).map(module => (
                                     <ModuleCard
@@ -104,11 +105,27 @@ const ActiveModules = ({ modules }) => {
                                         />
                                     ))}
                             </>
-                        )
-                    ) : (
-                        <div>no Active module</div>
-                    )}
-                </div>
+                        )}
+                    </div>
+                ) : (
+                    <ElementNotFound>
+                        <h2 className="text-xl sm:text-2xl text-primary font-bold">
+                            No Active Module Availble
+                        </h2>
+                        <p className="text-gray-text font-[500]">
+                            Click! on this{" "}
+                            <button
+                                onClick={() => {
+                                    setModalOpen(true);
+                                    setModalType("mountModule");
+                                }}
+                                className="text-primary">
+                                <span> Mount Module</span>
+                            </button>{" "}
+                            to mount new modules.
+                        </p>
+                    </ElementNotFound>
+                )}
             </div>
         </div>
     );

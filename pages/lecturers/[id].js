@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import ElementNotFound from "../../components/ElementNorFound";
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
 import axios from "../../src/lib/axios";
@@ -125,7 +126,15 @@ const Lecturer = ({ lecturer, cordinatingModule }) => {
                                 })}
                             </div>
                         ) : (
-                            <div>No Modules</div>
+                            <ElementNotFound>
+                                <h2 className="text-xl sm:text-2xl text-primary font-bold">
+                                    No Active Module Availble
+                                </h2>
+                                <p className="text-gray-text font-[500]">
+                                    Sorry! You don't have any moudules for this
+                                    semster yet.
+                                </p>
+                            </ElementNotFound>
                         )}
                     </div>
                 </div>
@@ -174,7 +183,15 @@ const Lecturer = ({ lecturer, cordinatingModule }) => {
                                 })}
                             </div>
                         ) : (
-                            <div>No Modules</div>
+                            <ElementNotFound>
+                                <h2 className="text-xl sm:text-2xl text-primary font-bold">
+                                    No Cordinating Module Availble
+                                </h2>
+                                <p className="text-gray-text font-[500]">
+                                    Sorry! You don't have any moudules to
+                                    cordinate.
+                                </p>
+                            </ElementNotFound>
                         )}
                     </div>
                 </div>
