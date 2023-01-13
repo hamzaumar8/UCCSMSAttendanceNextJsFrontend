@@ -7,8 +7,13 @@ import axios from "../lib/axios";
 
 export const useLevel = () => {
     const router = useRouter();
+
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [loading, setLoading] = useState(false);
+
+    const refreshData = () => {
+        router.replace(router.asPath);
+    };
 
     const csrf = () => axios.get("/sanctum/csrf-cookie");
 
@@ -25,6 +30,7 @@ export const useLevel = () => {
                 if (res.data.status === "success") {
                     setLoading(false);
                     setModalOpen(false);
+                    refreshData();
                     toast.success("Group Generated succesfully", {
                         position: toast.POSITION.TOP_RIGHT,
                     });

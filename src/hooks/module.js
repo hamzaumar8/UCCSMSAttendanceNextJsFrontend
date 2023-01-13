@@ -5,20 +5,11 @@ import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { modalState } from "../atoms/modalAtom";
 import { toast } from "react-toastify";
-import {
-    handleModuleBankState,
-    handleModuleMountState,
-} from "../atoms/moduleAtom";
 
 export const useModule = () => {
     const router = useRouter();
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
-    const [handleModuleBank, setHandleModuleBank] = useRecoilState(
-        handleModuleBankState,
-    );
-    const [handleModuleMount, setHandleModuleMount] = useRecoilState(
-        handleModuleMountState,
-    );
+
     const [loading, setLoading] = useState(false);
 
     const refreshData = () => {
