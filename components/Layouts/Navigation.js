@@ -117,6 +117,41 @@ const Navigation = ({ user, header, breadcrumbs }) => {
                                 active={router.pathname === "/dashboard"}>
                                 Dashboard
                             </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href="/modules"
+                                active={router.pathname === "/modules"}>
+                                Modules
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href="/students"
+                                active={router.pathname === "/students"}>
+                                Students
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href="/lecturers"
+                                active={router.pathname === "/lecturers"}>
+                                Lectures
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href="/cordinators"
+                                active={router.pathname === "/cordinators"}>
+                                Cordinators
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href="/results"
+                                active={router.pathname === "/results"}>
+                                Results
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href="/groups"
+                                active={router.pathname === "/groups"}>
+                                Groups
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href="/settings"
+                                active={router.pathname === "/settings"}>
+                                Settings
+                            </ResponsiveNavLink>
                         </div>
 
                         {/* Responsive Settings Options */}

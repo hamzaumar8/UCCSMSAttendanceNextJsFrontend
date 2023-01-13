@@ -50,7 +50,7 @@ const ModuleCard = ({ module }) => {
                             <EllipsisHorizontalIcon />
                         </button>
                     }>
-                    <DropdownLink href={`modules/${module.id}`}>
+                    <DropdownLink href={`/modules/${module.id}`}>
                         <PencilSquareIcon className="h-5 w-5 mr-1 text-secondary" />
                         Details
                     </DropdownLink>

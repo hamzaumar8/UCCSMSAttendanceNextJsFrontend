@@ -157,10 +157,10 @@ const CheckInModal = () => {
                     </div>
                 </div>
 
-                <div className="flex py-6 px-4 items-center justify-between">
-                    <button className="text-primary bg-primary-accent inline-block px-14 py-3 rounded-full capitalize font-bold">
+                <div className="flex py-6 px-4 items-center justify-end">
+                    {/* <button className="text-primary bg-primary-accent inline-block px-14 py-3 rounded-full capitalize font-bold">
                         save
-                    </button>
+                    </button> */}
                     <Button
                         loader={loading}
                         type="submit"

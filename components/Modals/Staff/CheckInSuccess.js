@@ -4,6 +4,11 @@ import { modalState } from "../../../src/atoms/modalAtom";
 
 const CheckInSuccess = () => {
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
+
+    const router = useRouter();
+    const refreshData = () => {
+        router.replace(router.asPath);
+    };
     return (
         <div className="space-y-8 text-center py-8 px-4 flex flex-col items-center justify-center">
             <div className="pb-8">
@@ -19,7 +24,10 @@ const CheckInSuccess = () => {
                 <CheckIcon />
             </div>
             <button
-                onClick={() => setModalOpen(false)}
+                onClick={() => {
+                    setModalOpen(false);
+                    refreshData();
+                }}
                 className="text-primary font-bold underline pt-14">
                 <span>Back to Homepage</span>
             </button>

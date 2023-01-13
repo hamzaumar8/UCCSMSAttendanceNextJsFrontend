@@ -112,6 +112,11 @@ const LecturerNavigation = ({ user, header }) => {
                             active={router.pathname === "/staff"}>
                             Attendance
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href="/staff/modules"
+                            active={router.pathname === "/staff/modules"}>
+                            My modules
+                        </ResponsiveNavLink>
                     </div>
 
                     {/* Responsive Settings Options */}

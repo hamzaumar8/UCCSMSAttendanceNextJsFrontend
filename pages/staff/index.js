@@ -18,6 +18,7 @@ import {
 } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
 import AttendanceCard from "../../components/Staff/Attendance/AttendanceCard";
+import ElementNotFound from "../../components/ElementNorFound";
 
 const StaffDashboard = () => {
     const { user } = useAuth({ middleware: "auth" });
@@ -30,7 +31,6 @@ const StaffDashboard = () => {
         start: startOfWeek(now),
         end: endOfWeek(now),
     });
-    const [calendarStartDate, setCalendarStartDate] = useState("");
     const [currentDate, setCurrentDate] = useState(now);
 
     const {
@@ -41,6 +41,10 @@ const StaffDashboard = () => {
         axios
             .get(`/api/v1/attendance/lecturer`)
             .then(response => response.data.data),
+    );
+
+    const currentAttendances = attendances?.filter(
+        item => item.date === format(currentDate, "yyyy-MM-dd"),
     );
 
     return (
@@ -99,22 +103,30 @@ const StaffDashboard = () => {
                             animate={{ y: 0, opacity: 1 }}
                             exit={{ y: -10, opacity: 0 }}
                             transition={{ duration: 0.2 }}>
-                            <div className="space-y-4 sm:space-y-0 sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {attendances
-                                    ?.filter(
-                                        item =>
-                                            item.date ===
-                                            format(currentDate, "yyyy-MM-dd"),
-                                    )
-                                    .map((attendance, index) => {
-                                        return (
-                                            <AttendanceCard
-                                                key={index}
-                                                attendance={attendance}
-                                            />
-                                        );
-                                    })}
-                            </div>
+                            {currentAttendances?.length > 0 ? (
+                                <div className="space-y-4 sm:space-y-0 sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                                    {currentAttendances.map(
+                                        (attendance, index) => {
+                                            return (
+                                                <AttendanceCard
+                                                    key={index}
+                                                    attendance={attendance}
+                                                />
+                                            );
+                                        },
+                                    )}
+                                </div>
+                            ) : (
+                                <ElementNotFound>
+                                    <h2 className="text-xl sm:text-2xl text-primary font-bold">
+                                        No Attendance Checked In Yet.
+                                    </h2>
+                                    <p className="text-gray-text font-[500]">
+                                        Sorry! You don't have any module checked
+                                        in for the day yet.
+                                    </p>
+                                </ElementNotFound>
+                            )}
                         </motion.div>
                     </AnimatePresence>
                     <div className="fixed bottom-20 right-4">

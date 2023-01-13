@@ -4,9 +4,9 @@ import Modal from "../Modal";
 import { useRecoilState } from "recoil";
 import { modalState, modalTypeState } from "../../src/atoms/modalAtom.js";
 import { useRouter } from "next/router";
-import LecturerSideNav from "./SideNav/LecturerSideNav";
 import LecturerNavigation from "./Lecturer/LecturerNavigation";
 import LecturerBackNavigation from "./Lecturer/LecturerBackNavigation";
+import LecturerSideNav from "./Lecturer/LecturerSideNav";
 
 const LecturerLayout = ({ header = "", backNav = "", children }) => {
     const router = useRouter();
@@ -15,14 +15,13 @@ const LecturerLayout = ({ header = "", backNav = "", children }) => {
     const [modalType, setModalType] = useRecoilState(modalTypeState);
     const { user, isLoading } = useAuth({ middleware: "auth" });
 
+    if (user?.role === "ADM") router.push("/dashboard");
+    if (user?.role === "USR" || user?.role === "REP") router.push("/user");
+
     if (isLoading || !user) {
         return <>Loading...</>;
     }
 
-    if (user.role !== "STF") {
-        if (user.role === "ADM") router.push("/dashboard");
-        if (user.role === "USR" || user.role === "REP") router.push("/user");
-    }
     return (
         <div className="bg-white sm:bg-[#E5E5E5]">
             {/* Side Navigation */}

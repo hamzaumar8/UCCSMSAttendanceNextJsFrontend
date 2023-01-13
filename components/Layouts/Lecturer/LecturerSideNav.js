@@ -33,7 +33,7 @@ const LecturerSideNav = () => {
                         href="/staff"
                         active={router.pathname === "/staff"}>
                         <ChartBarIcon className="w-6 h-6" />
-                        <span>Dashboard</span>
+                        <span>Attendance</span>
                     </NavLink>
                     <NavLink
                         href="/staff/modules"
