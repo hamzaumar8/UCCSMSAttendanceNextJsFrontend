@@ -12,12 +12,6 @@ import {
 
 export const useModule = () => {
     const router = useRouter();
-    // Call this function whenever you want to
-    // refresh props!
-    const refreshData = () => {
-        router.replace(router.asPath);
-    };
-
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [handleModuleBank, setHandleModuleBank] = useRecoilState(
         handleModuleBankState,
@@ -26,6 +20,10 @@ export const useModule = () => {
         handleModuleMountState,
     );
     const [loading, setLoading] = useState(false);
+
+    const refreshData = () => {
+        router.replace(router.asPath);
+    };
 
     // CSRF
     const csrf = () => axios.get("/sanctum/csrf-cookie");
@@ -50,10 +48,8 @@ export const useModule = () => {
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
-                    // setHandleModuleBank(true);
-                    setModalOpen(false);
-
                     refreshData();
+                    setModalOpen(false);
                     toast.success("Module has been added successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
                     });
@@ -81,7 +77,7 @@ export const useModule = () => {
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
-                    setHandleModuleBank(true);
+                    refreshData();
                     setModalOpen(false);
                     toast.success("Module editted successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
@@ -106,7 +102,7 @@ export const useModule = () => {
             .delete(`/api/v1/module_banks/${id}`)
             .then(res => {
                 setLoading(false);
-                setHandleModuleBank(true);
+                refreshData();
                 toast.success("Module deleted successfully!", {
                     position: toast.POSITION.TOP_RIGHT,
                 });
@@ -132,6 +128,7 @@ export const useModule = () => {
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
+                    refreshData();
                     toast.success("Module ended successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
                     });
@@ -161,7 +158,7 @@ export const useModule = () => {
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
-                    setHandleModuleMount(true);
+                    refreshData();
                     setModalOpen(false);
                     toast.success("Module Mounted Successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
@@ -197,7 +194,7 @@ export const useModule = () => {
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
-                    setHandleModuleMount(true);
+                    refreshData();
                     setModalOpen(false);
                     toast.success("Mounted module editted successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
@@ -231,7 +228,7 @@ export const useModule = () => {
             .delete(`/api/v1/modules/${id}`)
             .then(res => {
                 setLoading(false);
-                setHandleModuleMount(true);
+                refreshData();
                 toast.success("Module deleted successfully!", {
                     position: toast.POSITION.TOP_RIGHT,
                 });
@@ -259,7 +256,7 @@ export const useModule = () => {
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
-                    setHandleModuleMount(true);
+                    refreshData();
                     setModalOpen(false);
                     toast.success("Module Mounted Successfully!", {
                         position: toast.POSITION.TOP_RIGHT,

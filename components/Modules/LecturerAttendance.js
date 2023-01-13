@@ -64,7 +64,7 @@ const LecturerAttendance = ({ module }) => {
                                             <div>{index + 1}.</div>
                                         </span>
                                     </td>
-                                    <td className="uppercase p-3 whitespace-nowrap border-b">
+                                    <td className="capitalize p-3 whitespace-nowrap border-b">
                                         <span>
                                             <div>{lecturers[0].full_name}</div>
                                         </span>

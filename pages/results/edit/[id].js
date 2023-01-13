@@ -1,4 +1,5 @@
 import { ArrowUpTrayIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 import { useState } from "react";
 import Button from "../../../components/Button";
 import HeadTitle from "../../../components/HeadTitle";

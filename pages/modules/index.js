@@ -3,7 +3,6 @@ import { useRecoilState } from "recoil";
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
 import ActiveModules from "../../components/Modules/ActiveModules";
-import ModuleBankFeed from "../../components/Modules/ModuleBankFeed";
 import UpInactiveModules from "../../components/Modules/UpInactiveModules";
 import {
     handleModuleMountState,
@@ -11,6 +10,7 @@ import {
 } from "../../src/atoms/moduleAtom";
 import axios from "../../src/lib/axios";
 import SemesterNotFound from "../../components/SemesterNotFound";
+import ModuleBank from "../../components/Modules/ModuleBank";
 const Modules = ({ semester, modules, modulesBank }) => {
     const modulesActive = modules.filter(itm => itm.status == "active");
     const modulesUpInactive = modules.filter(
@@ -50,28 +50,13 @@ const Modules = ({ semester, modules, modulesBank }) => {
             <div className="relative space-y-8">
                 {semester ? (
                     <>
-                        {!useSSRModuleMount ? (
-                            <>
-                                <ActiveModules
-                                    modules={realtimeModulesActive}
-                                />
-                                <UpInactiveModules
-                                    modules={realtimeModulesUpInactive}
-                                />
-                            </>
-                        ) : (
-                            <>
-                                <ActiveModules modules={modulesActive} />
-                                <UpInactiveModules
-                                    modules={modulesUpInactive}
-                                />
-                            </>
-                        )}
+                        <ActiveModules modules={modulesActive} />
+                        <UpInactiveModules modules={modulesUpInactive} />
                     </>
                 ) : (
                     <SemesterNotFound />
                 )}
-                <ModuleBankFeed modules={modulesBank} />
+                <ModuleBank modules={modulesBank} />
             </div>
         </AppLayout>
     );

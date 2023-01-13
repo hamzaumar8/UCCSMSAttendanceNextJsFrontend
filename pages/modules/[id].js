@@ -78,7 +78,7 @@ const Module = ({ module }) => {
                             </div>
                         </div>
                         <div className="flex space-x-6 items-center">
-                            {module.status !== "upcoming" && (
+                            {module.status === "active" && (
                                 <Button
                                     onClick={handleEndModule}
                                     danger

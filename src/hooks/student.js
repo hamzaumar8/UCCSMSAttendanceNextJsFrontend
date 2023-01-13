@@ -12,6 +12,10 @@ export const useStudent = () => {
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [loading, setLoading] = useState(false);
 
+    const refreshData = () => {
+        router.replace(router.asPath);
+    };
+
     // CSRF
     const csrf = () => axios.get("/sanctum/csrf-cookie");
 
@@ -28,6 +32,7 @@ export const useStudent = () => {
                 if (res.data.status === "success") {
                     setLoading(false);
                     setModalOpen(false);
+                    refreshData();
                     toast.success("Student was added successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
                     });
@@ -61,6 +66,7 @@ export const useStudent = () => {
                 if (res.data.status === "success") {
                     setLoading(false);
                     setModalOpen(false);
+                    refreshData();
                     toast.success("Student was added successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
                     });
@@ -88,6 +94,7 @@ export const useStudent = () => {
                 if (res.data.status === "success") {
                     setLoading(false);
                     setModalOpen(false);
+                    refreshData();
                     toast.success("CSV imported successfully!", {
                         position: toast.POSITION.TOP_RIGHT,
                     });
