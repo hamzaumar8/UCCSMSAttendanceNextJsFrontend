@@ -39,6 +39,7 @@ const Login = () => {
         login({
             email,
             password,
+            device_name: "web",
             remember: shouldRemember,
             setErrors,
             setStatus,

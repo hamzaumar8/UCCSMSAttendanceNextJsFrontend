@@ -2,9 +2,12 @@ import useSWR from "swr";
 import axios from "../lib/axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { removeAuthToken, saveAuthToken } from "../lib/authService";
+import Cookies from "js-cookie";
 
 export const useAuth = ({ middleware } = {}) => {
     const router = useRouter();
+    const token = Cookies.get("token");
 
     const [isLoading, setIsLoading] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -31,10 +34,12 @@ export const useAuth = ({ middleware } = {}) => {
         setStatus(null);
 
         axios
-            .post("/login", props)
-            .then(() => {
+            // .post("/login", props)
+            .post("/api/auth/token", props)
+            .then(response => {
                 setLoading(false);
                 mutate();
+                saveAuthToken(response.data.token);
             })
             .catch(error => {
                 setLoading(false);
@@ -86,7 +91,10 @@ export const useAuth = ({ middleware } = {}) => {
 
     const logout = async () => {
         if (!error) {
-            await axios.post("/logout").then(() => mutate());
+            await axios.post("/api/auth/logout").then(() => {
+                removeAuthToken();
+                mutate();
+            });
         }
 
         window.location.pathname = "/login";
@@ -102,6 +110,8 @@ export const useAuth = ({ middleware } = {}) => {
         }
 
         if (middleware === "auth" && error) logout();
+
+        if (!token || token == "") router.push("/login");
     }, [user, error]);
 
     return {

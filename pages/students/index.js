@@ -24,9 +24,9 @@ const Student = ({ students, levels, modules }) => {
     const [levelSelectedValue, setLevelSelectedValue] = useState(
         levels[0].name,
     );
-    const [moduleSelectedValue, setModuleSelectedValue] = useState(
-        modules[0].module.code,
-    );
+    // const [moduleSelectedValue, setModuleSelectedValue] = useState(
+    //     modules[0].module.code,
+    // );
 
     return (
         <AppLayout header="Students">
@@ -247,17 +247,18 @@ const Student = ({ students, levels, modules }) => {
                                               </td>
                                           </tr>
                                       ))
-                                : modules
-                                      .filter(
-                                          itm =>
-                                              itm.module?.code ==
-                                              moduleSelectedValue,
-                                      )
-                                      .map((module, index) => (
-                                          <>
-                                              <tr>{module.id}</tr>
-                                          </>
-                                      ))}
+                                : // modules
+                                  //       .filter(
+                                  //           itm =>
+                                  //               itm.module?.code ==
+                                  //               moduleSelectedValue,
+                                  //       )
+                                  //       .map((module, index) => (
+                                  //           <>
+                                  //               <tr>{module.id}</tr>
+                                  //           </>
+                                  //       ))
+                                  "--"}
                         </tbody>
                     </table>
                 </div>

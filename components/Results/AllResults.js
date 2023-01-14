@@ -62,11 +62,11 @@ const AllResults = ({ results }) => {
                                 <div>
                                     {result.status === "save" ? (
                                         <span className="bg-primary-accent py-1 px-3 rounded-md text-xs font-bold text-primary">
-                                            save
+                                            Edit
                                         </span>
                                     ) : (
                                         <span className="bg-secondary-accent py-1 px-3 rounded-md text-xs font-bold text-green-600">
-                                            submitted
+                                            Published
                                         </span>
                                     )}
                                 </div>
@@ -91,8 +91,8 @@ const AllResults = ({ results }) => {
                                             }
                                             className="bg-primary-accent  py-1 px-3 rounded-md text-xs font-bold  text-primary outline-none inline-flex space-x-2">
                                             {result.status === "save"
-                                                ? "submit"
-                                                : "save"}
+                                                ? "Publish"
+                                                : "Edit"}
                                             {loading && <Loader />}
                                         </button>
                                     </div>
