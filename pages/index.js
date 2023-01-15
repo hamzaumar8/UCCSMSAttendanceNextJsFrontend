@@ -1,19 +1,37 @@
 import { AnimatePresence, motion } from "framer-motion";
+import Cookies from "js-cookie";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { useAuth } from "../src/hooks/auth";
+import { useEffect, useRef, useState } from "react";
 
 const images = ["/img1.jpg", "/img2.jpg", "/img3.jpg"];
 export default function Home() {
-    const { user } = useAuth({ middleware: "guest" });
-
+    const token = Cookies.get("token");
     const [imgIndex, setImgIndex] = useState(0);
+    const timeoutRef = useRef(null);
 
-    // const next () {
-    //     if
-    // }
+    function resetTimeout() {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+        }
+    }
+
+    useEffect(() => {
+        resetTimeout();
+        timeoutRef.current = setTimeout(
+            () =>
+                setImgIndex(prevIndex =>
+                    prevIndex === images.length - 1 ? 0 : prevIndex + 1,
+                ),
+            5000,
+        );
+
+        return () => {
+            resetTimeout();
+        };
+    }, [imgIndex]);
+
     return (
         <>
             <Head>
@@ -64,11 +82,19 @@ export default function Home() {
                     </div>
 
                     <div className="w-full">
-                        <Link
-                            href={"/login"}
-                            className="w-full inline-flex items-center justify-center px-4 py-3  border border-transparent rounded-sm font-bold text-xs uppercase tracking-widest focus:ring disabled:opacity-25 transition ease-in-out duration-150 text-white bg-primary hover:bg-primary active:bg-primary focus:outline-none focus:border-primary ring-primary">
-                            Login
-                        </Link>
+                        {token ? (
+                            <Link
+                                href={"/dashboard"}
+                                className="w-full inline-flex items-center justify-center px-4 py-3  border border-transparent rounded-sm font-bold text-xs uppercase tracking-widest focus:ring disabled:opacity-25 transition ease-in-out duration-150 text-white bg-primary hover:bg-primary active:bg-primary focus:outline-none focus:border-primary ring-primary">
+                                Dashboard
+                            </Link>
+                        ) : (
+                            <Link
+                                href={"/login"}
+                                className="w-full inline-flex items-center justify-center px-4 py-3  border border-transparent rounded-sm font-bold text-xs uppercase tracking-widest focus:ring disabled:opacity-25 transition ease-in-out duration-150 text-white bg-primary hover:bg-primary active:bg-primary focus:outline-none focus:border-primary ring-primary">
+                                Login
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>

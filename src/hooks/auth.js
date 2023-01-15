@@ -34,7 +34,6 @@ export const useAuth = ({ middleware } = {}) => {
         setStatus(null);
 
         axios
-            // .post("/login", props)
             .post("/api/auth/token", props)
             .then(response => {
                 setLoading(false);
