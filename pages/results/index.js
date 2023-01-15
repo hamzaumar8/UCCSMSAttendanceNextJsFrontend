@@ -17,7 +17,7 @@ const Results = ({ results }) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const fetchCordinatingModules = async () => {
-        const response = await axios.get("api/v1/cordinating/modules");
+        const response = await axios.get("api/v1/cordinating/modules/results");
         response.status === 200 && setCordinatingModules(response.data.data);
     };
     useEffect(() => {

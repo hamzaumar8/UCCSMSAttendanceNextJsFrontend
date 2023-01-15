@@ -4,6 +4,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import HeadTitle from "../components/HeadTitle";
 
 const images = ["/img1.jpg", "/img2.jpg", "/img3.jpg"];
 export default function Home() {
@@ -34,9 +35,7 @@ export default function Home() {
 
     return (
         <>
-            <Head>
-                <title>Laravel</title>
-            </Head>
+            <HeadTitle title={"Welcome"} />
 
             <div className="relative min-h-screen bg-gray-100 p-3 lg:p-0 space-y-10 lg:space-y-0 lg:flex">
                 <AnimatePresence mode="wait" initial={false}>
@@ -49,7 +48,6 @@ export default function Home() {
                         className="relative w-full lg:w-1/2 min-h-[60vh] rounded-lg lg:rounded-none overflow-hidden">
                         <Image
                             src={images[imgIndex]}
-                            alt="me"
                             fill
                             priority
                             alt={imgIndex}

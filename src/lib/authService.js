@@ -7,3 +7,7 @@ export const saveAuthToken = token => {
 export const removeAuthToken = () => {
     Cookies.remove("token");
 };
+
+export const saveAuthUser = user => {
+    Cookies.set("user", user);
+};

@@ -26,9 +26,9 @@ const StaffResults = () => {
         data: cordinatingModules,
         error: cordError,
         mutate: cordMutate,
-    } = useSWR("api/v1/cordinating/modules", () =>
+    } = useSWR("api/v1/cordinating/modules/results", () =>
         axios
-            .get("api/v1/cordinating/modules")
+            .get("api/v1/cordinating/modules/results")
             .then(response => response.data.data),
     );
 

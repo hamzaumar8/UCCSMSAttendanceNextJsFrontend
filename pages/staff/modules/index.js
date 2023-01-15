@@ -58,12 +58,11 @@ const StaffModules = () => {
                                         ) : (
                                             <ElementNotFound>
                                                 <h2 className="text-xl sm:text-2xl text-primary font-bold">
-                                                    No Active Module Availble
+                                                    No Active Module Available
                                                 </h2>
                                                 <p className="text-gray-text font-[500]">
                                                     Sorry! You don't have any
-                                                    module checked in for the
-                                                    day yet.
+                                                    module assigned yet.
                                                 </p>
                                             </ElementNotFound>
                                         )}

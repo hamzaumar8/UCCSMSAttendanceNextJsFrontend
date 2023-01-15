@@ -48,6 +48,14 @@ const LecturerSideNav = () => {
                         <CloudArrowDownIcon className="w-6 h-6" />
                         <span>Results</span>
                     </NavLink>
+                    <NavLink
+                        href="/staff/cordinating_modules"
+                        active={
+                            router.pathname === "/staff/cordinating_modules"
+                        }>
+                        <CloudArrowDownIcon className="w-6 h-6" />
+                        <span>Cordinating Modules</span>
+                    </NavLink>
                 </div>
             </div>
 

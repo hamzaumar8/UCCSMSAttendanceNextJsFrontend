@@ -27,55 +27,71 @@ const StaffAllResults = ({ results }) => {
                     </tr>
                 </thead>
                 <tbody className="text-gray-text text-sm !border-[#E6EAEF]">
-                    {results?.map((result, index) => (
-                        <tr className="" key={index}>
-                            <td className="capitalize p-3 whitespace-nowrap border-b">
-                                <span>
-                                    <div>{index + 1}</div>
-                                </span>
-                            </td>
-                            <td className="capitalize p-3 whitespace-nowrap border-b">
-                                <span>
-                                    <div>{result.module.module.title}</div>
-                                </span>
-                            </td>
-                            <td className="capitalize p-3 whitespace-nowrap border-b">
-                                <span>
-                                    <div>{result.module.module.code}</div>
-                                </span>
-                            </td>
-                            <td className="capitalize py-3  border-b">
-                                <div>{result.module.cordinator.full_name}</div>
-                            </td>
-                            <td className="capitalize py-3  border-b">
-                                <div>
-                                    {result.status === "save" ? (
-                                        <span className="bg-primary-accent py-1 px-3 rounded-md text-xs font-bold text-primary">
-                                            save
-                                        </span>
-                                    ) : (
-                                        <span className="bg-secondary-accent py-1 px-3 rounded-md text-xs font-bold text-green-600">
-                                            submitted
-                                        </span>
-                                    )}
-                                </div>
-                            </td>
+                    {results?.length > 0 ? (
+                        results?.map((result, index) => (
+                            <tr className="" key={index}>
+                                <td className="capitalize p-3 whitespace-nowrap border-b">
+                                    <span>
+                                        <div>{index + 1}</div>
+                                    </span>
+                                </td>
+                                <td className="capitalize p-3 whitespace-nowrap border-b">
+                                    <span>
+                                        <div>{result.module.module.title}</div>
+                                    </span>
+                                </td>
+                                <td className="capitalize p-3 whitespace-nowrap border-b">
+                                    <span>
+                                        <div>{result.module.module.code}</div>
+                                    </span>
+                                </td>
+                                <td className="capitalize py-3  border-b">
+                                    <div>
+                                        {result.module.cordinator.full_name}
+                                    </div>
+                                </td>
+                                <td className="capitalize py-3  border-b">
+                                    <div>
+                                        {result.status === "save" ? (
+                                            <span className="bg-primary-accent py-1 px-3 rounded-md text-xs font-bold text-primary">
+                                                save
+                                            </span>
+                                        ) : (
+                                            <span className="bg-secondary-accent py-1 px-3 rounded-md text-xs font-bold text-green-600">
+                                                submitted
+                                            </span>
+                                        )}
+                                    </div>
+                                </td>
 
-                            <td className="capitalize py-3 whitespace-nowrap border-b !text-right pr-5">
-                                <div className="space-x-3 inline-flex">
-                                    <Link
-                                        href={`/staff/results/${result.id}`}
-                                        legacyBehavior>
-                                        <a
-                                            className="inline-flex cursor-pointer text-gray-text hover:!text-secondary transition duration-500"
-                                            title="Details">
-                                            <EyeIcon className="h-6 w-6 " />
-                                        </a>
-                                    </Link>
-                                </div>
+                                <td className="capitalize py-3 whitespace-nowrap border-b !text-right pr-5">
+                                    <div className="space-x-3 inline-flex">
+                                        <Link
+                                            href={`/staff/results/${result.id}`}
+                                            legacyBehavior>
+                                            <a
+                                                className="inline-flex cursor-pointer text-gray-text hover:!text-secondary transition duration-500"
+                                                title="Details">
+                                                <EyeIcon className="h-6 w-6 " />
+                                            </a>
+                                        </Link>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr className="">
+                            <td
+                                className="capitalize text-center p-3 whitespace-nowrap border-b"
+                                colSpan={6}>
+                                <span>
+                                    <div className="text-lg font-bold text-danger">
+                                        No Results Found.
+                                    </div>
+                                </span>
                             </td>
                         </tr>
-                    ))}
+                    )}
                 </tbody>
             </table>
         </div>
