@@ -17,7 +17,6 @@ const StaffCordinatingModules = () => {
             .then(response => response.data.data),
     );
 
-    console.log(cordinatingModules);
     return (
         <LecturerLayout header="Cordinating Modules">
             <HeadTitle title="Lecturer Modules" />

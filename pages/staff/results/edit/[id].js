@@ -1,16 +1,16 @@
 import { ArrowUpTrayIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useState } from "react";
-import Button from "../../../components/Button";
-import HeadTitle from "../../../components/HeadTitle";
-import InputError from "../../../components/InputError";
-import AppLayout from "../../../components/Layouts/AppLayout";
-import Loader from "../../../components/Loader";
-import SemesterTag from "../../../components/SemesterTag";
-import { useResult } from "../../../src/hooks/result";
-import axios from "../../../src/lib/axios";
+import Button from "../../../../components/Button";
+import HeadTitle from "../../../../components/HeadTitle";
+import InputError from "../../../../components/InputError";
+import LecturerLayout from "../../../../components/Layouts/LecturerLayout";
+import Loader from "../../../../components/Loader";
+import SemesterTag from "../../../../components/SemesterTag";
+import { useResult } from "../../../../src/hooks/result";
+import axios from "../../../../src/lib/axios";
 
-const EditResult = ({ result }) => {
+const StaffEditResult = ({ result }) => {
     const { editResult, loading } = useResult();
     const [scores, setScores] = useState(result.assessments);
     const [isLoading, setIsLoading] = useState("");
@@ -30,7 +30,7 @@ const EditResult = ({ result }) => {
         setIsLoading("publish");
         result.status = "submit";
         editResult({
-            role: "admin",
+            role: "staff",
             result,
             setErrors,
             setStatus,
@@ -43,7 +43,7 @@ const EditResult = ({ result }) => {
         setIsLoading("save");
         result.status = "save";
         editResult({
-            role: "admin",
+            role: "staff",
             result,
             setErrors,
             setStatus,
@@ -52,12 +52,12 @@ const EditResult = ({ result }) => {
     };
 
     return (
-        <AppLayout
+        <LecturerLayout
             header={`${result.module.module.code} Results`}
             breadcrumbs={
                 <div className="space-x-1 text-primary font-bold text-sm capitalize">
-                    <Link href={"/dashboard"}>Dasbord /</Link>
-                    <Link href={"/results"}>Results /</Link>
+                    <Link href={"/staff"}>Dasbord /</Link>
+                    <Link href={"/staff/results"}>Results /</Link>
                     <span className="text-gray-text">
                         {result.module.module.code}
                     </span>
@@ -66,7 +66,7 @@ const EditResult = ({ result }) => {
             <HeadTitle title={`${result.module.module.code} Results`} />
 
             {/* Main content */}
-            <div className="relative space-y-8">
+            <div className="relative sm:mt-10 space-y-8">
                 <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg transition duration-500 ease-in-out">
                     <form onSubmit={saveForm}>
                         {/* Header */}
@@ -223,11 +223,11 @@ const EditResult = ({ result }) => {
                     </form>
                 </div>
             </div>
-        </AppLayout>
+        </LecturerLayout>
     );
 };
 
-export default EditResult;
+export default StaffEditResult;
 
 export async function getServerSideProps({ params }) {
     const response = await axios.get(`/api/v1/results/${params.id}`);

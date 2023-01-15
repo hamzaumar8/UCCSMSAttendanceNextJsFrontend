@@ -3,8 +3,19 @@ import LecturerLayout from "../../../components/Layouts/LecturerLayout";
 import HeadTitle from "../../../components/HeadTitle";
 import SemesterTag from "../../../components/SemesterTag";
 import axios from "../../../src/lib/axios";
+import { useEffect, useState } from "react";
 
 const Result = ({ result }) => {
+    const [userr, setUserr] = useState(null);
+
+    const fetchUserr = async () => {
+        const response = await axios.get("/api/v1/user");
+        response.status === 200 && setUserr(response.data.data);
+    };
+
+    useEffect(() => {
+        fetchUserr();
+    }, []);
     return (
         <LecturerLayout
             header={`${result.module.module.code} Results`}
@@ -30,6 +41,20 @@ const Result = ({ result }) => {
                             </h1>
                             <SemesterTag />
                         </div>
+                        {userr !== null &&
+                            userr?.lecturer.id === result.cordinator_id && (
+                                <>
+                                    {result.status === "save" && (
+                                        <div>
+                                            <Link
+                                                href={`/staff/results/edit/${result.id}`}
+                                                className="bg-primary py-2 px-6 rounded-full capitalize text-xs font-bold text-white">
+                                                Edit Results
+                                            </Link>
+                                        </div>
+                                    )}
+                                </>
+                            )}
                     </div>
                     <div className="overflow-x-auto rounded-t-2xl bg-white overflow-y-auto relative">
                         <table className="table  min-w-full">

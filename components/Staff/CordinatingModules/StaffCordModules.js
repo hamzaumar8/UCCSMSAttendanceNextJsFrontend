@@ -2,7 +2,6 @@ import { EyeIcon } from "@heroicons/react/24/outline";
 import format from "date-fns/format";
 import Link from "next/link";
 const StaffCordModules = ({ cord_modules }) => {
-    console.log(cord_modules);
     return (
         <div className="mt-3 overflow-x-auto rounded-t-2xl bg-white overflow-y-auto relative">
             <table className="table  min-w-full">

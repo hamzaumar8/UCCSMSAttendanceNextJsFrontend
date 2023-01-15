@@ -13,7 +13,7 @@ export const useResult = () => {
 
     const csrf = () => axios.get("/sanctum/csrf-cookie");
 
-    const editResult = async ({ setErrors, setStatus, result }) => {
+    const editResult = async ({ setErrors, setStatus, role, result }) => {
         setLoading(true);
         setErrors([]);
         setStatus(null);
@@ -26,10 +26,13 @@ export const useResult = () => {
                 if (res.data.status === "success") {
                     setLoading(false);
                     if (status === "submit") {
-                        router.push("/results/" + result.id);
+                        if (role === "staff") {
+                            router.push("/staff/results/" + result.id);
+                        } else {
+                            router.push("/results/" + result.id);
+                        }
                     } else {
                         window.location.pathname = router.asPath;
-                        // refreshData();
                     }
                     toast.success("Result updated!", {
                         position: toast.POSITION.TOP_RIGHT,
