@@ -1,11 +1,11 @@
-import StaffCordinatingModuleCard from "../Staff/CordinatingModules/StaffCordinatingModuleCard";
+import CordinatingModuleCard from "../Cards/CordinatingModuleCard";
 
 const CordinatingModules = ({ cordinatingModules }) => {
     return (
         <div className="grid grid-cols-3 p-6 gap-8">
             {cordinatingModules.length > 0 ? (
                 cordinatingModules.map((result, index) => (
-                    <StaffCordinatingModuleCard key={index} result={result} />
+                    <CordinatingModuleCard key={index} result={result} />
                 ))
             ) : (
                 <div className="col-span-3">

@@ -1,5 +1,6 @@
 import {
     ArrowLeftOnRectangleIcon,
+    CalendarDaysIcon,
     ChartBarIcon,
     CloudArrowDownIcon,
     PencilSquareIcon,
@@ -41,8 +42,8 @@ const StudentSideNav = ({ user }) => {
                         <NavLink
                             href="/student/attendances"
                             active={router.pathname === "/student/attendances"}>
-                            <ChartBarIcon className="w-6 h-6" />
-                            <span>Dashboard</span>
+                            <CalendarDaysIcon className="w-6 h-6" />
+                            <span>Attendance</span>
                         </NavLink>
                     )}
                     <NavLink

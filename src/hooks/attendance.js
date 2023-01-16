@@ -12,7 +12,9 @@ export const useAttendance = () => {
     const [modalType, setModalType] = useRecoilState(modalTypeState);
 
     const csrf = () => axios.get("/sanctum/csrf-cookie");
-
+    const refreshData = () => {
+        router.replace(router.asPath);
+    };
     const addAttendance = async ({ setErrors, setStatus, ...props }) => {
         setLoading(true);
         await csrf();
@@ -24,6 +26,7 @@ export const useAttendance = () => {
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
+                    refreshData();
                     setModalType("checkInSuccess");
                 }
             })
