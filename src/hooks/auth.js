@@ -105,7 +105,8 @@ export const useAuth = ({ middleware } = {}) => {
         if (middleware === "guest" && user) {
             if (user.role === "ADM") router.push("/dashboard");
             if (user.role === "STF") router.push("/staff");
-            if (user.role === "USR") router.push("/user");
+            if (user.role === "USR" || user.role === "REP")
+                router.push("/student");
         }
 
         if (middleware === "auth" && error) logout();

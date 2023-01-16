@@ -17,7 +17,7 @@ const AppLayout = ({ header = "", breadcrumbs = "", children }) => {
     const [modalType, setModalType] = useRecoilState(modalTypeState);
 
     if (user?.role === "STF") router.push("/staff");
-    if (user?.role === "USR" || user?.role === "REP") router.push("/user");
+    if (user?.role === "USR" || user?.role === "REP") router.push("/student");
 
     if (isLoading || !user) {
         return <PageLoader loading={isLoading} />;

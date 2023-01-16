@@ -6,10 +6,10 @@ import { modalState, modalTypeState } from "../../src/atoms/modalAtom.js";
 import { useRouter } from "next/router";
 import LecturerNavigation from "./Lecturer/LecturerNavigation";
 import LecturerBackNavigation from "./Lecturer/LecturerBackNavigation";
-import LecturerSideNav from "./Lecturer/LecturerSideNav";
 import PageLoader from "../PageLoader";
+import StudentSideNav from "./Student/StudentSideNav";
 
-const LecturerLayout = ({
+const StudentLayout = ({
     header = "",
     backNav = "",
     breadcrumbs = "",
@@ -22,7 +22,7 @@ const LecturerLayout = ({
     const [modalType, setModalType] = useRecoilState(modalTypeState);
 
     if (user?.role === "ADM") router.push("/dashboard");
-    if (user?.role === "USR" || user?.role === "REP") router.push("/student");
+    if (user?.role === "STF") router.push("/staff");
 
     if (isLoading || !user) {
         return <PageLoader loading={isLoading} />;
@@ -30,7 +30,7 @@ const LecturerLayout = ({
     return (
         <div className="bg-white sm:bg-[#E5E5E5]">
             {/* Side Navigation */}
-            <LecturerSideNav />
+            <StudentSideNav user={user} />
             <main className="ease-in-out xl:ml-[18rem] relative min-h-screen rounded-xl transition-all duration-200">
                 {backNav ? (
                     <LecturerBackNavigation
@@ -61,4 +61,4 @@ const LecturerLayout = ({
     );
 };
 
-export default LecturerLayout;
+export default StudentLayout;
