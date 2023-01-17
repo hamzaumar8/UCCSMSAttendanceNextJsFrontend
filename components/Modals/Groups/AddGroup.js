@@ -6,11 +6,12 @@ import AsyncSelect from "react-select/async";
 import InputError from "../../InputError";
 import Input from "../../Input";
 import axios from "../../../src/lib/axios";
-import { useLevel } from "../../../src/hooks/level";
+import { useGroup } from "../../../src/hooks/group";
 
 const AddGroup = ({ onClick }) => {
-    const { genrateGroups, loading } = useLevel();
+    const { genrateGroups, loading } = useGroup();
     const [level, setLevel] = useState("");
+    const [name, setName] = useState("");
     const [noOfGroup, setNoOfGroup] = useState("");
     const [levelData, setLevelData] = useState(null);
 
@@ -30,10 +31,6 @@ const AddGroup = ({ onClick }) => {
         const response = await axios.get("api/v1/levels");
         response.status === 200 && setLevelData(response.data.data);
     };
-
-    // let tempMod = ;
-    // tempMod = (tempMod - tempMod) * (noOfGroup > 1 ? noOfGroup : 1);
-
     useEffect(() => {
         fetchLevels();
     }, []);
@@ -46,6 +43,7 @@ const AddGroup = ({ onClick }) => {
             setErrs(false);
             genrateGroups({
                 level,
+                name,
                 no_of_group: noOfGroup,
                 setErrors,
                 setStatus,
@@ -85,6 +83,18 @@ const AddGroup = ({ onClick }) => {
                             capacity
                         </p>
                     )}
+                    <div className="">
+                        <Label htmlFor="name">Group Name</Label>
+                        <Input
+                            type="text"
+                            id="name"
+                            value={name}
+                            onChange={event => setName(event.target.value)}
+                            className="block mt-1 w-full"
+                            required
+                        />
+                        <InputError messages={errors.name} className="mt-1" />
+                    </div>
                     <div className="">
                         <Label htmlFor="level">Level (Class)</Label>
                         <AsyncSelect
@@ -135,25 +145,9 @@ const AddGroup = ({ onClick }) => {
                                 required
                             />
                             <InputError
-                                messages={errors.first_name}
+                                messages={errors.no_of_group}
                                 className="mt-1"
                             />
-                        </div>
-                    </div>
-                    <div className="p-4 bg-secondary-accent w-full block">
-                        <p>No of Student in a Group</p>
-                        <div className="flex items-center justify-between">
-                            {Math.floor(
-                                getCapcity() / (noOfGroup > 1 ? noOfGroup : 1),
-                            )}
-                            {getCapcity() % (noOfGroup > 1 ? noOfGroup : 1) >
-                                0 && (
-                                <div>
-                                    Reminder -{" "}
-                                    {getCapcity() %
-                                        (noOfGroup > 1 ? noOfGroup : 1)}
-                                </div>
-                            )}
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
 import axios from "../../src/lib/axios";
-import { PlusIcon } from "@heroicons/react/24/outline";
+import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useRecoilState } from "recoil";
 import {
     modalEditState,
@@ -11,8 +11,10 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import { EyeIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { useGroup } from "../../src/hooks/group";
 
-const Groups = ({ levels }) => {
+const Groups = ({ groups }) => {
+    const { deleteGroup, loading } = useGroup();
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
     const [modalEdit, setModalEdit] = useRecoilState(modalEditState);
@@ -53,6 +55,10 @@ const Groups = ({ levels }) => {
                                     Name
                                 </th>
                                 <th className="capitalize font-bold px-2 pr-4 py-3 text-left text-sm text-primary tracking-wider whitespace-nowrap">
+                                    level
+                                </th>
+                                <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
+                                    NO. <span className="lowercase">of</span>{" "}
                                     Groups
                                 </th>
                                 <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
@@ -65,7 +71,7 @@ const Groups = ({ levels }) => {
                             </tr>
                         </thead>
                         <tbody className="text-gray-text text-sm !border-[#E6EAEF]">
-                            {levels.map((level, index) => (
+                            {groups.map((group, index) => (
                                 <tr className="" key={index}>
                                     <td className="capitalize text-left p-3 whitespace-nowrap border-b">
                                         <span>
@@ -74,29 +80,46 @@ const Groups = ({ levels }) => {
                                     </td>
                                     <td className="uppercase p-3 whitespace-nowrap border-b">
                                         <span>
-                                            <div>{level.name}</div>
+                                            <div>{group.name}</div>
                                         </span>
                                     </td>
                                     <td className="capitalize p-3 whitespace-nowrap border-b">
                                         <span>
-                                            <div>{level.groups}</div>
+                                            <div>{group.level.name}</div>
                                         </span>
                                     </td>
                                     <td className="capitalize p-3 whitespace-nowrap border-b text-center">
                                         <span>
-                                            <div>{level.students_count}</div>
+                                            <div>{group.groups}</div>
+                                        </span>
+                                    </td>
+                                    <td className="capitalize p-3 whitespace-nowrap border-b text-center">
+                                        <span>
+                                            <div>
+                                                {group.level.students_count}
+                                            </div>
                                         </span>
                                     </td>
                                     <td className="capitalize p-3 whitespace-nowrap border-b text-right pr-6">
-                                        <span>
-                                            <div>
-                                                <Link
-                                                    href={`/groups/${level.id}`}
-                                                    className="inline-flex cursor-pointer text-gray-text hover:!text-secondary transition duration-500"
-                                                    title="Edit">
-                                                    <EyeIcon className="h-6 w-6 " />
-                                                </Link>
-                                            </div>
+                                        <span className="space-x-2">
+                                            <Link
+                                                href={`/groups/${group.id}`}
+                                                className="inline-flex cursor-pointer text-gray-text hover:!text-secondary transition duration-500"
+                                                title="Details">
+                                                <EyeIcon className="h-6 w-6 " />
+                                            </Link>
+                                            <button
+                                                onClick={e => {
+                                                    e.preventDefault();
+                                                    deleteGroup({
+                                                        id: group.id,
+                                                    });
+                                                }}
+                                                href={`/groups/${group.id}`}
+                                                className="inline-flex cursor-pointer text-gray-text hover:!text-danger transition duration-500"
+                                                title="Delete">
+                                                <TrashIcon className="h-6 w-6 " />
+                                            </button>
                                         </span>
                                     </td>
                                 </tr>
@@ -112,11 +135,11 @@ const Groups = ({ levels }) => {
 export default Groups;
 
 export async function getServerSideProps() {
-    const response = await axios.get("api/v1/levels");
-    const levels = response.data.data;
+    const response = await axios.get("api/v1/groups");
+    const groups = response.data.data;
     return {
         props: {
-            levels,
+            groups,
         },
     };
 }
