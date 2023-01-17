@@ -63,7 +63,7 @@ const SideNav = () => {
                         href="/cordinators"
                         active={router.pathname === "/cordinators"}>
                         <UserGroupIcon className="w-6 h-6" />
-                        <span>Cordinators</span>
+                        <span>Coordinators</span>
                     </NavLink>
                     <NavLink
                         href="/results"

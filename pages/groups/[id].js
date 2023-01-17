@@ -1,4 +1,4 @@
-import { EyeIcon } from "@heroicons/react/24/outline";
+import { EyeIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -32,13 +32,18 @@ const Group = ({ group }) => {
                             {group.students.length}
                         </span>
                     </div>
-                    <div>
-                        <Input
+                    <div className="relative max-w-xs">
+                        <input
                             type="text"
+                            name="hs-table-search"
+                            id="hs-table-search"
+                            className="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-primary focus:ring-primary dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 outline-none"
                             placeholder="Search..."
-                            className="bg-primary-accent border-primary text-sm text-gray-text outline-none min-w-max px-8 py-2 rounded-sm shadow-sm"
                             onChange={e => setQuery(e.target.value)}
                         />
+                        <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                            <MagnifyingGlassIcon className="h-4 w-4 text-gray-text" />
+                        </div>
                     </div>
                 </div>
                 <div className="my-3 overflow-x-auto bg-white shadow-lg rounded-lg overflow-y-auto">

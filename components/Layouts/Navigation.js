@@ -135,7 +135,7 @@ const Navigation = ({ user, header, breadcrumbs }) => {
                             <ResponsiveNavLink
                                 href="/cordinators"
                                 active={router.pathname === "/cordinators"}>
-                                Cordinators
+                                Coordinators
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 href="/results"

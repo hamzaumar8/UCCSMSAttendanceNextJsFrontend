@@ -73,17 +73,19 @@ const Lecturer = ({ lecturers, lecturersSummary }) => {
                             exit={{ x: -50, opacity: 0 }}
                             transition={{ duration: 0.2 }}>
                             {searchToggle ? (
-                                <Input
-                                    type="text"
-                                    placeholder="Search..."
-                                    className="bg-white border-primary text-sm text-gray-text outline-none min-w-max px-8 py-2 rounded-sm shadow-sm"
-                                    onChange={e => {
-                                        setSearching(true);
-                                        setQuery(e.target.value);
-                                        if (e.target.value === "")
-                                            setSearching(false);
-                                    }}
-                                />
+                                <div className="relative max-w-xs">
+                                    <input
+                                        type="text"
+                                        name="hs-table-search"
+                                        id="hs-table-search"
+                                        className="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-primary focus:ring-primary dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 outline-none"
+                                        placeholder="Search..."
+                                        onChange={e => setQuery(e.target.value)}
+                                    />
+                                    <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                                        <MagnifyingGlassIcon className="h-4 w-4 text-gray-text" />
+                                    </div>
+                                </div>
                             ) : (
                                 <button
                                     onClick={() => {
