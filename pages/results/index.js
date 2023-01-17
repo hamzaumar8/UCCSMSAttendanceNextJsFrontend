@@ -1,9 +1,5 @@
-import { EyeIcon } from "@heroicons/react/24/outline";
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import ModuleCard from "../../components/Cards/ModuleCard";
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
 import AllResults from "../../components/Results/AllResults";

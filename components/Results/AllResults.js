@@ -61,11 +61,11 @@ const AllResults = ({ results }) => {
                             <td className="capitalize py-3  border-b">
                                 <div>
                                     {result.status === "save" ? (
-                                        <span className="bg-primary-accent py-1 px-3 rounded-md text-xs font-bold text-primary">
-                                            Edit
+                                        <span className="bg-white py-1 px-3 rounded-md font-bold text-primary">
+                                            Save
                                         </span>
                                     ) : (
-                                        <span className="bg-secondary-accent py-1 px-3 rounded-md text-xs font-bold text-green-600">
+                                        <span className="bg-white py-1 px-3 rounded-md font-bold text-green-600">
                                             Published
                                         </span>
                                     )}
