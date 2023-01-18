@@ -21,6 +21,7 @@ import ElementNotFound from "../../../components/ElementNorFound";
 import StudentLayout from "../../../components/Layouts/StudentLayout";
 import Link from "next/link";
 import Image from "next/image";
+import RepAttendanceCard from "../../../components/Student/Attendance/RepAttendanceCard";
 
 const RepAttendance = () => {
     const { user } = useAuth({ middleware: "auth" });
@@ -39,9 +40,9 @@ const RepAttendance = () => {
         data: attendances,
         error,
         mutate,
-    } = useSWR(`/api/v1/attendance/lecturer`, () =>
+    } = useSWR("/api/v1/course_rep/attendances", () =>
         axios
-            .get(`/api/v1/attendance/lecturer`)
+            .get("/api/v1/course_rep/attendances")
             .then(response => response.data.data),
     );
 
@@ -102,7 +103,7 @@ const RepAttendance = () => {
                             <CalendarDaysIcon className="h-5 w-5" />
                             <span className="text-xs ">Record Attendance</span>
                         </Link>
-                        <div className="fixed sm:hidden sm:relative bottom-20 right-4 ">
+                        <div className="fixed sm:hidden sm:relative bottom-20 right-4 z-50">
                             <Link
                                 href={"/student/attendances/check-in"}
                                 className="inline-flex items-center px-6 py-3 bg-primary text-white border border-transparent rounded-full font-semibold text-xs capitalize tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity:25 transition ease-in-out duration-150 space-x-2">
@@ -127,7 +128,7 @@ const RepAttendance = () => {
                                     {currentAttendances.map(
                                         (attendance, index) => {
                                             return (
-                                                <AttendanceCard
+                                                <RepAttendanceCard
                                                     key={index}
                                                     attendance={attendance}
                                                 />

@@ -21,8 +21,6 @@ import AttendanceCard from "../../components/Staff/Attendance/AttendanceCard";
 import ElementNotFound from "../../components/ElementNorFound";
 
 const StaffDashboard = () => {
-    const { user } = useAuth({ middleware: "auth" });
-
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [modalType, setModalType] = useRecoilState(modalTypeState);
 
@@ -104,7 +102,7 @@ const StaffDashboard = () => {
                             <CalendarDaysIcon className="h-5 w-5" />
                             <span className="text-xs ">Check In</span>
                         </button>
-                        <div className="fixed sm:hidden sm:relative bottom-20 right-4 ">
+                        <div className="fixed sm:hidden sm:relative bottom-20 right-4 z-50">
                             <button
                                 onClick={() => {
                                     setModalOpen(true);

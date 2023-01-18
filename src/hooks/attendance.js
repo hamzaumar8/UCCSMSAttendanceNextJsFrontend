@@ -57,7 +57,7 @@ export const useAttendance = () => {
             .then(res => {
                 if (res.data.status === "success") {
                     setLoading(false);
-                    console.log(res.data);
+                    router.push("/student/attendances");
                 }
             })
             .catch(error => {
