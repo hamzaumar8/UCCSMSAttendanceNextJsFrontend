@@ -2,6 +2,7 @@ import { EyeIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 const StudentAllResults = ({ studentResults }) => {
     const results = Object.values(studentResults);
+    console.log(results);
     return (
         <div className="">
             {results?.map((result, index) => (
@@ -59,23 +60,31 @@ const StudentAllResults = ({ studentResults }) => {
                                             </span>
                                         </td>
                                         <td className="capitalize p-3  border-b">
-                                            {grade.score}
+                                            {grade.status === "submit"
+                                                ? grade.score
+                                                : "---"}
                                         </td>
                                         <td className="capitalize px-2 pr-6 py-3 text-center border-b">
-                                            <span
-                                                className={`${
-                                                    grade.remarks === "fail" &&
-                                                    "text-red-700"
-                                                } ${
-                                                    grade.remarks ===
-                                                        "honour" &&
-                                                    "text-green-500"
-                                                } ${
-                                                    grade.remarks === "pass" &&
-                                                    "text-primary"
-                                                } font-bold`}>
-                                                {grade.remarks}
-                                            </span>
+                                            {grade.status === "submit" ? (
+                                                <span
+                                                    className={`${
+                                                        grade.remarks ===
+                                                            "fail" &&
+                                                        "text-red-700"
+                                                    } ${
+                                                        grade.remarks ===
+                                                            "honour" &&
+                                                        "text-green-500"
+                                                    } ${
+                                                        grade.remarks ===
+                                                            "pass" &&
+                                                        "text-primary"
+                                                    } font-bold`}>
+                                                    {grade.remarks}
+                                                </span>
+                                            ) : (
+                                                <span>---</span>
+                                            )}
                                         </td>
                                     </tr>
                                 ))}
