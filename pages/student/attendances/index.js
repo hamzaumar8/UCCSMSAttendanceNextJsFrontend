@@ -18,7 +18,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import AttendanceCard from "../../../components/Staff/Attendance/AttendanceCard";
 import ElementNotFound from "../../../components/ElementNorFound";
-import StudentLayout from "../../../components/Layouts/StudentLayout";
+import CourseRepLayout from "../../../components/Layouts/CourseRepLayout";
 import Link from "next/link";
 import Image from "next/image";
 import RepAttendanceCard from "../../../components/Student/Attendance/RepAttendanceCard";
@@ -50,9 +50,8 @@ const RepAttendance = () => {
         item => item.date === format(currentDate, "yyyy-MM-dd"),
     );
 
-    console.log(attendances);
     return (
-        <StudentLayout header="Here's an overview of all attendaces">
+        <CourseRepLayout header="Here's an overview of all attendaces">
             <HeadTitle title="Lecturer Dashboard" />
 
             <div className="bg-[#E5E5E5] relative flex items-center justify-around py-4 before:absolute before:w-full before:h-4 before:bg-white before:bottom-0 before:rounded-t-3xl pb-8 sm:before:h-0">
@@ -161,7 +160,7 @@ const RepAttendance = () => {
                     </AnimatePresence>
                 </div>
             </div>
-        </StudentLayout>
+        </CourseRepLayout>
     );
 };
 

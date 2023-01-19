@@ -1,11 +1,12 @@
 import { format } from "date-fns";
-const LecturerAttendance = ({ module }) => {
+const CourseRepAttendance = ({ module }) => {
+    console.log(module.att_course_rep);
     return (
         <div>
-            <div className="flex items-center justify-between relative">
+            <div className=" flex items-center justify-between relative">
                 <div className="flex space-x-4 items-center">
                     <h1 className="text-black font-extrabold text-xl">
-                        Lecturers Attendance
+                        Course Reps Attendance
                     </h1>
                     <span className="p-1 h-7 w-7 inline-flex items-center justify-center rounded-full text-xs text-white bg-primary">
                         {module.att_lect.length}
@@ -21,7 +22,7 @@ const LecturerAttendance = ({ module }) => {
                                 NO.
                             </th>
                             <th className="capitalize font-bold px-2 pl-4 py-3 text-left text-sm text-primary tracking-wider whitespace-nowrap">
-                                Name
+                                Lecturer Name
                             </th>
                             <th className="capitalize font-bold px-2 pr-4 py-3 text-left text-sm text-primary tracking-wider whitespace-nowrap">
                                 Date
@@ -41,10 +42,7 @@ const LecturerAttendance = ({ module }) => {
                         </tr>
                     </thead>
                     <tbody className="text-gray-text text-sm !border-[#E6EAEF]">
-                        {module.att_lect.map((attendance, index) => {
-                            const lecturers = module.lecturers.filter(
-                                lec => lec.id === attendance.lecturer_id,
-                            );
+                        {module.att_course_rep.map((attendance, index) => {
                             const startTime = new Date(
                                 Date.parse(
                                     attendance.date +
@@ -66,7 +64,9 @@ const LecturerAttendance = ({ module }) => {
                                     </td>
                                     <td className="capitalize p-3 whitespace-nowrap border-b">
                                         <span>
-                                            <div>{lecturers[0].full_name}</div>
+                                            <div>
+                                                {attendance.lecturer.full_name}
+                                            </div>
                                         </span>
                                     </td>
                                     <td className="capitalize p-3 whitespace-nowrap border-b">
@@ -101,6 +101,7 @@ const LecturerAttendance = ({ module }) => {
                                     <td className="capitalize p-3 whitespace-nowrap border-b text-center">
                                         <span>
                                             <div>
+                                                {" "}
                                                 {format(
                                                     new Date(
                                                         attendance.created_at,
@@ -120,4 +121,4 @@ const LecturerAttendance = ({ module }) => {
     );
 };
 
-export default LecturerAttendance;
+export default CourseRepAttendance;

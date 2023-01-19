@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
-import StudentLayout from "../../../components/Layouts/StudentLayout";
+import CourseRepLayout from "../../../components/Layouts/CourseRepLayout";
 import Image from "next/image";
 import Errors from "../../../components/Errors";
 import Button from "../../../components/Button";
@@ -143,7 +143,7 @@ const RepCheckIn = () => {
     };
 
     return (
-        <StudentLayout backNav={"/student/attendances"}>
+        <CourseRepLayout backNav={"/student/attendances"}>
             <HeadTitle title="Record Attendance" />
 
             {/* Main Content  */}
@@ -602,7 +602,7 @@ const RepCheckIn = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </StudentLayout>
+        </CourseRepLayout>
     );
 };
 

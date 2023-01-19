@@ -7,6 +7,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import SemesterNotFound from "../components/SemesterNotFound";
 import { useSemester } from "../src/hooks/semester";
+import format from "date-fns/format";
+import Link from "next/link";
 
 const Dashboard = ({ semester, modules, lecturers, cordinators, students }) => {
     const [attendanceLecStu, setAttendanceLecStu] = useState(true);
@@ -34,27 +36,19 @@ const Dashboard = ({ semester, modules, lecturers, cordinators, students }) => {
                                         <div className="flex space-x-2 border-b px-3 pb-1">
                                             <CalendarDaysIcon className="h-5 w-5 text-gray-text" />
                                             <div className="font-bold uppercase">
-                                                {new Date(
-                                                    semester?.start_date,
-                                                ).toLocaleString("en-US", {
-                                                    day: "2-digit",
-                                                })}{" "}
-                                                {new Date(
-                                                    semester?.start_date,
-                                                ).toLocaleString("en-US", {
-                                                    month: "short",
-                                                })}
+                                                {format(
+                                                    new Date(
+                                                        semester?.start_date,
+                                                    ),
+                                                    "dd MMM",
+                                                )}
                                                 {" - "}
-                                                {new Date(
-                                                    semester?.start_date,
-                                                ).toLocaleString("en-US", {
-                                                    day: "2-digit",
-                                                })}{" "}
-                                                {new Date(
-                                                    semester?.end_date,
-                                                ).toLocaleString("en-US", {
-                                                    month: "short",
-                                                })}
+                                                {format(
+                                                    new Date(
+                                                        semester?.end_date,
+                                                    ),
+                                                    "dd MMM",
+                                                )}
                                             </div>
                                         </div>
                                         <div className="px-3 pt-1 text-gray-text">
@@ -71,7 +65,9 @@ const Dashboard = ({ semester, modules, lecturers, cordinators, students }) => {
                                     Summary
                                 </h1>
                                 <div className="space-y-4">
-                                    <div className="flex items-center justify-between bg-green-300 p-2 rounded-md">
+                                    <Link
+                                        href={"/modules"}
+                                        className="flex items-center justify-between bg-green-300 p-2 rounded-md">
                                         <div className="flex space-x-4 items-center">
                                             <div className="bg-blue-700 h-2 w-2 rounded-full"></div>
                                             <h3>Active Modules</h3>
@@ -79,8 +75,10 @@ const Dashboard = ({ semester, modules, lecturers, cordinators, students }) => {
                                         <div className="bg-white text-xs font-semibold block px-1 text-center rounded-lg w-[50px] py-0.5 mr-6">
                                             <span>{modulesActive.length}</span>
                                         </div>
-                                    </div>
-                                    <div className="flex items-center justify-between bg-gray-100 p-2 rounded-md">
+                                    </Link>
+                                    <Link
+                                        href={"/lecturers"}
+                                        className="flex items-center justify-between bg-gray-100 p-2 rounded-md">
                                         <div className="flex space-x-4 items-center">
                                             <div className="bg-blue-700 h-2 w-2 rounded-full"></div>
                                             <h3>Lectures Population</h3>
@@ -88,8 +86,10 @@ const Dashboard = ({ semester, modules, lecturers, cordinators, students }) => {
                                         <div className="bg-white text-xs font-semibold block px-1 text-center rounded-lg w-[50px] py-0.5 mr-6">
                                             <span>{lecturers.length}</span>
                                         </div>
-                                    </div>
-                                    <div className="flex items-center justify-between bg-gray-100 p-2 rounded-md">
+                                    </Link>
+                                    <Link
+                                        href={"/students"}
+                                        className="flex items-center justify-between bg-gray-100 p-2 rounded-md">
                                         <div className="flex space-x-4 items-center">
                                             <div className="bg-blue-700 h-2 w-2 rounded-full"></div>
                                             <h3>Students Poulation</h3>
@@ -97,16 +97,18 @@ const Dashboard = ({ semester, modules, lecturers, cordinators, students }) => {
                                         <div className="bg-white text-xs font-semibold block px-1 text-center rounded-lg w-[50px] py-0.5 mr-6">
                                             <span>{students.length}</span>
                                         </div>
-                                    </div>
-                                    <div className="flex items-center justify-between bg-blue-100 p-2 rounded-md">
+                                    </Link>
+                                    <Link
+                                        href={"/cordinators"}
+                                        className="flex items-center justify-between bg-blue-100 p-2 rounded-md">
                                         <div className="flex space-x-4 items-center">
                                             <div className="bg-blue-700 h-2 w-2 rounded-full"></div>
-                                            <h3>Cordinators Population</h3>
+                                            <h3>Coordinators Population</h3>
                                         </div>
                                         <div className="bg-white text-xs font-semibold block px-1 text-center rounded-lg w-[50px] py-0.5 mr-6">
                                             <span>{cordinators.length}</span>
                                         </div>
-                                    </div>
+                                    </Link>
                                 </div>
                             </div>
                         </Card>
@@ -119,6 +121,15 @@ const Dashboard = ({ semester, modules, lecturers, cordinators, students }) => {
                                     <h1 className="text-black-text font-extrabold capitalize">
                                         Active Mdoules
                                     </h1>
+                                }
+                                button={
+                                    modulesActive.length > 8 && (
+                                        <Link
+                                            href={"/modules"}
+                                            className="bg-primary-accent text-primary px-6 py-2 rounded-full text-xs font-bold">
+                                            View All
+                                        </Link>
+                                    )
                                 }>
                                 <div className="space-y-3">
                                     {modulesActive
@@ -127,20 +138,22 @@ const Dashboard = ({ semester, modules, lecturers, cordinators, students }) => {
                                             <div
                                                 key={activeModule.id}
                                                 className="flex items-center justify-between p-1">
-                                                <div className="flex space-x-2 items-center">
+                                                <Link
+                                                    href={`/modules/${activeModule.id}`}
+                                                    className="flex space-x-2 items-center">
                                                     <div className="flex items-center justify-center bg-primary-accent text-primary rounded-full text-xs w-[80px] py-1 font-bold uppercase">
                                                         {
                                                             activeModule.module
                                                                 .code
                                                         }
                                                     </div>
-                                                    <h3 className="text-gray-text text-xs capitalized">
+                                                    <h3 className="text-gray-text text-xs capitalize">
                                                         {
                                                             activeModule.module
                                                                 .title
                                                         }
                                                     </h3>
-                                                </div>
+                                                </Link>
                                                 <div className="flex items-center space-x-4">
                                                     <div className="bg-gray-200 h-2 w-40 rounded-full relative overflow-hidden">
                                                         <div

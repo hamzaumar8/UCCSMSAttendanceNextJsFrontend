@@ -58,9 +58,9 @@ const StudentList = ({ module }) => {
                             <th className="capitalize font-bold px-2 pr-4 py-3 text-center text-sm text-primary tracking-wider whitespace-nowrap">
                                 Absents(%)
                             </th>
-                            <th className="capitalize font-bold px-2 pr-6 py-3 text-sm text-primary tracking-wider whitespace-nowrap text-right">
+                            {/* <th className="capitalize font-bold px-2 pr-6 py-3 text-sm text-primary tracking-wider whitespace-nowrap text-right">
                                 Action
-                            </th>
+                            </th> */}
                         </tr>
                     </thead>
                     <tbody className="text-gray-text text-sm !border-[#E6EAEF]">
@@ -105,14 +105,14 @@ const StudentList = ({ module }) => {
                                         </div>
                                     </span>
                                 </td>
-                                <td className="capitalize p-3 whitespace-nowrap border-b text-right pr-6">
+                                {/* <td className="capitalize p-3 whitespace-nowrap border-b text-right pr-6">
                                     <Link
                                         href={`/students/${student.id}`}
                                         className="inline-flex cursor-pointer text-gray-text hover:!text-primary transition duration-500"
                                         title="Detials">
                                         <EyeIcon className="h-6 w-6" />
                                     </Link>
-                                </td>
+                                </td> */}
                             </tr>
                         ))}
                     </tbody>

@@ -5,6 +5,7 @@ import Card from "../../components/Card";
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
 import AttendanceChart from "../../components/Modules/AttendanceChart";
+import CourseRepAttendance from "../../components/Modules/CourseRepAttendance";
 import InCharge from "../../components/Modules/InCharge";
 import LecturerAttendance from "../../components/Modules/LecturerAttendance";
 import LecturerAttendanceTotal from "../../components/Modules/LecturerAttendanceTotal";
@@ -39,6 +40,7 @@ const Module = ({ module }) => {
         });
     };
 
+    console.log(module);
     return (
         <AppLayout
             header={module.module.code}
@@ -129,7 +131,10 @@ const Module = ({ module }) => {
                 {/*  */}
                 <div className="space-y-5">
                     {attendanceLecStu ? (
-                        <LecturerAttendance module={module} />
+                        <div className="grid grid-cols-2 gap-10">
+                            <LecturerAttendance module={module} />
+                            <CourseRepAttendance module={module} />
+                        </div>
                     ) : (
                         <StudentList module={module} />
                     )}
