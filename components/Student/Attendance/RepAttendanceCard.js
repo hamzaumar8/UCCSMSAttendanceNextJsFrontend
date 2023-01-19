@@ -1,4 +1,7 @@
-import { ArrowTrendingDownIcon } from "@heroicons/react/24/solid";
+import {
+    ArrowTrendingDownIcon,
+    ArrowTrendingUpIcon,
+} from "@heroicons/react/24/solid";
 import { format } from "date-fns";
 const RepAttendanceCard = ({ attendance }) => {
     const attendanceStatus = attendance.module.status;
@@ -57,7 +60,7 @@ const RepAttendanceCard = ({ attendance }) => {
                             {attendance.total.student.present >
                                 attendance.total.student.absent && (
                                 <span>
-                                    <ArrowTrendingDownIcon className="h-6 w-6 text-green-700" />
+                                    <ArrowTrendingUpIcon className="h-6 w-6 text-green-700" />
                                 </span>
                             )}
                             {attendance.total.student.present <

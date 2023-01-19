@@ -177,14 +177,23 @@ const RepCheckIn = () => {
                             {attendanceLecStu ? (
                                 <form className="space-y-4" onSubmit={nextForm}>
                                     <Errors className="mb-5" errors={errors} />
-                                    <div className="p-4 space-y-4">
+                                    <div className="p-4 sm:px-6 space-y-4">
                                         {errors.msg && (
                                             <p className="text-sm text-red-600 bg-red-100 p-1">
                                                 {errors.msg}
                                             </p>
                                         )}
                                         <div className="relative">
-                                            <Label>Lecturer Presence</Label>
+                                            <div
+                                                className="bg-primary-accent text-sm font-bold
+                                             uppercase py-1 px-3 rounded-full text-center sm:inline-block">
+                                                {format(now, "do MMMM, yyyy")}
+                                            </div>
+                                        </div>
+                                        <div className="relative">
+                                            <h2 className="text-black-text font-bold text-lg">
+                                                Lecturer Presence
+                                            </h2>
                                             <div className="flex items-center justify-between bg-[#F3F3F3] p-1 rounded-full">
                                                 <button
                                                     type="button"
@@ -244,8 +253,11 @@ const RepCheckIn = () => {
                                                         )
                                                     }
                                                     required
-                                                    className="w-full text-primary font-bold capitalize p-4 border-primary-accent">
-                                                    <option></option>
+                                                    className={`${
+                                                        moduleValue &&
+                                                        "!border-primary"
+                                                    } w-full border-2 border-gray-text text-primary font-bold capitalize p-4`}>
+                                                    <option value=""></option>
                                                     {courseRepModules?.length >
                                                     0 ? (
                                                         courseRepModules
@@ -305,7 +317,10 @@ const RepCheckIn = () => {
                                                             )
                                                         }
                                                         required
-                                                        className="w-full text-black-text font-bold capitalize p-4 border-primary-accent">
+                                                        className={`${
+                                                            lecturerValue &&
+                                                            "!border-primary"
+                                                        } w-full border-2 border-gray-text text-primary font-bold capitalize p-4`}>
                                                         <option></option>
                                                         {getLecturers().map(
                                                             (lect, index) => (
@@ -326,21 +341,24 @@ const RepCheckIn = () => {
                                         )}
                                     </div>
 
-                                    <div className="space-y-4">
-                                        <div className="bg-[#CCFFE24D] sm:bg-white p-4 py-5 space-y-4 border-y border-[#F3F3F3]">
+                                    <div className="space-y-4 sm:px-2 ">
+                                        <div className="bg-[#CCFFE24D] sm:bg-white p-4 py-5 space-y-4 border-y sm:border-none border-[#F3F3F3]">
                                             <div className="flex items-center justify-between">
                                                 <h2 className="text-black-text font-bold text-lg">
                                                     Check In Time
                                                 </h2>
                                                 <button
                                                     onClick={checkInNow}
-                                                    className="text-primary px-5 py-2 border border-primary text-sm rounded-full font-bold">
+                                                    className="text-primary px-5 py-2 border-2 border-primary text-sm rounded-full font-bold">
                                                     Now
                                                 </button>
                                             </div>
-                                            <div className="flex items-center space-x-2">
+                                            <div className="">
                                                 <input
-                                                    className="border w-full h-16 bg-white text-center text-3xl rounded-md uppercase"
+                                                    className={`${
+                                                        checkInTime &&
+                                                        "border-primary"
+                                                    } border-2 w-full h-16 bg-white text-center text-primary text-3xl uppercase`}
                                                     type="time"
                                                     id="checkInTime"
                                                     value={checkInTime}
@@ -360,13 +378,16 @@ const RepCheckIn = () => {
                                                 </h2>
                                                 <button
                                                     onClick={checkOutNow}
-                                                    className="text-primary px-5 py-2 border border-primary rounded-full text-sm font-bold">
+                                                    className="text-primary px-5 py-2 border-2 border-primary rounded-full text-sm font-bold">
                                                     Now
                                                 </button>
                                             </div>
                                             <div className="flex items-center space-x-2">
                                                 <input
-                                                    className="border w-full h-16 bg-white text-center text-3xl rounded-md uppercase"
+                                                    className={`${
+                                                        checkOutTime &&
+                                                        "border-primary"
+                                                    } border-2 w-full h-16 bg-white text-center text-primary text-3xl uppercase`}
                                                     type="time"
                                                     id="checkOutTime"
                                                     value={checkOutTime}
@@ -381,7 +402,7 @@ const RepCheckIn = () => {
                                         </div>
                                     </div>
 
-                                    <div className="flex py-6 px-4 items-center justify-end">
+                                    <div className="flex py-6 px-4 sm:px-6 items-center justify-end">
                                         <Button
                                             type="submit"
                                             className="text-white bg-primary inline-block px-12 py-3 !rounded-full capitalize font-bold ">
@@ -413,6 +434,7 @@ const RepCheckIn = () => {
                                                             onChange={
                                                                 handleSelectAllChange
                                                             }
+                                                            className="w-5 h-5 rounded-full"
                                                         />{" "}
                                                         Select All
                                                     </th>
@@ -434,7 +456,7 @@ const RepCheckIn = () => {
                                                                     alt={
                                                                         student.index_number
                                                                     }
-                                                                    className="w-14 h-12 my-0 mx-auto"
+                                                                    className="w-10 h-10 sm:w-14 sm:h-12 sm:mx-auto rounded-full"
                                                                 />
                                                             </td>
                                                             <td className="capitalize p-3 whitespace-nowrap sm:border-b">
@@ -456,7 +478,9 @@ const RepCheckIn = () => {
                                                                 </span>
                                                             </td>
 
-                                                            <td className="capitalize p-3 whitespace-nowrap sm:border-b text-center">
+                                                            <td
+                                                                className="capitalize p-3 whitespace-nowrap sm:border-b text-center"
+                                                                width={30}>
                                                                 <span>
                                                                     <div>
                                                                         <input
@@ -470,6 +494,7 @@ const RepCheckIn = () => {
                                                                                     student.id,
                                                                                 )
                                                                             }
+                                                                            className="w-6 h-6 rounded-full shadow-lg"
                                                                         />
                                                                     </div>
                                                                 </span>
