@@ -2,7 +2,6 @@ import { EyeIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 const StudentAllResults = ({ studentResults }) => {
     const results = Object.values(studentResults);
-    console.log(results);
     return (
         <div className="">
             {results?.map((result, index) => (

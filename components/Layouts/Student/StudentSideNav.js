@@ -53,6 +53,12 @@ const StudentSideNav = ({ user }) => {
                         <span>Registered Modules</span>
                     </NavLink>
                     <NavLink
+                        href="/student/groups"
+                        active={router.pathname === "/student/groups"}>
+                        <PencilSquareIcon className="w-6 h-6" />
+                        <span>Groups</span>
+                    </NavLink>
+                    <NavLink
                         href="/student/results"
                         active={router.pathname === "/student/results"}>
                         <CloudArrowDownIcon className="w-6 h-6" />

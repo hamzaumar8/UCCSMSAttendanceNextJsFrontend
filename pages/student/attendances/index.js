@@ -50,6 +50,7 @@ const RepAttendance = () => {
         item => item.date === format(currentDate, "yyyy-MM-dd"),
     );
 
+    console.log(attendances);
     return (
         <StudentLayout header="Here's an overview of all attendaces">
             <HeadTitle title="Lecturer Dashboard" />
