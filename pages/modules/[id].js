@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { useRecoilState } from "recoil";
 import Button from "../../components/Button";
-import Card from "../../components/Card";
 import HeadTitle from "../../components/HeadTitle";
 import AppLayout from "../../components/Layouts/AppLayout";
 import AttendanceChart from "../../components/Modules/AttendanceChart";

@@ -1,21 +1,12 @@
 import HeadTitle from "../../components/HeadTitle";
 import LecturerLayout from "../../components/Layouts/LecturerLayout";
 import axios from "../../src/lib/axios";
-import { CalendarDaysIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
+import { CalendarDaysIcon } from "@heroicons/react/24/solid";
 import { useRecoilState } from "recoil";
 import { modalState, modalTypeState } from "../../src/atoms/modalAtom";
-import { useAuth } from "../../src/hooks/auth";
 import useSWR from "swr";
-import { useEffect, useState } from "react";
-import {
-    eachDayOfInterval,
-    addDays,
-    addWeeks,
-    format,
-    getTime,
-    startOfWeek,
-    endOfWeek,
-} from "date-fns";
+import { useState } from "react";
+import { eachDayOfInterval, format, startOfWeek, endOfWeek } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
 import AttendanceCard from "../../components/Staff/Attendance/AttendanceCard";
 import ElementNotFound from "../../components/ElementNorFound";

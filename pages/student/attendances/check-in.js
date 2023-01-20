@@ -8,7 +8,6 @@ import CourseRepLayout from "../../../components/Layouts/CourseRepLayout";
 import Image from "next/image";
 import Errors from "../../../components/Errors";
 import Button from "../../../components/Button";
-import Label from "../../../components/Label";
 import { useAttendance } from "../../../src/hooks/attendance";
 import { useRecoilState } from "recoil";
 import {

@@ -1,11 +1,7 @@
-import { AnimatePresence, motion } from "framer-motion";
 import useSWR from "swr";
-import { useState } from "react";
 import HeadTitle from "../../../components/HeadTitle";
 import { SectionLoader } from "../../../components/PageLoader";
-import CordinatingModules from "../../../components/Results/CordinatingModules";
 import SemesterTag from "../../../components/SemesterTag";
-import StaffAllResults from "../../../components/Staff/Results/StaffAllResults";
 import axios from "../../../src/lib/axios";
 import StudentLayout from "../../../components/Layouts/StudentLayout";
 import StudentAllModules from "../../../components/Student/Modules/StudentAllModules";
@@ -56,13 +52,3 @@ const StudentModules = () => {
 };
 
 export default StudentModules;
-
-// export async function getServerSideProps() {
-//     const response = await axios.get("api/v1/results");
-//     const results = response.data.data;
-
-//     return {
-//         props: {
-//         },
-//     };
-// }

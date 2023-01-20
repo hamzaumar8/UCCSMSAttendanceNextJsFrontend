@@ -1,22 +1,10 @@
 import HeadTitle from "../../../components/HeadTitle";
 import axios from "../../../src/lib/axios";
-import { CalendarDaysIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
-import { useRecoilState } from "recoil";
-import { modalState, modalTypeState } from "../../../src/atoms/modalAtom";
-import { useAuth } from "../../../src/hooks/auth";
+import { CalendarDaysIcon } from "@heroicons/react/24/solid";
 import useSWR from "swr";
-import { useEffect, useState } from "react";
-import {
-    eachDayOfInterval,
-    addDays,
-    addWeeks,
-    format,
-    getTime,
-    startOfWeek,
-    endOfWeek,
-} from "date-fns";
+import { useState } from "react";
+import { eachDayOfInterval, format, startOfWeek, endOfWeek } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
-import AttendanceCard from "../../../components/Staff/Attendance/AttendanceCard";
 import ElementNotFound from "../../../components/ElementNorFound";
 import CourseRepLayout from "../../../components/Layouts/CourseRepLayout";
 import Link from "next/link";
@@ -24,11 +12,6 @@ import Image from "next/image";
 import RepAttendanceCard from "../../../components/Student/Attendance/RepAttendanceCard";
 
 const RepAttendance = () => {
-    const { user } = useAuth({ middleware: "auth" });
-
-    const [modalOpen, setModalOpen] = useRecoilState(modalState);
-    const [modalType, setModalType] = useRecoilState(modalTypeState);
-
     const now = new Date();
     const calendarWeekInterval = eachDayOfInterval({
         start: startOfWeek(now),

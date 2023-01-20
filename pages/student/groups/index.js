@@ -1,17 +1,12 @@
-import { AnimatePresence, motion } from "framer-motion";
 import useSWR from "swr";
-import { useState } from "react";
 import HeadTitle from "../../../components/HeadTitle";
 import { SectionLoader } from "../../../components/PageLoader";
 import SemesterTag from "../../../components/SemesterTag";
 import axios from "../../../src/lib/axios";
 import StudentLayout from "../../../components/Layouts/StudentLayout";
-import StudentAllResults from "../../../components/Student/Results/StudentAllResults";
 import StudentAllGroups from "../../../components/Student/Groups/StudentAllGroups";
 
 const StudentResults = () => {
-    const [upInactiveToggle, setUpInactiveToggle] = useState(false);
-
     const {
         data: groups,
         error,
