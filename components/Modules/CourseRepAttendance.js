@@ -9,7 +9,7 @@ const CourseRepAttendance = ({ module }) => {
                         Course Reps Attendance
                     </h1>
                     <span className="p-1 h-7 w-7 inline-flex items-center justify-center rounded-full text-xs text-white bg-primary">
-                        {module.att_lect.length}
+                        {module.att_course_rep.length}
                     </span>
                 </div>
                 <div></div>
